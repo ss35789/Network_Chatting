@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JavaChatClient/JavaChatClient.iml" filepath="$PROJECT_DIR$/JavaChatClient/JavaChatClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaChatServer/JavaChatServer.iml" filepath="$PROJECT_DIR$/JavaChatServer/JavaChatServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaObjClient/JavaObjClient.iml" filepath="$PROJECT_DIR$/JavaObjClient/JavaObjClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaObjServer/JavaObjServer.iml" filepath="$PROJECT_DIR$/JavaObjServer/JavaObjServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Network_Chatting.iml" filepath="$PROJECT_DIR$/.idea/Network_Chatting.iml" />
+    </modules>
+  </component>
+</project>
