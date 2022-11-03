@@ -1,6 +1,6 @@
 // JavaObjClient.java
-// ObjecStream »ç¿ëÇÏ´Â Ã¤ÆÃ Client
-
+// ObjecStream ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Ã¤ï¿½ï¿½ Client
+//sfsflksflnlksnfllasnfl
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -92,7 +92,7 @@ public class JavaObjClientMain extends JFrame {
 		txtIpAddress.addActionListener(action);
 		txtPortNumber.addActionListener(action);
 	}
-	class Myaction implements ActionListener // ³»ºÎÅ¬·¡½º·Î ¾×¼Ç ÀÌº¥Æ® Ã³¸® Å¬·¡½º
+	class Myaction implements ActionListener // ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½ ï¿½Ìºï¿½Æ® Ã³ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
