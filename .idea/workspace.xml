@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/PrevCode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +35,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -35,11 +55,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.JavaObjServer">
+  <component name="RunManager" selected="Application.JavaObjClientMain">
     <configuration name="JavaObjClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="JavaObjClientMain" />
       <module name="JavaObjClient" />
@@ -60,8 +81,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JavaObjServer" />
         <item itemvalue="Application.JavaObjClientMain" />
+        <item itemvalue="Application.JavaObjServer" />
       </list>
     </recent_temporary>
   </component>
