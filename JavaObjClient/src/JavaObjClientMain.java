@@ -100,6 +100,8 @@ public class JavaObjClientMain extends JFrame {
 			String ip_addr = txtIpAddress.getText().trim();
 			String port_no = txtPortNumber.getText().trim();
 			JavaObjClientView view = new JavaObjClientView(username, ip_addr, port_no);
+			App frame = new App("NetWork Chatting");
+			frame.setVisible(true);
 			setVisible(false);
 		}
 	}

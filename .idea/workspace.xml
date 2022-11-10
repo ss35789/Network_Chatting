@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +38,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/ss357/OneDrive/문서/GitHub/Network_Chatting",
     "project.structure.last.edited": "Project",
@@ -43,7 +48,14 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.JavaObjServer">
+  <component name="RunManager" selected="Application.JavaObjClientMain">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="App" />
+      <module name="JavaObjClient" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JavaObjClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="JavaObjClientMain" />
       <module name="JavaObjClient" />
@@ -59,13 +71,15 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.App" />
       <item itemvalue="Application.JavaObjClientMain" />
       <item itemvalue="Application.JavaObjServer" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JavaObjServer" />
         <item itemvalue="Application.JavaObjClientMain" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.JavaObjServer" />
       </list>
     </recent_temporary>
   </component>
@@ -82,6 +96,7 @@
       <workItem from="1667812869920" duration="2864000" />
       <workItem from="1667890749750" duration="33000" />
       <workItem from="1668054809927" duration="2353000" />
+      <workItem from="1668065689201" duration="501000" />
     </task>
     <servers />
   </component>
