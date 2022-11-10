@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +98,7 @@
       <workItem from="1667890749750" duration="33000" />
       <workItem from="1668054809927" duration="2353000" />
       <workItem from="1668065689201" duration="4709000" />
-      <workItem from="1668072920697" duration="5032000" />
+      <workItem from="1668072920697" duration="7165000" />
     </task>
     <servers />
   </component>

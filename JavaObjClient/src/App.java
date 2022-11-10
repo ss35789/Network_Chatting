@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class App extends JFrame{
 
@@ -25,6 +28,7 @@ public class App extends JFrame{
     private String ip_addr;
     private String port_no;
     private String [] user = {"user1", "user2", "user3"};
+    private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
     private void ChattingButton_Click(JFrame App){
        //chattingPanel로 이동
@@ -60,6 +64,21 @@ public class App extends JFrame{
         userList.setModel(model);
         userList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         userList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        userList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String clickedUser = (String)userList.getSelectedValue();
+                if(arr.contains(clickedUser)){
+                    arr.remove(clickedUser);
+                }
+                else{
+                    arr.add(clickedUser);
+                }
+
+
+                System.out.println(arr);
+            }
+        });
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
 
