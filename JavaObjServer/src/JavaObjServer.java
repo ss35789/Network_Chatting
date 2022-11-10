@@ -29,7 +29,8 @@ import javax.swing.SwingConstants;
 public class JavaObjServer extends JFrame {
 
 	/**
-	 * 
+	 *
+	 * fuck develop env
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
