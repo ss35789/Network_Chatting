@@ -42,7 +42,7 @@ public class JavaObjServer extends JFrame {
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 
 	/**
-	 * Launch the application.
+	 * Launch the application.sed
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
