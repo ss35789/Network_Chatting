@@ -9,11 +9,13 @@ public class App extends JFrame{
     private JPanel sideBarPanel;
     private JButton chattingRoomButton;
     private JLabel myName;
-
+    private String username;
+    private String ip_addr;
+    private String port_no;
     private void ChattingButton_Click(JFrame App){
        //chattingPanel·Î ÀÌµ¿
 
-        JFrame cha = new Chatting();
+        JFrame cha = new Chatting(username, ip_addr, port_no);
         App.setVisible(false);
     }
     private void createUIComponents() {
@@ -21,22 +23,22 @@ public class App extends JFrame{
         mainPanel = new JPanel();
 
     }
-    public App(){
+    public App(){}
 
+    public App(String username, String ip_addr,String port_no){
+        this.username=username;
+        this.ip_addr=ip_addr;
+        this.port_no=port_no;
         chattingRoomButton.addActionListener(event -> ChattingButton_Click(this));
         chattingRoomButton.setIcon(new ImageIcon("icon1.jpg"));
-
+        myName.setText(username);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
+
         this.pack();
         this.setVisible(true);
 
     }
 
 
-
-    public static void main(String[] args) {
-        JFrame frame = new App();
-
-    }
 }

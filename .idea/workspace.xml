@@ -4,7 +4,11 @@
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Chatting.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/Chatting.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +52,7 @@
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Application.JavaObjClientMain">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
       <module name="JavaObjClient" />
@@ -77,9 +81,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
         <item itemvalue="Application.JavaObjClientMain" />
         <item itemvalue="Application.JavaObjServer" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -96,7 +100,7 @@
       <workItem from="1667812869920" duration="2864000" />
       <workItem from="1667890749750" duration="33000" />
       <workItem from="1668054809927" duration="2353000" />
-      <workItem from="1668065689201" duration="3528000" />
+      <workItem from="1668065689201" duration="4487000" />
     </task>
     <servers />
   </component>
