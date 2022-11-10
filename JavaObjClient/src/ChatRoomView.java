@@ -17,7 +17,7 @@ public class ChatRoomView extends JFrame{
     public ChatRoomView() {
         setContentPane(contentPane);
         setTitle("辰特号 持失");
-        setSize(400,600);
+        setSize(500,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -31,5 +31,9 @@ public class ChatRoomView extends JFrame{
             }
         });
 
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
