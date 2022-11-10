@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/PrevCode.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +23,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2H1qt1RaLxoBTKJdmeRM59MzYGA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -125,5 +125,8 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Network_Chatting$JavaObjClientMain.ic" NAME="JavaObjClientMain Coverage Results" MODIFIED="1667456227852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
