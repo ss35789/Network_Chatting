@@ -5,10 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chatting.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Chatting.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +98,7 @@
       <workItem from="1667890749750" duration="33000" />
       <workItem from="1668054809927" duration="2353000" />
       <workItem from="1668065689201" duration="4709000" />
-      <workItem from="1668072920697" duration="2898000" />
+      <workItem from="1668072920697" duration="4056000" />
     </task>
     <servers />
   </component>

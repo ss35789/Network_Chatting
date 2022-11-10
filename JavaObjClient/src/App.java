@@ -18,6 +18,8 @@ public class App extends JFrame{
     private JLabel chatting_myName;
     private JButton chatting_userButton;
     private JButton chatting_chattingRoombutton;
+    private JButton chatting_MakeChatRoomButton;
+    private JButton user_chatting_MakeChatRoomButton;
     private String username;
     private String ip_addr;
     private String port_no;
@@ -47,6 +49,7 @@ public class App extends JFrame{
         chattingRoomButton.setIcon(new ImageIcon("icon1.jpg"));
         myName.setText(username);
         chatting_myName.setText(username);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
 
