@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class App extends JFrame{
 
@@ -11,7 +12,6 @@ public class App extends JFrame{
     private JScrollPane userListPanel;
     private JPanel userPanel;
     private JPanel ChattingPannel;
-    private JPanel userList;
     private JPanel Chatting_sideBar;
     private JPanel chattingHeader;
     private JScrollPane chatRoomList;
@@ -20,9 +20,12 @@ public class App extends JFrame{
     private JButton chatting_chattingRoombutton;
     private JButton chatting_MakeChatRoomButton;
     private JButton user_chatting_MakeChatRoomButton;
+    private JList userList;
     private String username;
     private String ip_addr;
     private String port_no;
+    private String [] user = {"user1", "user2", "user3"};
+    //더미 유저들
     private void ChattingButton_Click(JFrame App){
        //chattingPanel로 이동
         App.setContentPane(ChattingPannel);
@@ -37,6 +40,7 @@ public class App extends JFrame{
         // TODO: place custom component creation code here
         mainPanel = new JPanel();
 
+
     }
     public App(){}
 
@@ -49,7 +53,13 @@ public class App extends JFrame{
         chattingRoomButton.setIcon(new ImageIcon("icon1.jpg"));
         myName.setText(username);
         chatting_myName.setText(username);
-
+        DefaultListModel model = new DefaultListModel();
+        for(String s : user){
+            model.addElement(s);
+        }
+        userList.setModel(model);
+        userList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        userList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
 
