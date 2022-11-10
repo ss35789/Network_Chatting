@@ -8,14 +8,19 @@ public class Chatting extends JFrame{
     private JButton chattingRoomButton;
     private JLabel myName;
 
+    private void UserButton_Click(JFrame App){
+        //chattingPanel·Î ÀÌµ¿
 
+        JFrame cha = new App();
+        App.setVisible(false);
+    }
     private void createUIComponents() {
         // TODO: place custom component creation code here
         mainPanel = new JPanel();
 
     }
     public Chatting(){
-
+        userButton.addActionListener(event -> UserButton_Click(this));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
         this.pack();
@@ -23,7 +28,7 @@ public class Chatting extends JFrame{
     }
 
     public static void main(String[] args) {
-        JFrame frame = new App("NetWork Chatting");
+        JFrame frame = new App();
 
     }
 }

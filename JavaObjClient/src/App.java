@@ -1,4 +1,6 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.File;
 
 public class App extends JFrame{
 
@@ -19,9 +21,11 @@ public class App extends JFrame{
         mainPanel = new JPanel();
 
     }
-    public App(String title){
-        super(title);
+    public App(){
+
         chattingRoomButton.addActionListener(event -> ChattingButton_Click(this));
+        chattingRoomButton.setIcon(new ImageIcon("icon1.jpg"));
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
         this.pack();
@@ -32,7 +36,7 @@ public class App extends JFrame{
 
 
     public static void main(String[] args) {
-        JFrame frame = new App("NetWork Chatting");
+        JFrame frame = new App();
 
     }
 }
