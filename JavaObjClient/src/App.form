@@ -6,6 +6,8 @@
       <xy x="26" y="32" width="1014" height="736"/>
     </constraints>
     <properties>
+      <alignmentX value="0.5"/>
+      <alignmentY value="0.5"/>
       <background color="-131075"/>
       <foreground color="-16777216"/>
       <minimumSize width="500" height="700"/>

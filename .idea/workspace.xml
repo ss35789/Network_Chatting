@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chatting.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Chatting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,14 +38,19 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ss357/OneDrive/문서/GitHub/Network_Chatting",
+    "last_opened_file_path": "C:/Users/ss357/OneDrive/문서/GitHub/Network_Chatting/JavaObjClient/src",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.JavaObjClientMain">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
       <module name="JavaObjClient" />
@@ -77,8 +79,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JavaObjClientMain" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.JavaObjClientMain" />
         <item itemvalue="Application.JavaObjServer" />
       </list>
     </recent_temporary>
@@ -96,7 +98,7 @@
       <workItem from="1667812869920" duration="2864000" />
       <workItem from="1667890749750" duration="33000" />
       <workItem from="1668054809927" duration="2353000" />
-      <workItem from="1668065689201" duration="501000" />
+      <workItem from="1668065689201" duration="2812000" />
     </task>
     <servers />
   </component>
@@ -113,5 +115,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
