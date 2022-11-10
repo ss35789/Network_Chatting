@@ -1,3 +1,4 @@
+
 // JavaObjClient.java
 // ObjecStream ����ϴ� ä�� Client
 //sfsflksflnlksnfllasnfl
@@ -106,5 +107,3 @@ public class JavaObjClientMain extends JFrame {
 		}
 	}
 }
-
-
