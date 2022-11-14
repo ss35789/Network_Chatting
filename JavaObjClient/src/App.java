@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class App extends JFrame{
 
     private JPanel mainPanel;
-    private JButton userButton;
     private JPanel sideBarPanel;
-    private JButton chattingRoomButton;
+    private JLabel chattingRoomButton;
+    private JLabel chatting_userButton;
     private JLabel myName;
     private JPanel userHeaderPanel;
     private JScrollPane userListPanel;
@@ -19,27 +19,18 @@ public class App extends JFrame{
     private JPanel chattingHeader;
     private JScrollPane chatRoomList;
     private JLabel chatting_myName;
-    private JButton chatting_userButton;
-    private JButton chatting_chattingRoombutton;
     private JButton chatting_MakeChatRoomButton;
     private JButton user_chatting_MakeChatRoomButton;
     private JList userList;
+    private JLabel UserButton;
+    private JLabel chatting_chattingRoombutton;
     private String username;
     private String ip_addr;
     private String port_no;
     private String [] user = {"user1", "user2", "user3"};
     private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
-    private void ChattingButton_Click(JFrame App){
-       //chattingPanel로 이동
-        App.setContentPane(ChattingPannel);
-        App.pack();
-    }
-    private void UserButton_Click(JFrame App){
-        //chattingPanel로 이동
-        App.setContentPane(userPanel);
-        App.pack();
-    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
         mainPanel = new JPanel();
@@ -52,9 +43,26 @@ public class App extends JFrame{
         this.username=username;
         this.ip_addr=ip_addr;
         this.port_no=port_no;
-        chattingRoomButton.addActionListener(event -> ChattingButton_Click(this));
-        chatting_userButton.addActionListener(event -> UserButton_Click(this));
-        chattingRoomButton.setIcon(new ImageIcon("icon1.jpg"));
+
+        chatting_userButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                //마우스 이벤트
+                setContentPane(userPanel);
+                pack();
+            }
+        });
+        chattingRoomButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                //마우스 이벤트
+                setContentPane(ChattingPannel);
+                pack();
+            }
+        });
+
         myName.setText(username);
         chatting_myName.setText(username);
         DefaultListModel model = new DefaultListModel();

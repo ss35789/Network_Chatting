@@ -96,23 +96,15 @@
             <margin top="0" left="10" bottom="0" right="10"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="50" height="-1"/>
+                <preferred-size width="30" height="-1"/>
               </grid>
             </constraints>
             <properties>
-              <background color="-5649558"/>
+              <background color="-1446935"/>
               <visible value="true"/>
             </properties>
             <border type="none"/>
             <children>
-              <component id="f0c72" class="javax.swing.JButton" binding="chattingRoomButton" default-binding="true">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="ChattingRoom"/>
-                </properties>
-              </component>
               <vspacer id="649fc">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
@@ -125,12 +117,22 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
-              <component id="53d26" class="javax.swing.JButton" binding="userButton" default-binding="true">
+              <component id="abb9f" class="javax.swing.JLabel" binding="UserButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="User"/>
+                  <icon value="userImg.jpg"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="a7169" class="javax.swing.JLabel" binding="chattingRoomButton">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <icon value="ChatImg.jpg"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -149,23 +151,15 @@
             <margin top="0" left="10" bottom="0" right="10"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="50" height="-1"/>
+                <preferred-size width="30" height="-1"/>
               </grid>
             </constraints>
             <properties>
-              <background color="-5649558"/>
+              <background color="-1446935"/>
               <visible value="true"/>
             </properties>
             <border type="none"/>
             <children>
-              <component id="f5422" class="javax.swing.JButton" binding="chatting_chattingRoombutton">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="ChattingRoom"/>
-                </properties>
-              </component>
               <vspacer id="69a6c">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
@@ -178,12 +172,22 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
-              <component id="84938" class="javax.swing.JButton" binding="chatting_userButton">
+              <component id="5c703" class="javax.swing.JLabel" binding="chatting_userButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="User"/>
+                  <icon value="userImg.jpg"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="36a39" class="javax.swing.JLabel" binding="chatting_chattingRoombutton">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <icon value="ChatImg.jpg"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
