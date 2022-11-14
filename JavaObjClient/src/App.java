@@ -19,11 +19,12 @@ public class App extends JFrame{
     private JPanel chattingHeader;
     private JScrollPane chatRoomList;
     private JLabel chatting_myName;
-    private JButton chatting_MakeChatRoomButton;
-    private JButton user_chatting_MakeChatRoomButton;
     private JList userList;
     private JLabel UserButton;
     private JLabel chatting_chattingRoombutton;
+    private JLabel user_chatting_MakeChatRoomButton;
+    private JLabel chatting_MakeChatRoomButton;
+
     private String username;
     private String ip_addr;
     private String port_no;

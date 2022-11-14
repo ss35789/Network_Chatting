@@ -5,13 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/icon1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +105,7 @@
       <workItem from="1668065689201" duration="4709000" />
       <workItem from="1668072920697" duration="7165000" />
       <workItem from="1668391197418" duration="1069000" />
-      <workItem from="1668392290737" duration="1064000" />
+      <workItem from="1668392290737" duration="1658000" />
     </task>
     <servers />
   </component>
