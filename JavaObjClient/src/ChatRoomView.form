@@ -61,7 +61,15 @@
           <verticalScrollBarPolicy value="21"/>
         </properties>
         <border type="line"/>
-        <children/>
+        <children>
+          <component id="e15c0" class="javax.swing.JList" binding="selectedFriendList">
+            <constraints/>
+            <properties>
+              <font name="Consolas" size="25" style="1"/>
+              <layoutOrientation value="2"/>
+            </properties>
+          </component>
+        </children>
       </scrollpane>
       <scrollpane id="fb977" binding="friendScrollPane">
         <constraints>
@@ -71,7 +79,15 @@
           <font/>
         </properties>
         <border type="line"/>
-        <children/>
+        <children>
+          <component id="d0de5" class="javax.swing.JList" binding="friendList">
+            <constraints/>
+            <properties>
+              <dropMode value="USE_SELECTION"/>
+              <font name="Consolas" size="50" style="1"/>
+            </properties>
+          </component>
+        </children>
       </scrollpane>
     </children>
   </grid>
