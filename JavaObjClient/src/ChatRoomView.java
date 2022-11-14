@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-public class ChatRoomView extends JFrame {
+public class ChatRoomView extends JFrame  {
     private JPanel contentPane;
     private JTextField txtRoomNameInput;
     private JButton btnComplete;
@@ -40,6 +40,8 @@ public class ChatRoomView extends JFrame {
         }
         friendList.setModel(model);
         friendList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        //완료 버튼
+        btnComplete.addActionListener(event -> setVisible(false));
 
 
         MouseListener mouseListener = new MouseAdapter() {

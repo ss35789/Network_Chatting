@@ -22,8 +22,9 @@ public class App extends JFrame{
     private JList userList;
     private JLabel UserButton;
     private JLabel chatting_chattingRoombutton;
-    private JLabel user_chatting_MakeChatRoomButton;
+    private JLabel user_MakeChatRoomButton;
     private JLabel chatting_MakeChatRoomButton;
+    private JList RoomList;
 
     private String username;
     private String ip_addr;
@@ -44,7 +45,50 @@ public class App extends JFrame{
         this.username=username;
         this.ip_addr=ip_addr;
         this.port_no=port_no;
+        chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
 
+                ChatRoomView chatRoomView= new ChatRoomView();
+                chatRoomView.setVisible(true);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+        user_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                ChatRoomView chatRoomView= new ChatRoomView();
+                chatRoomView.setVisible(true);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
         chatting_userButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -52,6 +96,20 @@ public class App extends JFrame{
                 //마우스 이벤트
                 setContentPane(userPanel);
                 pack();
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
         chattingRoomButton.addMouseListener(new MouseAdapter() {
@@ -61,6 +119,20 @@ public class App extends JFrame{
                 //마우스 이벤트
                 setContentPane(ChattingPannel);
                 pack();
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 

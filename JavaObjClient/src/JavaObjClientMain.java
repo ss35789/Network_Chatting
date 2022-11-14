@@ -101,11 +101,9 @@ public class JavaObjClientMain extends JFrame {
 			String ip_addr = txtIpAddress.getText().trim();
 			String port_no = txtPortNumber.getText().trim();
 			//JavaObjClientView view = new JavaObjClientView(username, ip_addr, port_no);
-			//App frame = new App(username, ip_addr, port_no);
-			//frame.setVisible(true);
-			ChatRoomView chatRoomView= new ChatRoomView();
-			chatRoomView.setVisible(true);
-			setVisible(false);
+			App frame = new App(username, ip_addr, port_no);
+			frame.setVisible(true);
+
 		}
 	}
 }
