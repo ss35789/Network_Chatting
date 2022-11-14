@@ -95,7 +95,10 @@ public class App extends JFrame{
                 super.mouseClicked(e);
                 //마우스 이벤트
                 setContentPane(userPanel);
-                pack();
+                revalidate();
+                repaint();
+
+
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
@@ -118,7 +121,10 @@ public class App extends JFrame{
                 super.mouseClicked(e);
                 //마우스 이벤트
                 setContentPane(ChattingPannel);
-                pack();
+                revalidate();
+                repaint();
+
+
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 

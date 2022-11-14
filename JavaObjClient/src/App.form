@@ -75,6 +75,7 @@
                     <constraints/>
                     <properties>
                       <font size="20"/>
+                      <maximumSize width="300" height="300"/>
                       <model>
                         <item value="user 1"/>
                       </model>
@@ -247,6 +248,7 @@
                     <constraints/>
                     <properties>
                       <font size="20"/>
+                      <maximumSize width="300" height="300"/>
                       <model>
                         <item value="Room1"/>
                       </model>
