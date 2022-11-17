@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Room.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatRoomView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatRoomView$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatRoomView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +39,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView" />
   </component>
   <component name="RecentsManager">
@@ -51,6 +47,9 @@
       <recent name="C:\한성대\3학년\2학기\네트워크프로그래밍\팀플\Network_Chatting\JavaObjClient\src\MakeChatRoomView" />
       <recent name="C:\한성대\3학년\2학기\네트워크프로그래밍\팀플\Network_Chatting\JavaObjClient\src" />
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
+    </key>
+    <key name="CreateBuilderDialog.RecentsKey">
+      <recent name="Object" />
     </key>
   </component>
   <component name="RunManager" selected="Application.JavaObjClientMain">
