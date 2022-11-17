@@ -224,12 +224,43 @@ public class JavaObjServer extends JFrame {
 			WriteOne("Welcome to Java chat server\n");
 			WriteOne(user.userName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + user.userName + "]님이 입장 하였습니다.\n";
+
+			SendUserList(); // 누군가 로그인 할 때마다 데이터 갱신
 		}
 
 		public void Logout() {
 			String msg = "[" + user.userName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			AppendText("사용자 " + "[" + user.userName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
+
+			SendUserList();
+		}
+
+		public void SendUserList(){
+
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				if (user.UserStatus == "Online")
+					try {
+						ChatMsg obcm = new ChatMsg("SERVER", "600", new SendListData(userList, roomList));
+						oos.writeObject(obcm);
+					} catch (IOException e) {
+						AppendText("send listData error");
+						try {
+							ois.close();
+							oos.close();
+							client_socket.close();
+							client_socket = null;
+							ois = null;
+							oos = null;
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						Logout(); // 에러가난 현재 객체를 벡터에서 지운다
+					}
+			}
+
 		}
 		public void MakeRoom(String roomName, ArrayList<Integer> authUser){
 			int rid=-1;
@@ -252,8 +283,8 @@ public class JavaObjServer extends JFrame {
 				}
 			}
 		}
-		public void Chatting(int rid, String msg){
-			roomList.get(rid).createChat(user.uid, msg);
+		public void Chatting(int rid, Chat chat){
+			roomList.get(rid).createChat(user.uid, chat);
 			UpdateChatting(rid);
 		}
 
@@ -265,7 +296,7 @@ public class JavaObjServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
+				if (user.UserStatus == "Online")
 					user.WriteOneObject(ob);
 			}
 		}
@@ -409,7 +440,7 @@ public class JavaObjServer extends JFrame {
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
 						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
-							UserStatus = "O";
+							user.setState("Online");
 						} else if (args[1].matches("/exit")) {
 							Logout();
 							break;
@@ -452,6 +483,9 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("300")) {
 						WriteAllObject(cm);
+					} else if(cm.getCode().matches("700")){  // 방생성
+						MakeChattingRoomOrder mo = (MakeChattingRoomOrder) cm.getData();
+						MakeRoom(mo.roomName, mo.userAuth);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
