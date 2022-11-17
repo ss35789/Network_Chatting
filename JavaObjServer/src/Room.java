@@ -4,14 +4,14 @@ import java.util.Map;
 
 public class Room {
     int rid;
-    ArrayList<Integer> authUser = new ArrayList<>();
+    ArrayList<Integer> userAuth = new ArrayList<>();
     String  roomName;
 
     Map<Integer, Chat> chat = new HashMap<>();
 
-    public Room(int rid, ArrayList<Integer> authUser, String roomName){
+    public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
-        this.authUser = authUser;
+        this.userAuth = userAuth;
         this.roomName = roomName;
 
     }

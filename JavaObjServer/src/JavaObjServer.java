@@ -237,7 +237,6 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void SendUserList(){
-
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
 				if (user.UserStatus == "Online")
@@ -262,7 +261,7 @@ public class JavaObjServer extends JFrame {
 			}
 
 		}
-		public void MakeRoom(String roomName, ArrayList<Integer> authUser){
+		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
 			int rid=-1;
 
 			for(int i=0;i<=roomCount;i++){
@@ -270,18 +269,23 @@ public class JavaObjServer extends JFrame {
 				rid=i;
 			}
 
-			Room room = new Room(rid, authUser, roomName);
+			Room room = new Room(rid, userAuth, roomName);
 			roomList.put(rid, room);
-
+			SendUserList();
 		}
 
 		public void UpdateChatting(int rid){
-			for(int i=0;i<userList.size();i++){
-				if(roomList.get(rid).authUser.contains(i)){
-					WriteOneObject(roomList.get(i).chat);
-					//userList 유저들 중에서 rid 방의 권한을 갖고있는 유저들에게 rid의 방의 채팅내역을 보내줌
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				for(int u=0;u<userList.size();u++){
+					if(roomList.get(rid).userAuth.contains(u)){
+
+						user.WriteChat(roomList.get(u).chat);
+						//userList 유저들 중에서 rid 방의 권한을 갖고있는 유저들에게 rid의 방의 채팅내역을 보내줌
+					}
 				}
 			}
+
 		}
 		public void Chatting(int rid, Chat chat){
 			roomList.get(rid).createChat(user.uid, chat);
@@ -351,9 +355,9 @@ public class JavaObjServer extends JFrame {
 		}
 
 		// 귓속말 전송
-		public void WritePrivate(String msg) {
+		public void WriteChat(Object msg) {
 			try {
-				ChatMsg obcm = new ChatMsg("귓속말", "200", msg);
+				ChatMsg obcm = new ChatMsg("채팅", "200", msg);
 				oos.writeObject(obcm);
 			} catch (IOException e) {
 				AppendText("dos.writeObject() error");
@@ -372,6 +376,7 @@ public class JavaObjServer extends JFrame {
 		}
 		public void WriteOneObject(Object ob) {
 			try {
+
 			    oos.writeObject(ob);
 			} 
 			catch (IOException e) {
@@ -468,7 +473,7 @@ public class JavaObjServer extends JFrame {
 											msg2 += " ";
 									}
 									// /to 빼고.. [귓속말] [user1] Hello user2..
-									user.WritePrivate(args[0] + " " + msg2 + "\n");
+									user.WriteChat(args[0] + " " + msg2 + "\n");
 									//user.WriteOne("[귓속말] " + args[0] + " " + msg2 + "\n");
 									break;
 								}

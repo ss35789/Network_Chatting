@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/JavaObjServer/src/Chat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjServer/src/MakeChattingRoomOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjServer/src/SendListData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/ChatMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/Room.java" afterDir="false" />
     </list>
@@ -115,7 +111,7 @@
       <workItem from="1668489988854" duration="360000" />
       <workItem from="1668574729495" duration="697000" />
       <workItem from="1668578136671" duration="802000" />
-      <workItem from="1668664832187" duration="13169000" />
+      <workItem from="1668664832187" duration="15056000" />
     </task>
     <servers />
   </component>
