@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+
 public class User{
     int uid;
     String state;
-    int [] RoomAuth;
+    ArrayList<Integer> RoomAuth = new ArrayList<>();
     String userName;
     String img;
 
-    public User(int uid,String state, int [] RoomAuth, String userName, String img){
+    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img){
         this.uid = uid;
         this.state = state;
         this.RoomAuth = RoomAuth;
@@ -15,6 +17,10 @@ public class User{
 
     public void setUserName(String Changing){
         this.userName = Changing;
+    }
+
+    public void setState(String state){
+        this.state = state;
     }
 
 }

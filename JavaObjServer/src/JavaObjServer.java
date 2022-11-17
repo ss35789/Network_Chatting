@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -130,14 +131,14 @@ public class JavaObjServer extends JFrame {
 					UserService new_user = new UserService(client_socket);
 					//신규 유저면 userList에 추가, 아니면 user설정
 					for(int i=0;i<userList.size();i++){
-						if(userList.get(i).userName == new_user.UserName){
+						if(userList.get(i).userName == new_user.user.userName){
 							user = userList.get(i);
 							dupcheck=true;
 							new_user.setUser(user);
 						}
 					}
 					if(!dupcheck){
-						userList.put(++userCount, new User(userCount,"O",null,new_user.UserName,null));
+						userList.put(++userCount, new User(userCount,"Online",null,new_user.user.userName,null));
 						new_user.setUser(userList.get(userList.size()-1));
 					}
 
@@ -180,9 +181,9 @@ public class JavaObjServer extends JFrame {
 
 		private Socket client_socket;
 		private Vector user_vc;
-		public String UserName = "";
 		public String UserStatus;
 
+		//user.user.userName 과 user.userName은 같은 것임
 		public void setUser(User user){
 			this.user = user;
 		}
@@ -210,7 +211,7 @@ public class JavaObjServer extends JFrame {
 //				String line1 = new String(b);
 //
 //				//String[] msg = line1.split(" ");
-//				//UserName = msg[1].trim();
+//				//user.userName = msg[1].trim();
 //				UserStatus = "O"; // Online 상태
 //				Login();
 			} catch (Exception e) {
@@ -221,26 +222,45 @@ public class JavaObjServer extends JFrame {
 		public void Login() {
 			AppendText("새로운 참가자 " + user.userName + " 입장.");
 			WriteOne("Welcome to Java chat server\n");
-			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
-			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
-			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
+			WriteOne(user.userName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
+			String msg = "[" + user.userName + "]님이 입장 하였습니다.\n";
 		}
 
 		public void Logout() {
-			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
+			String msg = "[" + user.userName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
-			WriteAll(msg); // 나를 제외한 다른 User들에게 전송
-			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
+			AppendText("사용자 " + "[" + user.userName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
+		}
+		public void MakeRoom(String roomName, ArrayList<Integer> authUser){
+			int rid=-1;
+
+			for(int i=0;i<=roomCount;i++){
+				if(roomList.containsKey(i))continue;
+				rid=i;
+			}
+
+			Room room = new Room(rid, authUser, roomName);
+			roomList.put(rid, room);
+
 		}
 
-		// 모든 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
-		public void WriteAll(String str) {
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
-					user.WriteOne(str);
+		public void UpdateChatting(int rid){
+			for(int i=0;i<userList.size();i++){
+				if(roomList.get(rid).authUser.contains(i)){
+					WriteOneObject(roomList.get(i).chat);
+					//userList 유저들 중에서 rid 방의 권한을 갖고있는 유저들에게 rid의 방의 채팅내역을 보내줌
+				}
 			}
 		}
+		public void Chatting(int rid, String msg){
+			roomList.get(rid).createChat(user.uid, msg);
+			UpdateChatting(rid);
+		}
+
+
+
+		// 모든 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
+
 		// 모든 User들에게 Object를 방송. 채팅 message와 image object를 보낼 수 있다
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
@@ -251,13 +271,7 @@ public class JavaObjServer extends JFrame {
 		}
 
 		// 나를 제외한 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
-		public void WriteOthers(String str) {
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this && user.UserStatus == "O")
-					user.WriteOne(str);
-			}
-		}
+
 
 		// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
 		public byte[] MakePacket(String msg) {
@@ -387,8 +401,8 @@ public class JavaObjServer extends JFrame {
 					} else
 						continue;
 					if (cm.getCode().matches("100")) {
-						UserName = cm.getId();
-						UserStatus = "O"; // Online 상태
+						user.userName = cm.getId();
+						user.setState("Online"); // Online 상태
 						Login();
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
@@ -405,7 +419,7 @@ public class JavaObjServer extends JFrame {
 							WriteOne("-----------------------------\n");
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserStatus + "\n");
+								WriteOne(user.user.userName + "\t" + user.UserStatus + "\n");
 							}
 							WriteOne("-----------------------------\n");
 						} else if (args[1].matches("/sleep")) {
@@ -415,7 +429,7 @@ public class JavaObjServer extends JFrame {
 						} else if (args[1].matches("/to")) { // 귓속말
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserStatus.matches("O")) {
+								if (user.user.userName.matches(args[2]) && user.UserStatus.matches("O")) {
 									String msg2 = "";
 									for (int j = 3; j < args.length; j++) {// 실제 message 부분
 										msg2 += args[j];

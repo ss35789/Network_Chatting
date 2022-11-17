@@ -4,6 +4,7 @@
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +112,7 @@
       <workItem from="1668489988854" duration="360000" />
       <workItem from="1668574729495" duration="697000" />
       <workItem from="1668578136671" duration="802000" />
-      <workItem from="1668664832187" duration="6146000" />
+      <workItem from="1668664832187" duration="8461000" />
     </task>
     <servers />
   </component>
