@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-public class ChatRoomView extends JFrame  {
+public class MakeChatRoomView extends JFrame  {
     private JPanel contentPane;
     private JTextField txtRoomNameInput;
     private JButton btnComplete;
@@ -17,7 +17,7 @@ public class ChatRoomView extends JFrame  {
     List selectionList;
     DefaultListModel selectedmodel = new DefaultListModel();
 
-    public ChatRoomView() {
+    public MakeChatRoomView() {
         setContentPane(contentPane);
         setTitle("辰特号 持失");
         setSize(500, 800);
