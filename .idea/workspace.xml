@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/ChatMsg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" afterDir="false" />
@@ -50,7 +47,7 @@
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;450&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ss357/OneDrive/문서/GitHub/Network_Chatting/JavaObjClient/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ss357/OneDrive/바탕 화면/3학년/2학기/네트워크프로그래밍/NetP11-java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -62,7 +59,7 @@
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JavaObjClientMain">
+  <component name="RunManager" selected="Application.JavaObjServer">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
       <module name="JavaObjClient" />
@@ -91,8 +88,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JavaObjClientMain" />
         <item itemvalue="Application.JavaObjServer" />
+        <item itemvalue="Application.JavaObjClientMain" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -119,7 +116,8 @@
       <workItem from="1668489988854" duration="360000" />
       <workItem from="1668574729495" duration="697000" />
       <workItem from="1668578136671" duration="802000" />
-      <workItem from="1668664832187" duration="18538000" />
+      <workItem from="1668664832187" duration="19857000" />
+      <workItem from="1668686131547" duration="2899000" />
     </task>
     <servers />
   </component>

@@ -8,7 +8,7 @@ public class User{
     String img;
     public User(){}
 
-    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img){
+    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img) {
         this.uid = uid;
         this.state = state;
         this.RoomAuth = RoomAuth;
