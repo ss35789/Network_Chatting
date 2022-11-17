@@ -45,6 +45,8 @@ public class JavaObjServer extends JFrame {
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private static Map<Integer, User> userList = new HashMap<>();
 	private static Map<Integer, Room> roomList = new HashMap<>();
+	private static int userCount=0;
+	private static int roomCount=0;
 
 	/**
 	 * Launch the application.sed
@@ -117,6 +119,8 @@ public class JavaObjServer extends JFrame {
 	class AcceptServer extends Thread {
 		@SuppressWarnings("unchecked")
 		public void run() {
+			boolean dupcheck =false;
+			User user;
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
 					AppendText("Waiting new clients ...");
@@ -124,9 +128,23 @@ public class JavaObjServer extends JFrame {
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
+					//신규 유저면 userList에 추가, 아니면 user설정
+					for(int i=0;i<userList.size();i++){
+						if(userList.get(i).userName == new_user.UserName){
+							user = userList.get(i);
+							dupcheck=true;
+							new_user.setUser(user);
+						}
+					}
+					if(!dupcheck){
+						userList.put(++userCount, new User(userCount,"O",null,new_user.UserName,null));
+						new_user.setUser(userList.get(userList.size()-1));
+					}
+
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
+
 					new_user.start(); // 만든 객체의 스레드 실행
-					AppendText("현재 참가자 수 " + UserVec.size());
+					AppendText("현재 참가자 수 " + userCount);
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -156,7 +174,7 @@ public class JavaObjServer extends JFrame {
 		private OutputStream os;
 		private DataInputStream dis;
 		private DataOutputStream dos;
-
+		private User user;
 		private ObjectInputStream ois;
 		private ObjectOutputStream oos;
 
@@ -164,6 +182,11 @@ public class JavaObjServer extends JFrame {
 		private Vector user_vc;
 		public String UserName = "";
 		public String UserStatus;
+
+		public void setUser(User user){
+			this.user = user;
+		}
+
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
@@ -196,7 +219,7 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void Login() {
-			AppendText("새로운 참가자 " + UserName + " 입장.");
+			AppendText("새로운 참가자 " + user.userName + " 입장.");
 			WriteOne("Welcome to Java chat server\n");
 			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
