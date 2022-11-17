@@ -46,9 +46,6 @@ public class JavaObjServer extends JFrame {
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private static Map<Integer, User> userList = new HashMap<>();
 	private static Map<Integer, Room> roomList = new HashMap<>();
-	private static int userCount=0;
-	private static int roomCount=0;
-
 	/**
 	 * Launch the application.sed
 	 */
@@ -120,32 +117,48 @@ public class JavaObjServer extends JFrame {
 	class AcceptServer extends Thread {
 		@SuppressWarnings("unchecked")
 		public void run() {
-			boolean dupcheck =false;
-			User user;
+
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
+					boolean dupcheck =false;
+					User user;
 					AppendText("Waiting new clients ...");
 					client_socket = socket.accept(); // accept가 일어나기 전까지는 무한 대기중
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
 					//신규 유저면 userList에 추가, 아니면 user설정
-					for(int i=0;i<userList.size();i++){
-						if(userList.get(i).userName == new_user.user.userName){
-							user = userList.get(i);
-							dupcheck=true;
-							new_user.setUser(user);
+
+					int uid=0;
+					if(userList.size() != 0){
+						for(int i=0;i<userList.size();i++){
+							if(userList.get(i).userName == new_user.user.userName){
+								user = userList.get(i);
+								dupcheck=true;
+								new_user.setUser(user);
+								System.out.println(user.uid);
+								break;
+							}
 						}
+						if(!dupcheck){
+
+							for(int i=0;i<=userList.size();i++){
+								if(!userList.containsKey(i)){
+									uid = i;
+									break;
+								}
+							}
 					}
-					if(!dupcheck){
-						userList.put(++userCount, new User(userCount,"Online",null,new_user.user.userName,null));
-						new_user.setUser(userList.get(userList.size()-1));
+						User newUser =  new User(uid,"Online",new ArrayList<Integer>(),new_user.user.userName,"file");
+						userList.put(uid,newUser);
+						new_user.setUser(newUser);
+						System.out.println(newUser.uid);
 					}
 
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
 
 					new_user.start(); // 만든 객체의 스레드 실행
-					AppendText("현재 참가자 수 " + userCount);
+					AppendText("현재 참가자 수 " + UserVec.size());
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -264,7 +277,7 @@ public class JavaObjServer extends JFrame {
 		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
 			int rid=-1;
 
-			for(int i=0;i<=roomCount;i++){
+			for(int i=0;i<=roomList.size();i++){
 				if(roomList.containsKey(i))continue;
 				rid=i;
 			}
