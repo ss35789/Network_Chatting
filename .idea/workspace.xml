@@ -4,9 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
+    <list default="true" id="81a5bc5d-df94-44ea-8b4c-5c07a9273a0c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Img/List.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +57,9 @@
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="Object" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\한성대\3학년\2학기\네트워크프로그래밍\팀플\Network_Chatting\JavaObjClient\src\Img" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.JavaObjClientMain">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -86,7 +99,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="" />
+      <changelist id="81a5bc5d-df94-44ea-8b4c-5c07a9273a0c" name="Changes" comment="" />
       <created>1667463151504</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
