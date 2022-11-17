@@ -25,6 +25,7 @@ public class App extends JFrame{
     private JLabel user_MakeChatRoomButton;
     private JLabel chatting_MakeChatRoomButton;
     private JList RoomList;
+    private JLabel myImg;
 
     private String username;
     private String ip_addr;
@@ -137,12 +138,17 @@ public class App extends JFrame{
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 
         myName.setText(username);
+        ImageIcon icon = new ImageIcon("../lion.jpg");
+        Image img = icon.getImage();
+        Image changeImg = img.getScaledInstance(40,40,Image.SCALE_SMOOTH);
+
+        ImageIcon changeIcon = new ImageIcon(changeImg);
+        myImg.setIcon(icon);
         chatting_myName.setText(username);
         DefaultListModel model = new DefaultListModel();
         for(String s : user){

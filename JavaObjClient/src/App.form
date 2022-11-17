@@ -36,15 +36,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="4f22a" class="javax.swing.JLabel" binding="myName">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font size="40"/>
-                  <text value="User1"/>
-                </properties>
-              </component>
               <component id="32009" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -92,10 +83,38 @@
                   <text value=""/>
                 </properties>
               </component>
+              <grid id="5ffcb" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="93cd1" class="javax.swing.JLabel" binding="myImg">
+                    <constraints border-constraint="West"/>
+                    <properties>
+                      <background color="-5649558"/>
+                      <foreground color="-5649558"/>
+                      <icon value="lion.jpg"/>
+                      <maximumSize width="40" height="40"/>
+                      <minimumSize width="40" height="40"/>
+                      <preferredSize width="40" height="40"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="db671" class="javax.swing.JLabel" binding="myName">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <font/>
+                      <text value="Myname"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
           <grid id="19a03" binding="sideBarPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="10" bottom="0" right="10"/>
+            <margin top="0" left="10" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="30" height="-1"/>
@@ -152,7 +171,7 @@
         <border type="none"/>
         <children>
           <grid id="1277c" binding="Chatting_sideBar" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="10" bottom="0" right="10"/>
+            <margin top="0" left="10" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="30" height="-1"/>
