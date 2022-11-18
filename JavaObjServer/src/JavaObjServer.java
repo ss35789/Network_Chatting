@@ -22,10 +22,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -44,11 +41,20 @@ public class JavaObjServer extends JFrame {
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
 	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	private Map<Integer, User> userList = new HashMap<>();
-	private Map<Integer, Room> roomList = new HashMap<>();
+	private static Map<Integer, User> userList = new HashMap<>();
+	private static Map<Integer, Room> roomList = new HashMap<>();
 	/**
 	 * Launch the application.sed
 	 */
+
+	public static SendListData getListData(){
+		SendListData ListData = new SendListData(userList, roomList);
+		return ListData;
+	}
+	public static void setListData(SendListData ListData){
+		userList = ListData.userList;
+		roomList = ListData.roomList;
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -120,53 +126,19 @@ public class JavaObjServer extends JFrame {
 	class AcceptServer extends Thread {
 		@SuppressWarnings("unchecked")
 		public void run() {
-
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
-					boolean dupcheck =false;
-					User user;
+
 					AppendText("Waiting new clients ...");
 					client_socket = socket.accept(); // accept가 일어나기 전까지는 무한 대기중
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
-					//신규 유저면 userList에 추가, 아니면 user설정
-
-					int uid=0;
-					if(userList.size() != 0){
-						for(int i=0;i<userList.size();i++){
-							if(userList.get(i).userName == new_user.UserName){
-								user = userList.get(i);
-								dupcheck=true;
-								new_user.setUser(user);
-
-								break;
-							}
-						}
-						if(!dupcheck){
-
-							for(int i=0;i<=userList.size();i++){
-								if(!userList.containsKey(i)){
-									uid = i;
-									break;
-								}
-							}
-					}
-						User newUser =  new User(uid,"Online",new ArrayList<Integer>(), new_user.UserName,"file");
-						userList.put(uid,newUser);
-
-
-					}
 
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
-
 					 // 만든 객체의 스레드 실행
 					AppendText("현재 참가자 수 " + UserVec.size());
-
-
-
 					new_user.start();
-					AppendText(new_user.UserName);
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -199,17 +171,21 @@ public class JavaObjServer extends JFrame {
 		private User user;
 		private ObjectInputStream ois;
 		private ObjectOutputStream oos;
-
+		private Map<Integer, User> UserList;
+		private Map<Integer, Room> RoomList;
 		private Socket client_socket;
 		private Vector user_vc;
-		private Map<Integer, User> userList;
-		private Map<Integer, Room> roomList;
 		private String UserName;
 		public String UserStatus;
 
 		//user.UserName 과 UserName은 같은 것임
 		public void setUser(User user){
 			this.user = user;
+		}
+		public void setListData(){
+			SendListData ListData =  JavaObjServer.getListData();
+			this.UserList = ListData.userList;
+			this.RoomList = ListData.roomList;
 		}
 
 
@@ -219,8 +195,7 @@ public class JavaObjServer extends JFrame {
 
 			this.client_socket = client_socket;
 			this.user_vc = UserVec;
-			this.userList = userList;
-			this.roomList = roomList;
+			setListData();
 			try {
 //				is = client_socket.getInputStream();
 //				dis = new DataInputStream(is);
@@ -252,7 +227,7 @@ public class JavaObjServer extends JFrame {
 			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 
-			SendUserList(); // 누군가 로그인 할 때마다 데이터 갱신
+			SendListData(); // 누군가 로그인 할 때마다 데이터 갱신
 		}
 
 		public void Logout() {
@@ -260,10 +235,10 @@ public class JavaObjServer extends JFrame {
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 
-			SendUserList();
+			SendListData();
 		}
 
-		public void SendUserList(){
+		public void SendListData(){
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
 				if (user.UserStatus == "Online")
@@ -298,7 +273,7 @@ public class JavaObjServer extends JFrame {
 
 			Room room = new Room(rid, userAuth, roomName);
 			roomList.put(rid, room);
-			SendUserList();
+			SendListData();
 		}
 
 		public void UpdateChatting(int rid){
@@ -466,7 +441,45 @@ public class JavaObjServer extends JFrame {
 						continue;
 					if (cm.getCode().matches("100")) {
 						UserName = cm.getId();
+						AppendText("ASdsfsaf");
+
 						Login();
+						//신규 유저면 userList에 추가, 아니면 user설정
+						boolean dupcheck =false;
+						User user;
+						int uid=0;
+						if(UserList.size() != 0){
+							for(int i=0;i<UserList.size();i++){
+								if(UserList.get(i).userName.equals(this.UserName)){
+									user = UserList.get(i);
+									dupcheck=true;
+									this.setUser(user);
+									System.out.println("dupdup");
+									break;
+								}
+							}
+							if(!dupcheck){
+
+								for(int i=0;i<=UserList.size();i++){
+									if(!UserList.containsKey(i)){
+										uid = i;
+
+
+										break;
+									}
+								}
+							}
+
+						}
+						User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+						UserList.put(uid,newUser);
+						JavaObjServer.setListData(new SendListData(UserList, RoomList));
+						setListData();
+						for(int j=0;j<UserList.size();j++){
+							System.out.println("id : "+ Integer.toString(UserList.get(j).uid) +", name : " + UserList.get(j).userName);
+
+						}
+						AppendText("ASdascacscssfsaf");
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력

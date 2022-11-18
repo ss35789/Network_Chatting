@@ -87,7 +87,9 @@ public class JavaObjClientMain extends JFrame {
 		JButton btnConnect = new JButton("Connect");
 		btnConnect.setBounds(12, 223, 205, 38);
 		contentPane.add(btnConnect);
+
 		Myaction action = new Myaction();
+
 		btnConnect.addActionListener(action);
 		txtUserName.addActionListener(action);
 		txtIpAddress.addActionListener(action);
@@ -101,6 +103,7 @@ public class JavaObjClientMain extends JFrame {
 			String ip_addr = txtIpAddress.getText().trim();
 			String port_no = txtPortNumber.getText().trim();
 			JavaObjClientView view = new JavaObjClientView(username, ip_addr, port_no);
+
 			//App frame = new App(username, ip_addr, port_no);
 			//frame.setSize(500,600);
 			//frame.setVisible(true);
