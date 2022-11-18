@@ -8,6 +8,7 @@ class ChatMsg implements Serializable {
 	private String code; // 100:로그인, 400:로그아웃, 200:채팅메시지, 300:Image
 	private Object data;
 	public ImageIcon img;
+	public ListData sld;
 
 	public ChatMsg(String id, String code, Object msg) {
 		this.id = id;
@@ -42,4 +43,7 @@ class ChatMsg implements Serializable {
 	public void setImg(ImageIcon img) {
 		this.img = img;
 	}
+
+	public void setSld(ListData sld){this.sld = sld;}
+
 }

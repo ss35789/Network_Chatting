@@ -2,22 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Chat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ListData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatMsg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/ChatMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/SendListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/ListData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/ChatMsg.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$ImageSendAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$ImageSendAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$ListenNetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$ListenNetwork.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$TextSendAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView$TextSendAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/ChatMsg.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/SendListData.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +68,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Application.JavaObjClientMain">
@@ -126,7 +132,7 @@
       <workItem from="1668578136671" duration="802000" />
       <workItem from="1668664832187" duration="19857000" />
       <workItem from="1668686131547" duration="3183000" />
-      <workItem from="1668754174694" duration="5440000" />
+      <workItem from="1668754174694" duration="11522000" />
     </task>
     <servers />
   </component>
