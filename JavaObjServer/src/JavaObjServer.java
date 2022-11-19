@@ -248,7 +248,7 @@ public class JavaObjServer extends JFrame {
 
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
-			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.getUserListToString());
+			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
 			WriteAllObject(obcm);
 		}
 		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
@@ -278,7 +278,7 @@ public class JavaObjServer extends JFrame {
 
 		}
 		public void Chatting(int rid, Chat chat){
-			roomList.get(rid).createChat(user.uid, chat);
+			roomList.get(rid).createChat(chat);
 			UpdateChatting(rid);
 		}
 

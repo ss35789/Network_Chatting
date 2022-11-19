@@ -20,9 +20,11 @@ public class ListData extends Object{
             str.append(userList.get(i).state+",");
             str.append("[");
             for(int j=0;j<userList.get(i).RoomAuth.size();i++){
-                str.append(userList.get(i).RoomAuth.get(j)+".");
+                str.append(userList.get(i).RoomAuth.get(j));
+                if(j!=userList.get(i).RoomAuth.size()-1)str.append(".");
+
             }
-            str.append("]");
+            str.append("],");
             str.append(userList.get(i).userName+",");
             str.append(userList.get(i).img);
 
@@ -39,8 +41,45 @@ public class ListData extends Object{
 //    String  roomName;
 //
 //    Map<Integer, Chat> chat = new HashMap<>();
-//    public String getUserListToString(){
-//
-//    }
+
+    public String getRoomListToString(){
+        StringBuilder str= new StringBuilder();
+        for(int i=0;i<roomList.size();i++){
+            Room room = roomList.get(i);
+
+            str.append(i+":");
+            str.append(room.rid+",");
+
+            str.append("[");
+            for(int j=0;j<room.userAuth.size();j++){
+                str.append(room.userAuth.get(j)+".");
+            }
+            str.append("],");
+
+            str.append(room.roomName+",");
+
+            str.append("<");
+            for(int c=0;c<room.chat.size();c++){
+                str.append(room.chat.get(c).uid+"-");
+                str.append(room.chat.get(c).msg+"-");
+                str.append(room.chat.get(c).date.toString());
+                if(c!=room.chat.size()-1)str.append("@");
+            }
+            str.append(">");
+
+            str.append(" ");
+        }
+
+        return str.toString();
+    }
+    //0:0,[1,4,5],roomnameLLL,<0-ぞしぞしぞぞ-date.toString()@1-でででででで-date.toString()@...> ...
+
+    public String AllListData(){
+        String allList="";
+        allList = getUserListToString();
+        allList += "|";
+        allList += getRoomListToString();
+        return allList;
+    }
 
 }

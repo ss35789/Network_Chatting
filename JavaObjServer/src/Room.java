@@ -7,7 +7,7 @@ public class Room {
     ArrayList<Integer> userAuth = new ArrayList<>();
     String  roomName;
 
-    Map<Integer, Chat> chat = new HashMap<>();
+    ArrayList<Chat> chat = new ArrayList<>();
 
     public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
@@ -16,8 +16,8 @@ public class Room {
 
     }
 
-    public void createChat(int uid, Chat chatting){
-        this.chat.put(uid,chatting);
+    public void createChat(Chat chatting){
+        this.chat.add(chatting);
     }
 
 }
