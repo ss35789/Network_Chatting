@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/PrevCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +36,12 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;131&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;450&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ss357/OneDrive/문서/GitHub/Network_Chatting/JavaObjClient/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ss357/OneDrive/바탕 화면/3학년/2학기/네트워크프로그래밍/NetP11-java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -48,6 +51,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Application.JavaObjClientMain">
@@ -100,6 +106,17 @@
       <workItem from="1668054809927" duration="2353000" />
       <workItem from="1668065689201" duration="4709000" />
       <workItem from="1668072920697" duration="7165000" />
+      <workItem from="1668391197418" duration="1069000" />
+      <workItem from="1668392290737" duration="1658000" />
+      <workItem from="1668399585949" duration="678000" />
+      <workItem from="1668400499363" duration="345000" />
+      <workItem from="1668489988854" duration="360000" />
+      <workItem from="1668574729495" duration="697000" />
+      <workItem from="1668578136671" duration="802000" />
+      <workItem from="1668664832187" duration="19857000" />
+      <workItem from="1668686131547" duration="3183000" />
+      <workItem from="1668754174694" duration="11704000" />
+      <workItem from="1668843444847" duration="5100000" />
     </task>
     <servers />
   </component>

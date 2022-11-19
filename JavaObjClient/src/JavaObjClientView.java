@@ -196,13 +196,16 @@ public class JavaObjClientView extends JFrame {
 					} else
 						continue;
 					switch (cm.getCode()) {
-					case "200": // chat message
-						AppendText(msg);
-						break;
-					case "300": // Image Ã·ºÎ
-						AppendText("[" + cm.getId() + "]");
-						AppendImage(cm.img);
-						break;
+						case "200": // chat message
+							AppendText(msg);
+							break;
+						case "300": // Image Ã·ºÎ
+							AppendText("[" + cm.getId() + "]");
+							AppendImage(cm.img);
+							break;
+						case "600":
+							AppendText(cm.getData().toString());
+							break;
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
