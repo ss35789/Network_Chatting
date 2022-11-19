@@ -143,12 +143,14 @@ public class App extends JFrame{
         });
 
         myName.setText(username);
-        ImageIcon icon = new ImageIcon("../lion.jpg");
+        ImageIcon icon = new ImageIcon("JavaObjClient/images/lion.jpg");;
         Image img = icon.getImage();
         Image changeImg = img.getScaledInstance(40,40,Image.SCALE_SMOOTH);
 
         ImageIcon changeIcon = new ImageIcon(changeImg);
-        myImg.setIcon(icon);
+
+        myImg.setIcon(changeIcon);
+
         chatting_myName.setText(username);
         DefaultListModel model = new DefaultListModel();
         for(String s : user){
