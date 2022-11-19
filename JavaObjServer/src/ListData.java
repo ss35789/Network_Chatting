@@ -15,18 +15,19 @@ public class ListData extends Object{
     public String getUserListToString(){
         StringBuilder str= new StringBuilder();
         for(int i=0;i<userList.size();i++){
+            User user = userList.get(i);
             str.append(i+":");
-            str.append(userList.get(i).uid+",");
-            str.append(userList.get(i).state+",");
+            str.append(user.uid+",");
+            str.append(user.state+",");
             str.append("[");
-            for(int j=0;j<userList.get(i).RoomAuth.size();i++){
-                str.append(userList.get(i).RoomAuth.get(j));
-                if(j!=userList.get(i).RoomAuth.size()-1)str.append(".");
+            for(int j=0;j<user.RoomAuth.size();i++){
+                str.append(user.RoomAuth.get(j));
+                if(j!=user.RoomAuth.size()-1)str.append(".");
 
             }
             str.append("],");
-            str.append(userList.get(i).userName+",");
-            str.append(userList.get(i).img);
+            str.append(user.userName+",");
+            str.append(user.img);
 
             str.append(" ");
         }
