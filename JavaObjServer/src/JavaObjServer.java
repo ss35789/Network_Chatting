@@ -241,35 +241,9 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void SendListData(){
-			for (int i = 0; i < user_vc.size(); i++) {
-
-				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus.equals("Online"))
-					try {
-
-						ChatMsg obcm = new ChatMsg("SERVER", "600", "listdata");
-						ListData sld = null;
-						obcm.setSld(sld);
-
-						oos.writeObject(obcm);
-						System.out.println(userList.get(0).userName);
-
-					} catch (IOException e) {
-						AppendText("send listData error");
-						try {
-							ois.close();
-							oos.close();
-							client_socket.close();
-							client_socket = null;
-							ois = null;
-							oos = null;
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						Logout(); // 에러가난 현재 객체를 벡터에서 지운다
-					}
-			}
+			ListData sld = JavaObjServer.getListData();
+			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.getUserListToString());
+			WriteAllObject(obcm);
 
 		}
 		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
@@ -452,7 +426,6 @@ public class JavaObjServer extends JFrame {
 						UserName = cm.getId();
 						UserStatus = "Online";
 
-						AppendText("ASdsfsaf");
 						//신규 유저면 userList에 추가, 아니면 user설정
 						boolean dupcheck =false;
 						User user;

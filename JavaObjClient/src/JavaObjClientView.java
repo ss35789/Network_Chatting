@@ -204,7 +204,7 @@ public class JavaObjClientView extends JFrame {
 							AppendImage(cm.img);
 							break;
 						case "600":
-							AppendText("gotcha");
+							AppendText(cm.getData().toString());
 							break;
 					}
 				} catch (IOException e) {
