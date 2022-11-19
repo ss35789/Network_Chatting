@@ -233,18 +233,23 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void Logout() {
+			ListData ld = JavaObjServer.getListData();
+			for(int i=0;i<ld.userList.size();i++){
+				if(UserName.equals(ld.userList.get(i).userName))ld.userList.get(i).setState("Offline");
+			}
+			JavaObjServer.setListData(ld);
+			SendListData();
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 
-			SendListData();
+
 		}
 
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.getUserListToString());
 			WriteAllObject(obcm);
-
 		}
 		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
 			int rid=-1;
