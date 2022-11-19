@@ -223,12 +223,63 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void Login() {
+
+			boolean dupcheck =false;
+			User user;
+			int uid=0;
+			if(UserList.size() == 0){
+				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+				UserList.put(uid,newUser);
+			}
+			else{
+				for(int i=0;i<UserList.size();i++){
+					if(UserList.get(i).userName.equals(this.UserName)){
+						user = UserList.get(i);
+						dupcheck=true;
+						this.setUser(user);
+						user.setState("Online");
+						System.out.println("이미 있는 계정으로 로그인됩니다.");
+						break;
+					}
+				}
+				if(!dupcheck){
+
+					for(int i=0;i<=UserList.size();i++){
+						if(!UserList.containsKey(i)){
+							uid = i;
+							break;
+						}
+					}
+
+					User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+					UserList.put(uid,newUser);
+
+
+				}
+
+			}
+
+			JavaObjServer.setListData(new ListData(UserList, RoomList));
+			setListData();
+			for(int j=0;j<UserList.size();j++){
+				System.out.println("id : "+ Integer.toString(UserList.get(j).uid) +", name : " + UserList.get(j).userName);
+
+			}
+
+
 			AppendText("새로운 참가자 " + UserName + " 입장.");
 			WriteOne("Welcome to Java chat server\n");
 			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 			AppendText(msg);
+
+
+
+
+
 			SendListData(); // 누군가 로그인 할 때마다 데이터 갱신
+
+
 
 		}
 
@@ -432,38 +483,7 @@ public class JavaObjServer extends JFrame {
 						UserStatus = "Online";
 
 						//신규 유저면 userList에 추가, 아니면 user설정
-						boolean dupcheck =false;
-						User user;
-						int uid=0;
-						if(UserList.size() != 0){
-							for(int i=0;i<UserList.size();i++){
-								if(UserList.get(i).userName.equals(this.UserName)){
-									user = UserList.get(i);
-									dupcheck=true;
-									this.setUser(user);
-									System.out.println("이미 있는 계정으로 로그인됩니다.");
-									break;
-								}
-							}
-							if(!dupcheck){
 
-								for(int i=0;i<=UserList.size();i++){
-									if(!UserList.containsKey(i)){
-										uid = i;
-										break;
-									}
-								}
-							}
-
-						}
-						User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
-						UserList.put(uid,newUser);
-						JavaObjServer.setListData(new ListData(UserList, RoomList));
-						setListData();
-						for(int j=0;j<UserList.size();j++){
-							System.out.println("id : "+ Integer.toString(UserList.get(j).uid) +", name : " + UserList.get(j).userName);
-
-						}
 						Login();
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
