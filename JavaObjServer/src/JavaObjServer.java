@@ -316,20 +316,19 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void UpdateChatting(int rid){
-			for (int i = 0; i < user_vc.size(); i++) {
-				UserService user = (UserService) user_vc.elementAt(i);
-				for(int u=0;u<userList.size();u++){
-					if(roomList.get(rid).userAuth.contains(u)){
-
-						user.WriteChat(roomList.get(u).chat);
-						//userList 유저들 중에서 rid 방의 권한을 갖고있는 유저들에게 rid의 방의 채팅내역을 보내줌
-					}
-				}
-			}
+//			ListData sld = JavaObjServer.getListData();
+//			Room room = sld.roomList.get(rid);
+//			ChatMsg obcm = new ChatMsg("SERVER", "600", room.getChatToString());
+//			WriteAllObject(obcm);
 
 		}
 		public void Chatting(int rid, Chat chat){
-			roomList.get(rid).createChat(chat);
+			ListData sld = JavaObjServer.getListData();
+			Room room = sld.roomList.get(rid);
+			room.createChat(chat);
+			//JavaObjServer.setListData(sld);
+
+
 			UpdateChatting(rid);
 		}
 

@@ -16,6 +16,19 @@ public class Room {
 
     }
 
+    public String getChatToString(){
+        StringBuilder str= new StringBuilder();
+        str.append("<");
+        for(int i=0;i<chat.size();i++){
+            Chat c= chat.get(i);
+            str.append(c.uid+"-"+c.msg+"-"+c.date.toString());
+            if(i!=chat.size()-1)str.append("@");
+        }
+        str.append(">");
+        return str.toString();
+    }
+
+
     public void createChat(Chat chatting){
         this.chat.add(chatting);
     }
