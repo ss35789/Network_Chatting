@@ -4,13 +4,24 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class LoginView extends JFrame{
+
+    // JFrame 요소들
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtUserName;
     private JTextField txtIpAddress;
     private JTextField txtPortNumber;
+
+    //JavaObjClientMainViewController
+    private JavaObjClientMainViewController controller;
+
+
 
     public LoginView() { // Login 창 생성
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,14 +80,31 @@ public class LoginView extends JFrame{
             String username = txtUserName.getText().trim();
             String ip_addr = txtIpAddress.getText().trim();
             String port_no = txtPortNumber.getText().trim();
-            //JavaObjClientView view = new JavaObjClientView(username, ip_addr, port_no);
-            App frame = new App(username, ip_addr, port_no);
-            frame.setSize(500,600);
-            frame.setVisible(true);
+            controller = JavaObjClientMainViewController.getInstance();
+            controller.setUser(username);
+            try {
+                Socket socket = new Socket(ip_addr, Integer.parseInt(port_no));
+                controller.setSocket(socket);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.flush();
+                controller.setOOS(oos);
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+                controller.setOIS(ois);
+                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
+                controller.SendObject(obcm);
 
-            ChatRoomView chatRoomView = new ChatRoomView();
-            chatRoomView.setSize(500,1000);
-            chatRoomView.setVisible(true);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                //AppendText("connect error");
+            }
+
+//            App frame = new App(username, ip_addr, port_no);
+//            frame.setSize(500,600);
+//            frame.setVisible(true);
+//
+//            ChatRoomView chatRoomView = new ChatRoomView();
+//            chatRoomView.setSize(500,1000);
+//            chatRoomView.setVisible(true);
         }
     }
 }

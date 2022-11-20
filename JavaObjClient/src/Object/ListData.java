@@ -92,7 +92,7 @@ public class ListData extends Object{
         private Map<Integer, User> userList;
         private Map<Integer, Room> roomList;
 
-        private ListDataBuilder() {
+        public ListDataBuilder() {
         }
 
         public static ListDataBuilder aListData() {

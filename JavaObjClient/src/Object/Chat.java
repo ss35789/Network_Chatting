@@ -19,7 +19,7 @@ public class Chat {
         private String msg;
         private Date date;
 
-        private ChatBuilder() {
+        public ChatBuilder() {
         }
 
         public static ChatBuilder aChat() {

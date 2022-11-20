@@ -15,7 +15,8 @@ public class JavaObjClientMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JavaObjClientMainViewController main = new JavaObjClientMainViewController();
+					JavaObjClientMainViewController main = JavaObjClientMainViewController.getInstance();
+					main.activate();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

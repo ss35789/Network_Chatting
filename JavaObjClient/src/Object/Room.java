@@ -41,7 +41,7 @@ public class Room {
         private String roomName;
         private ArrayList<Chat> chat;
 
-        private RoomBuilder() {
+        public RoomBuilder() {
         }
 
         public static RoomBuilder aRoom() {

@@ -1,6 +1,7 @@
 
 // JavaObjClientView.java ObjecStram 기반 Client
 //실질적인 채팅 창
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,115 +13,149 @@ import Object.*;
 
 
 public class JavaObjClientMainViewController {
-	private static final long serialVersionUID = 1L;
-	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
-	private Socket socket; // 연결소켓
-	private ObjectInputStream ois;
-	private ObjectOutputStream oos;
-	private User user; // User Object 정의
-	private Map<Integer, User> UserList; // 현재 접속 중인 UserList
-	private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
+    private static final long serialVersionUID = 1L;
+    private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+    private Socket socket; // 연결소켓
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    private User user; // User Object 정의
+    private Map<Integer, User> UserList; // 현재 접속 중인 UserList
+    private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
 
-	/**
-	 * Create the frame.
-	 */
-	public JavaObjClientMainViewController(){
-		LoginView loginView = new LoginView();
-		loginView.setVisible(true);
-	}
-	public JavaObjClientMainViewController(String username, String ip_addr, String port_no) {
-		try {
-			socket = new Socket(ip_addr, Integer.parseInt(port_no));
-//			is = socket.getInputStream();
-//			dis = new DataInputStream(is);
-//			os = socket.getOutputStream();
-//			dos = new DataOutputStream(os);
+    private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			oos.flush();
-			ois = new ObjectInputStream(socket.getInputStream());
+    // Singleton pattern 시작
+    private JavaObjClientMainViewController() {
+    }
 
-			//SendMessage("/login " + UserName);
-			//ChatMsg obcm = new ChatMsg(UserName, "100", "Hello");
-			//SendObject(obcm);
-			
-			ListenNetwork net = new ListenNetwork();
-			net.start();
-		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			//AppendText("connect error");
-		}
+    public static JavaObjClientMainViewController getInstance() {
+        if (controller == null) {
+            controller = new JavaObjClientMainViewController(); // Main에서 처음 생성됨
+        }
+        return controller;
+    }
+    // Singleton pattern 끝
 
-	}
+    // Getter & Setter 시작
+    public User getUser() {
+        return user;
+    }
 
-	// Server Message를 수신해서 화면에 표시
-	class ListenNetwork extends Thread {
-		public void run() {
-			while (true) {
-				try {
-					// String msg = dis.readUTF();
-//					byte[] b = new byte[BUF_LEN];
-//					int ret;
-//					ret = dis.read(b);
-//					if (ret < 0) {
-//						AppendText("dis.read() < 0 error");
-//						try {
-//							dos.close();
-//							dis.close();
-//							socket.close();
-//							break;
-//						} catch (Exception ee) {
-//							break;
-//						}// catch문 끝
-//					}
-//					String	msg = new String(b, "euc-kr");
-//					msg = msg.trim(); // 앞뒤 blank NULL, \n 모두 제거
+    public void setUser(String username) {
+        user = new User.UserBuilder().setUserName(username).build();
+    }
 
-					Object obcm = null;
-					String msg = null;
-					ChatMsg cm;
-					try {
-						obcm = ois.readObject();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						break;
-					}
-					if (obcm == null)
-						break;
-					if (obcm instanceof ChatMsg) {
-						cm = (ChatMsg) obcm;
-						msg = String.format("[%s] %s", cm.getId(), cm.getData());
-					} else
-						continue;
-					switch (cm.getCode()) {
-					case "200": // chat message
-						//AppendText(msg);
-						break;
-					case "300": // Image 첨부
-						//AppendText("[" + cm.getId() + "]");
-						//AppendImage(cm.img);
-						break;
-					}
-				} catch (IOException e) {
-					//AppendText("ois.readObject() error");
-					try {
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setOIS(ObjectInputStream ois) {
+        this.ois = ois;
+    }
+
+    public void setOOS(ObjectOutputStream oos) {
+        this.oos = oos;
+    }
+    // Getter & Setter 끝
+
+    public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
+        try {
+            oos.writeObject(ob);
+        } catch (IOException e) {
+            // textArea.append("메세지 송신 에러!!\n");
+            //AppendText("SendObject Error");
+        }
+    }
+
+    /**
+     * Controller가 실행됨
+     */
+    public void activate() {
+        LoginView loginView = new LoginView();
+        loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
+
+        //SendMessage("/login " + UserName);
+
+        //SendObject(obcm);
+
+        //ListenNetwork net = new ListenNetwork();
+        //net.start();
+    }
+
+    public JavaObjClientMainViewController(String username, String ip_addr, String port_no) {
+        try {
+            socket = new Socket(ip_addr, Integer.parseInt(port_no));
+
+
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.flush();
+            ois = new ObjectInputStream(socket.getInputStream());
+
+            //SendMessage("/login " + UserName);
+            //ChatMsg obcm = new ChatMsg(UserName, "100", "Hello");
+            //SendObject(obcm);
+
+            ListenNetwork net = new ListenNetwork();
+            net.start();
+        } catch (NumberFormatException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //AppendText("connect error");
+        }
+
+    }
+
+
+    // Server Message를 수신해서 화면에 표시
+    class ListenNetwork extends Thread {
+        public void run() {
+            while (true) {
+                try {
+                    Object obcm = null;
+                    String msg = null;
+                    ChatMsg cm;
+                    try {
+                        obcm = ois.readObject();
+                    } catch (ClassNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                        break;
+                    }
+                    if (obcm == null)
+                        break;
+                    if (obcm instanceof ChatMsg) {
+                        cm = (ChatMsg) obcm;
+                        msg = String.format("[%s] %s", cm.getId(), cm.getData());
+                    } else
+                        continue;
+                    switch (cm.getCode()) {
+                        case "200": // chat message
+                            //AppendText(msg);
+                            break;
+                        case "300": // Image 첨부
+                            //AppendText("[" + cm.getId() + "]");
+                            //AppendImage(cm.img);
+                            break;
+                    }
+                } catch (IOException e) {
+                    //AppendText("ois.readObject() error");
+                    try {
 //						dos.close();
 //						dis.close();
-						ois.close();
-						oos.close();
-						socket.close();
+                        ois.close();
+                        oos.close();
+                        socket.close();
 
-						break;
-					} catch (Exception ee) {
-						break;
-					} // catch문 끝
-				} // 바깥 catch문끝
+                        break;
+                    } catch (Exception ee) {
+                        break;
+                    } // catch문 끝
+                } // 바깥 catch문끝
 
-			}
-		}
-	}
+            }
+        }
+    }
 
 //	// keyboard enter key 치면 서버로 전송
 //	class TextSendAction implements ActionListener {
@@ -210,26 +245,26 @@ public class JavaObjClientMainViewController {
 //		// new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
 //	}
 
-	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
-	public byte[] MakePacket(String msg) {
-		byte[] packet = new byte[BUF_LEN];
-		byte[] bb = null;
-		int i;
-		for (i = 0; i < BUF_LEN; i++)
-			packet[i] = 0;
-		try {
-			bb = msg.getBytes("euc-kr");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.exit(0);
-		}
-		for (i = 0; i < bb.length; i++)
-			packet[i] = bb[i];
-		return packet;
-	}
+    // Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
+    public byte[] MakePacket(String msg) {
+        byte[] packet = new byte[BUF_LEN];
+        byte[] bb = null;
+        int i;
+        for (i = 0; i < BUF_LEN; i++)
+            packet[i] = 0;
+        try {
+            bb = msg.getBytes("euc-kr");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.exit(0);
+        }
+        for (i = 0; i < bb.length; i++)
+            packet[i] = bb[i];
+        return packet;
+    }
 
-	// Server에게 network으로 전송
+    // Server에게 network으로 전송
 	/*public void SendMessage(String msg) {
 		try {
 			// dos.writeUTF(msg);
@@ -255,12 +290,14 @@ public class JavaObjClientMainViewController {
 		}
 	}*/
 
-	public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
-		try {
-			oos.writeObject(ob);
-		} catch (IOException e) {
-			// textArea.append("메세지 송신 에러!!\n");
-			//AppendText("SendObject Error");
-		}
-	}
+//    public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
+//        try {
+//            oos.writeObject(ob);
+//        } catch (IOException e) {
+//            // textArea.append("메세지 송신 에러!!\n");
+//            //AppendText("SendObject Error");
+//        }
+//    }
+
 }
+

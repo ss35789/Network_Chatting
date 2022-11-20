@@ -17,6 +17,7 @@ public class User{
         this.img = img;
     }
 
+    // Use Builder pattern
     public static final class UserBuilder {
         private int uid;
         private String state;
@@ -24,7 +25,7 @@ public class User{
         private String userName;
         private String img;
 
-        private UserBuilder() {
+        public UserBuilder() {
         }
 
         public static UserBuilder anUser() {
@@ -61,5 +62,26 @@ public class User{
             user.RoomAuth = this.RoomAuth;
             return user;
         }
+    }
+    
+    // Getters ¼±¾ð
+    public int getUid() {
+        return uid;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public ArrayList<Integer> getRoomAuth() {
+        return RoomAuth;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getImg() {
+        return img;
     }
 }
