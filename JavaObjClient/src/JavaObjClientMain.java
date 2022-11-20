@@ -17,23 +17,14 @@ import java.awt.event.ActionEvent;
 public class JavaObjClientMain extends JFrame {
 
 	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtUserName;
-	private JTextField txtIpAddress;
-	private JTextField txtPortNumber;
-
-	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginView frame = new LoginView();
-					frame.setVisible(true);
+					JavaObjClientMainView main = new JavaObjClientMainView();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

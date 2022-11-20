@@ -12,7 +12,7 @@ public class LoginView extends JFrame{
     private JTextField txtIpAddress;
     private JTextField txtPortNumber;
 
-    public LoginView() {
+    public LoginView() { // Login Ã¢ »ý¼º
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 254, 321);
         contentPane = new JPanel();
