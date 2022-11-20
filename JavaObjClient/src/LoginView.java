@@ -76,13 +76,14 @@ public class LoginView extends JFrame{
     class Myaction implements ActionListener // 로그인 창 에서 ActionListener
     {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) { // LoginView에서 입력이 완료되면
             String username = txtUserName.getText().trim();
             String ip_addr = txtIpAddress.getText().trim();
             String port_no = txtPortNumber.getText().trim();
-            controller = JavaObjClientMainViewController.getInstance();
-            controller.setUser(username);
+            controller = JavaObjClientMainViewController.getInstance(); // Controller 참조
+            controller.setUser(username); // Controller의 userName setting
             try {
+                // Server에게 Obj 전송 부분
                 Socket socket = new Socket(ip_addr, Integer.parseInt(port_no));
                 controller.setSocket(socket);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -90,6 +91,7 @@ public class LoginView extends JFrame{
                 controller.setOOS(oos);
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 controller.setOIS(ois);
+                // Server에게 Protocol code 100 전송
                 ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
                 controller.SendObject(obcm);
 
