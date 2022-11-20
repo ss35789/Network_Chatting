@@ -11,27 +11,24 @@ import java.util.Map;
 import Object.*;
 
 
-public class JavaObjClientMainView  {
-	/**
-	 * 
-	 */
+public class JavaObjClientMainViewController {
 	private static final long serialVersionUID = 1L;
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private Socket socket; // 연결소켓
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	private User user;
-	private Map<Integer, User> UserList;
-	private Map<Integer, Room> RoomList;
+	private User user; // User Object 정의
+	private Map<Integer, User> UserList; // 현재 접속 중인 UserList
+	private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
 
 	/**
 	 * Create the frame.
 	 */
-	public JavaObjClientMainView(){
+	public JavaObjClientMainViewController(){
 		LoginView loginView = new LoginView();
 		loginView.setVisible(true);
 	}
-	public JavaObjClientMainView(String username, String ip_addr, String port_no) {
+	public JavaObjClientMainViewController(String username, String ip_addr, String port_no) {
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
 //			is = socket.getInputStream();
