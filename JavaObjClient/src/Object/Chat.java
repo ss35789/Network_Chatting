@@ -3,27 +3,32 @@ package Object;
 import java.util.Date;
 
 public class Chat {
-    String msg; // message
-    Date date; // message 생성 시간
-    int code; // portocol code
+    int uid;
+    String msg;
+    Date date;
 
-    public Chat(String msg, Date date, int code) {
+    public Chat(int uid, String msg, Date date) {
+        this.uid = uid;
         this.msg = msg;
         this.date = date;
-        this.code = code;
     }
 
-
+    //Use Builder pattern
     public static final class ChatBuilder {
+        private int uid;
         private String msg;
         private Date date;
-        private int code;
 
         private ChatBuilder() {
         }
 
         public static ChatBuilder aChat() {
             return new ChatBuilder();
+        }
+
+        public ChatBuilder setUid(int uid) {
+            this.uid = uid;
+            return this;
         }
 
         public ChatBuilder setMsg(String msg) {
@@ -36,13 +41,8 @@ public class Chat {
             return this;
         }
 
-        public ChatBuilder setCode(int code) {
-            this.code = code;
-            return this;
-        }
-
         public Chat build() {
-            return new Chat(msg, date, code);
+            return new Chat(uid, msg, date);
         }
     }
 }

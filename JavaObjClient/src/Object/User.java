@@ -28,6 +28,7 @@ public class User{
         private String userName;
         private String img;
 
+        //Use Builder pattern
         private UserBuilder() {
         }
 

@@ -8,7 +8,7 @@ public class Room {
     int rid;
     ArrayList<Integer> userAuth = new ArrayList<>();
     String  roomName;
-    Map<Integer, Chat> chat = new HashMap<>();
+    ArrayList<Chat> chat = new ArrayList<>();
 
     public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
@@ -17,8 +17,61 @@ public class Room {
 
     }
 
-    public void createChat(int uid, Chat chatting){
-        this.chat.put(uid,chatting);
+    public String getChatToString(){
+        StringBuilder str= new StringBuilder();
+        str.append("<");
+        for(int i=0;i<chat.size();i++){
+            Chat c= chat.get(i);
+            str.append(c.uid+"-"+c.msg+"-"+c.date.toString());
+            if(i!=chat.size()-1)str.append("@");
+        }
+        str.append(">");
+        return str.toString();
     }
 
+
+    public void createChat(Chat chatting){
+        this.chat.add(chatting);
+    }
+
+    //Use Builder pattern
+    public static final class RoomBuilder {
+        private int rid;
+        private ArrayList<Integer> userAuth;
+        private String roomName;
+        private ArrayList<Chat> chat;
+
+        private RoomBuilder() {
+        }
+
+        public static RoomBuilder aRoom() {
+            return new RoomBuilder();
+        }
+
+        public RoomBuilder setRid(int rid) {
+            this.rid = rid;
+            return this;
+        }
+
+        public RoomBuilder setUserAuth(ArrayList<Integer> userAuth) {
+            this.userAuth = userAuth;
+            return this;
+        }
+
+        public RoomBuilder setRoomName(String roomName) {
+            this.roomName = roomName;
+            return this;
+        }
+
+        public RoomBuilder setChat(ArrayList<Chat> chat) {
+            this.chat = chat;
+            return this;
+        }
+
+        public Room build() {
+            Room room = new Room(rid, userAuth, roomName);
+            room.chat = this.chat;
+            return room;
+        }
+    }
 }

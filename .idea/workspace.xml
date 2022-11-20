@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81a5bc5d-df94-44ea-8b4c-5c07a9273a0c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Img/List.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/LoginView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/ListData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$Myaction.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
