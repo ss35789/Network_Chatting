@@ -41,7 +41,7 @@ public class ListData extends Object{
 //    ArrayList<Integer> userAuth = new ArrayList<>();
 //    String  roomName;
 //
-//    Map<Integer, Chat> chat = new HashMap<>();
+//    ArrayList<Chat> chat = new ArrayList<>();
 
     public String getRoomListToString(){
         StringBuilder str= new StringBuilder();
