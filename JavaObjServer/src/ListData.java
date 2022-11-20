@@ -74,7 +74,7 @@ public class ListData extends Object{
 
         return str.toString();
     }
-    //0:0,[1,4,5],roomnameLLL,<0-¤¾¤·¤¾¤·¤¾¤¾-date.toString()@1-¤Ç¤Ç¤Ç¤Ç¤Ç¤Ç-date.toString()@...> ...
+    //0:0,[1.4.5],roomnameLLL,<0-ãžã—ãžã—ãžãž-date.toString()@1-ã§ã§ã§ã§ã§ã§-date.toString()@...> ...
 
     public String AllListData(){
         String allList="";
