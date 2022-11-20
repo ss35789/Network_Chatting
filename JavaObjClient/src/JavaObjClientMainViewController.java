@@ -79,8 +79,8 @@ public class JavaObjClientMainViewController {
 
         //SendObject(obcm);
 
-        ListenNetwork net = new ListenNetwork();
-        net.start();
+        //ListenNetwork net = new ListenNetwork();
+        //net.start();
     }
 
     public JavaObjClientMainViewController(String username, String ip_addr, String port_no) {
@@ -116,7 +116,7 @@ public class JavaObjClientMainViewController {
                     String msg = null;
                     ChatMsg cm;
                     try {
-                        obcm = ois.readObject(); // 입력을 기다리는 부분
+                        obcm = ois.readObject();
                     } catch (ClassNotFoundException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
