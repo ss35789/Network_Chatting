@@ -176,7 +176,7 @@ public class JavaObjServer extends JFrame {
 		private Socket client_socket;
 		private Vector user_vc;
 		private String UserName;
-		public String UserStatus;
+		public String UserState;
 
 		//user.UserName 과 UserName은 같은 것임
 		public void setUser(User user){
@@ -215,7 +215,7 @@ public class JavaObjServer extends JFrame {
 //
 //				//String[] msg = line1.split(" ");
 //				//UserName = msg[1].trim();
-//				UserStatus = "O"; // Online 상태
+//				UserState = "O"; // Online 상태
 //				Login();
 			} catch (Exception e) {
 				AppendText("userService error");
@@ -312,6 +312,19 @@ public class JavaObjServer extends JFrame {
 			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
 		}
+
+		public void setSleepMode(String username){
+
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer,User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setState("Sleep");
+				}
+			}
+			JavaObjServer.setListData(sld);
+
+		}
 		public void MakeRoom(String data){
 			String[] str=data.split(",");
 			ArrayList<Integer> userAuth = new ArrayList<>();
@@ -365,7 +378,7 @@ public class JavaObjServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus.equals("Online"))
+				if (user.UserState.equals("Online"))
 					user.WriteOneObject(ob);
 			}
 		}
@@ -504,7 +517,7 @@ public class JavaObjServer extends JFrame {
 						continue;
 					if (cm.getCode().matches("100")) {
 						UserName = cm.getId();
-						UserStatus = "Online";
+						UserState = "Online";
 
 						//신규 유저면 userList에 추가, 아니면 user설정
 
@@ -524,17 +537,17 @@ public class JavaObjServer extends JFrame {
 							WriteOne("-----------------------------\n");
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserStatus + "\n");
+								WriteOne(user.UserName + "\t" + user.UserState + "\n");
 							}
 							WriteOne("-----------------------------\n");
 						} else if (args[1].matches("/sleep")) {
-							UserStatus = "Sleep";
+							UserState = "Sleep";
 						} else if (args[1].matches("/wakeup")) {
-							UserStatus = "Online";
+							UserState = "Online";
 						} else if (args[1].matches("/to")) { // 귓속말
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserStatus.matches("Online")) {
+								if (user.UserName.matches(args[2]) && user.UserState.matches("Online")) {
 									String msg2 = "";
 									for (int j = 3; j < args.length; j++) {// 실제 message 부분
 										msg2 += args[j];
@@ -548,7 +561,7 @@ public class JavaObjServer extends JFrame {
 								}
 							}
 						} else { // 일반 채팅 메시지
-							UserStatus = "Online";
+							UserState = "Online";
 							//WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
@@ -561,7 +574,12 @@ public class JavaObjServer extends JFrame {
 						String str = (String)cm.getData();
 						MakeRoom(str);
 						SendRoomData();
+					}else if(cm.getCode().matches("720")){  // setSleep
+						String username = cm.getId();
+						setSleepMode(username);
+						SendUserData();
 					}
+
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {

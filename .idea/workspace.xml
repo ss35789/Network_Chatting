@@ -4,7 +4,6 @@
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/MakeChattingRoomOrder.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +122,7 @@
       <workItem from="1668754174694" duration="11704000" />
       <workItem from="1668843444847" duration="6503000" />
       <workItem from="1668850195512" duration="2837000" />
-      <workItem from="1668989155286" duration="2024000" />
+      <workItem from="1668989155286" duration="2930000" />
     </task>
     <servers />
   </component>
