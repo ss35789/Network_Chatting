@@ -303,15 +303,19 @@ public class JavaObjServer extends JFrame {
 			WriteAllObject(obcm);
 		}
 		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
+			ListData sld = JavaObjServer.getListData();
 			int rid=-1;
 
 			for(int i=0;i<=roomList.size();i++){
-				if(roomList.containsKey(i))continue;
-				rid=i;
+				if(!roomList.containsKey(i)){
+					rid=i;
+					break;
+				}
 			}
 
 			Room room = new Room(rid, userAuth, roomName);
-			roomList.put(rid, room);
+			sld.roomList.put(rid, room);
+			JavaObjServer.setListData(sld);
 			SendListData();
 		}
 
@@ -326,7 +330,7 @@ public class JavaObjServer extends JFrame {
 			ListData sld = JavaObjServer.getListData();
 			Room room = sld.roomList.get(rid);
 			room.createChat(chat);
-			//JavaObjServer.setListData(sld);
+			JavaObjServer.setListData(sld);
 
 
 			UpdateChatting(rid);

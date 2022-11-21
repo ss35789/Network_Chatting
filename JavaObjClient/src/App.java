@@ -31,6 +31,7 @@ public class App extends JFrame{
     private String ip_addr;
     private String port_no;
     private String [] user = {"user1", "user2", "user3"};
+    private String MyimgPath ="JavaObjClient/images/lion.jpg";
     private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
 
@@ -143,12 +144,14 @@ public class App extends JFrame{
         });
 
         myName.setText(username);
-        ImageIcon icon = new ImageIcon("../lion.jpg");
+        ImageIcon icon = new ImageIcon(MyimgPath);;
         Image img = icon.getImage();
         Image changeImg = img.getScaledInstance(40,40,Image.SCALE_SMOOTH);
 
         ImageIcon changeIcon = new ImageIcon(changeImg);
-        myImg.setIcon(icon);
+
+        myImg.setIcon(changeIcon);
+
         chatting_myName.setText(username);
         DefaultListModel model = new DefaultListModel();
         for(String s : user){

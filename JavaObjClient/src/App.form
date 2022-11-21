@@ -93,13 +93,13 @@
                   <component id="93cd1" class="javax.swing.JLabel" binding="myImg">
                     <constraints border-constraint="West"/>
                     <properties>
-                      <background color="-5649558"/>
-                      <foreground color="-5649558"/>
-                      <icon value="lion.jpg"/>
+                      <background color="-131075"/>
+                      <enabled value="true"/>
+                      <foreground color="-131075"/>
                       <maximumSize width="40" height="40"/>
                       <minimumSize width="40" height="40"/>
                       <preferredSize width="40" height="40"/>
-                      <text value=""/>
+                      <text value="sdfdsf"/>
                     </properties>
                   </component>
                   <component id="db671" class="javax.swing.JLabel" binding="myName">
