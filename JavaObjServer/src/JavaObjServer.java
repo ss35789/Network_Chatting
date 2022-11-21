@@ -377,7 +377,7 @@ public class JavaObjServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				System.out.println(user.UserName);
+
 				if (user.UserState.equals("Online"))
 					user.WriteOneObject(ob);
 			}
