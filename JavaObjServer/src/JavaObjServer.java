@@ -284,14 +284,13 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void Logout() {
+			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			ListData ld = JavaObjServer.getListData();
 			for(int i=0;i<ld.userList.size();i++){
 				if(UserName.equals(ld.userList.get(i).userName))ld.userList.get(i).setState("Offline");
 			}
 			JavaObjServer.setListData(ld);
 			SendUserData();
-			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
-			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 
 
@@ -378,6 +377,7 @@ public class JavaObjServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
+				System.out.println(user.UserName);
 				if (user.UserState.equals("Online"))
 					user.WriteOneObject(ob);
 			}
@@ -583,12 +583,13 @@ public class JavaObjServer extends JFrame {
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
+						Logout();
 //						dos.close();
 //						dis.close();
 						ois.close();
 						oos.close();
 						client_socket.close();
-						Logout(); // 에러가난 현재 객체를 벡터에서 지운다
+						 // 에러가난 현재 객체를 벡터에서 지운다
 						break;
 					} catch (Exception ee) {
 						break;
