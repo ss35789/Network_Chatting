@@ -289,7 +289,7 @@ public class JavaObjServer extends JFrame {
 				if(UserName.equals(ld.userList.get(i).userName))ld.userList.get(i).setState("Offline");
 			}
 			JavaObjServer.setListData(ld);
-			SendListData();
+			SendUserData();
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
 			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
@@ -300,6 +300,16 @@ public class JavaObjServer extends JFrame {
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
+			WriteAllObject(obcm);
+		}
+		public void SendUserData(){
+			ListData sld = JavaObjServer.getListData();
+			ChatMsg obcm = new ChatMsg("SERVER", "610", sld.getUserListToString());
+			WriteAllObject(obcm);
+		}
+		public void SendRoomData(){
+			ListData sld = JavaObjServer.getListData();
+			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
 		}
 		public void MakeRoom(String data){
@@ -550,6 +560,7 @@ public class JavaObjServer extends JFrame {
 					} else if(cm.getCode().matches("700")){  // 방생성
 						String str = (String)cm.getData();
 						MakeRoom(str);
+						SendRoomData();
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
