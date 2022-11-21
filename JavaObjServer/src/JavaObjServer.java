@@ -302,28 +302,39 @@ public class JavaObjServer extends JFrame {
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
 			WriteAllObject(obcm);
 		}
-		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
-			ListData sld = JavaObjServer.getListData();
-			int rid=-1;
+		public void MakeRoom(String data){
+			String[] str=data.split(",");
+			ArrayList<Integer> userAuth = new ArrayList<>();
+			String roomName =str[0];
+			StringBuffer userAuthToStringBuffer = new StringBuffer(str[1]);
+			//[,] 제거
+			userAuthToStringBuffer.deleteCharAt(userAuthToStringBuffer.length());
+			userAuthToStringBuffer.deleteCharAt(0);
+			String userAuthToString = userAuthToStringBuffer.toString();
+			String[] arr = userAuthToString.split(",");
+			for(String s : arr){
+				int uid = Integer.parseInt(s);
+				userAuth.add(uid);
+			}
 
+			ListData sld = JavaObjServer.getListData();
 			for(int i=0;i<=roomList.size();i++){
 				if(!roomList.containsKey(i)){
-					rid=i;
+					Room room = new Room(i, userAuth, roomName);
+					sld.roomList.put(i, room);
+					JavaObjServer.setListData(sld);
+					SendListData();
 					break;
 				}
 			}
-
-			Room room = new Room(rid, userAuth, roomName);
-			sld.roomList.put(rid, room);
-			JavaObjServer.setListData(sld);
-			SendListData();
 		}
 
-		public void UpdateChatting(int rid){
-//			ListData sld = JavaObjServer.getListData();
-//			Room room = sld.roomList.get(rid);
-//			ChatMsg obcm = new ChatMsg("SERVER", "600", room.getChatToString());
-//			WriteAllObject(obcm);
+		public void UpdateChatting(){
+			//특정방의 채팅내역만 업데이트하는게 아니라 전부 다 갱신
+			ListData sld = JavaObjServer.getListData();
+			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.getRoomListToString());
+			WriteAllObject(obcm);
+
 
 		}
 		public void Chatting(int rid, Chat chat){
@@ -333,7 +344,7 @@ public class JavaObjServer extends JFrame {
 			JavaObjServer.setListData(sld);
 
 
-			UpdateChatting(rid);
+			UpdateChatting();
 		}
 
 
@@ -537,8 +548,8 @@ public class JavaObjServer extends JFrame {
 					} else if (cm.getCode().matches("300")) {
 						WriteAllObject(cm);
 					} else if(cm.getCode().matches("700")){  // 방생성
-						MakeChattingRoomOrder mo = (MakeChattingRoomOrder) cm.getData();
-						MakeRoom(mo.roomName, mo.userAuth);
+						String str = (String)cm.getData();
+						MakeRoom(str);
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
