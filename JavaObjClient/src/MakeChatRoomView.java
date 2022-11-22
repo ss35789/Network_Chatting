@@ -19,12 +19,12 @@ public class MakeChatRoomView extends JFrame  {
 
     public MakeChatRoomView() {
         setContentPane(contentPane);
-        setTitle("Ã¤ÆÃ¹æ »ý¼º");
+        setTitle("ì±„íŒ…ë°© ìƒì„±");
         setSize(500, 800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        lblChatInputView.setFocusable(true); // textField Default °ª Ãâ·ÂÀ» À§ÇØ °­Á¦·Î ´Ù¸¥ °÷¿¡ Æ÷Ä¿½º ÁÖ±â
+        lblChatInputView.setFocusable(true); // textField Default ê°’ ì¶œë ¥ì„ ìœ„í•´ ê°•ì œë¡œ ë‹¤ë¥¸ ê³³ì— í¬ì»¤ìŠ¤ ì£¼ê¸°
         txtRoomNameInput.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -40,7 +40,7 @@ public class MakeChatRoomView extends JFrame  {
         }
         friendList.setModel(model);
         friendList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        //¿Ï·á ¹öÆ°
+        //ì™„ë£Œ ë²„íŠ¼
         btnComplete.addActionListener(event -> setVisible(false));
 
 
