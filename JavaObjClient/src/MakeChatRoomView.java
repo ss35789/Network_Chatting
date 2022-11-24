@@ -22,7 +22,6 @@ public class MakeChatRoomView extends JFrame  {
         setTitle("채팅방 생성");
         setSize(500, 800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
 
         lblChatInputView.setFocusable(true); // textField Default 값 출력을 위해 강제로 다른 곳에 포커스 주기
         txtRoomNameInput.addFocusListener(new FocusAdapter() {

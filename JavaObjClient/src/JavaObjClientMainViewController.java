@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import Object.*;
@@ -16,15 +18,19 @@ public class JavaObjClientMainViewController {
     private static final long serialVersionUID = 1L;
     private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
     private Socket socket; // 연결소켓
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
+    private ObjectInputStream ois; // 입력용 객체
+    private ObjectOutputStream oos; // 출력용 객체
     private User user; // User Object 정의
     private Map<Integer, User> UserList; // 현재 접속 중인 UserList
     private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
+    private LoginView loginView; // LoginView
+    private App appView; // AppView(MainView)
+    private ChatRoomView chatRoomView; // ChatRoomView
+    private MakeChatRoomView makeChatRoomView; // MakeChatRoomView
 
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
-    // Singleton pattern 시작
+    // Singleton pattern 시작 (생성자)
     private JavaObjClientMainViewController() {
     }
 
@@ -57,6 +63,27 @@ public class JavaObjClientMainViewController {
     public void setOOS(ObjectOutputStream oos) {
         this.oos = oos;
     }
+
+    public void setUserList(Map<Integer, User> userList) {
+        UserList = userList;
+    }
+
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
+
+    public void setAppView(App appView) {
+        this.appView = appView;
+    }
+
+    public void setChatRoomView(ChatRoomView chatRoomView) {
+        this.chatRoomView = chatRoomView;
+    }
+
+    public void setMakeChatRoomView(MakeChatRoomView makeChatRoomView) {
+        this.makeChatRoomView = makeChatRoomView;
+    }
+
     // Getter & Setter 끝
 
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
@@ -73,39 +100,25 @@ public class JavaObjClientMainViewController {
      */
     public void activate() {
         LoginView loginView = new LoginView();
+        //App appView = new App();
+        MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
+        ChatRoomView chatRoomView = new ChatRoomView();
+
+        setLoginView(loginView);
+        //setAppView(appView);
+        setChatRoomView(chatRoomView);
+        setMakeChatRoomView(makeChatRoomView);
+
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
+
 
         //SendMessage("/login " + UserName);
 
         //SendObject(obcm);
 
-        //ListenNetwork net = new ListenNetwork();
-        //net.start();
+//        ListenNetwork net = new ListenNetwork();
+//        net.start();
     }
-
-    public JavaObjClientMainViewController(String username, String ip_addr, String port_no) {
-        try {
-            socket = new Socket(ip_addr, Integer.parseInt(port_no));
-
-
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.flush();
-            ois = new ObjectInputStream(socket.getInputStream());
-
-            //SendMessage("/login " + UserName);
-            //ChatMsg obcm = new ChatMsg(UserName, "100", "Hello");
-            //SendObject(obcm);
-
-            ListenNetwork net = new ListenNetwork();
-            net.start();
-        } catch (NumberFormatException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            //AppendText("connect error");
-        }
-
-    }
-
 
     // Server Message를 수신해서 화면에 표시
     class ListenNetwork extends Thread {
@@ -137,6 +150,10 @@ public class JavaObjClientMainViewController {
                             //AppendText("[" + cm.getId() + "]");
                             //AppendImage(cm.img);
                             break;
+                        case "600":
+                            System.out.println("Client received " + msg);
+                            dataReformat(msg);
+                            break;
                     }
                 } catch (IOException e) {
                     //AppendText("ois.readObject() error");
@@ -156,6 +173,7 @@ public class JavaObjClientMainViewController {
             }
         }
     }
+
 
 //	// keyboard enter key 치면 서버로 전송
 //	class TextSendAction implements ActionListener {
@@ -299,5 +317,94 @@ public class JavaObjClientMainViewController {
 //        }
 //    }
 
+    //내가 짠 함수 들 
+
+    /**
+     * userName,socket 정보를 받아 LoginView -> AppView 전환 & ListenNetwork Thread run() 하는 함수
+     *
+     * @param username 유저 이름
+     * @param ip_addr  접속할 서버 주소
+     * @param port_no  접속할 포트 번호
+     */
+    public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
+        App appView = new App(username, ip_addr, port_no);
+        controller.setAppView(appView);
+        controller.loginView.setVisible(false);
+        controller.appView.setVisible(true);
+        ListenNetwork net = new ListenNetwork();
+        net.start();
+    }
+
+    /**
+     * 서버에서 받은 문자열로 UserList,RoomList,RoomAuth ..으로 변환하는 함수
+     *
+     * @param data Server에서 받은 데이터
+     */
+    public void dataReformat(String data) {
+        data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
+        String[] deleteTarget = data.split(" ");
+        data = data.substring(deleteTarget[0].length() + 1); // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
+        String[] receivedData = data.split("\\|");
+        String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+        String stringRoomList = receivedData[1]; // roomList
+        Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+//            Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+            controller.setUserList(userList);
+//            controller.setUserList(userList);
+    }
+
+    /**
+     * String으로 된 UserList를 보내면 Map<Integer, User> UserList로 변환해서 반환해주는 함수
+     * @param data  String으로 된 UserList를 보내면
+     * @return Map<Integer, User> UserList
+     */
+    public Map<Integer, User> StringDatatoUserList(String data) {
+        String[] StringUserListData = data.split(" ");
+        Map<Integer, User> userList = new HashMap<Integer, User>(); //Map<Integer, User> <- User 삽입 하기위해 생성
+
+        // User 생성 후 UserList에 삽입
+        for (String s : StringUserListData) {
+            // User 생성을 위한 String & ArrayList 들 생성
+            String[] deleteTarget = s.split(":");
+            s = s.substring(deleteTarget[0].length() + 1); // 앞에 Map의 Key : 값 제거 ex) 1:
+            
+            // stringUserData  생성
+            String[] stringUserData = s.split(","); // 0 = uid, 1 = state , 2 = RoomAuth , 3 = userName, 4 = img
+
+            ArrayList<Integer> roomAuth = new ArrayList<Integer>();
+            // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
+            String stringRoomAuth = stringUserData[2];
+            StringBuffer str = new StringBuffer(stringRoomAuth);
+            stringRoomAuth = str.delete(0, stringRoomAuth.length()).toString();
+
+            //stringRoomAuth ","로 분할
+            String[] stringRoomAuthRid = stringRoomAuth.split(",");
+
+            // RoomAuth가 존재하면 setting
+            if (!stringRoomAuthRid[0].isEmpty()) {
+                for (String ra : stringRoomAuthRid) {
+                    roomAuth.add(Integer.parseInt(ra));
+                }
+            }
+
+            // user 생성
+            User user = User.UserBuilder.anUser().
+                    setUid(Integer.parseInt(stringUserData[0])).
+                    setState(stringUserData[1]).
+                    setRoomAuth(roomAuth).
+                    setUserName(stringUserData[3]).
+                    setImg(stringUserData[4]).
+                    build();
+            
+            // userList에 생성한 user 삽입
+            userList.put(user.getUid(), user);
+        }
+        return userList;
+    }
+
+    public Map<Integer, Room> StringDatatoRoomList(String data) {
+        Map<Integer, Room> room = new HashMap<Integer, Room>();
+        return room;
+    }
 }
 

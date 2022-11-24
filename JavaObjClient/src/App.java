@@ -31,6 +31,11 @@ public class App extends JFrame{
     private String ip_addr;
     private String port_no;
     private String [] user = {"user1", "user2", "user3"};
+
+    public void setUser(String[] user) {
+        this.user = user;
+    }
+
     private String MyimgPath ="JavaObjClient/images/lion.jpg";
     private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
