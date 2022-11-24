@@ -311,6 +311,16 @@ public class JavaObjServer extends JFrame {
 			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
 		}
+		public void SetProfileImg(String username, String imgPath){
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer,User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setImg(imgPath);
+				}
+			}
+			JavaObjServer.setListData(sld);
+		}
 
 		public void setSleepMode(String username){
 
@@ -324,6 +334,18 @@ public class JavaObjServer extends JFrame {
 			JavaObjServer.setListData(sld);
 
 		}
+
+		public void setWakeup(String username){
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer,User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setState("Online");
+				}
+			}
+			JavaObjServer.setListData(sld);
+		}
+
 		public void MakeRoom(String data){
 			String[] str=data.split(",");
 			ArrayList<Integer> userAuth = new ArrayList<>();
@@ -540,9 +562,8 @@ public class JavaObjServer extends JFrame {
 								WriteOne(user.UserName + "\t" + user.UserState + "\n");
 							}
 							WriteOne("-----------------------------\n");
-						} else if (args[1].matches("/sleep")) {
-							UserState = "Sleep";
-						} else if (args[1].matches("/wakeup")) {
+						}
+						else if (args[1].matches("/wakeup")) {
 							UserState = "Online";
 						} else if (args[1].matches("/to")) { // 귓속말
 							for (int i = 0; i < user_vc.size(); i++) {
@@ -570,13 +591,22 @@ public class JavaObjServer extends JFrame {
 						break;
 					} else if (cm.getCode().matches("300")) {
 						WriteAllObject(cm);
-					} else if(cm.getCode().matches("700")){  // 방생성
+					} else if (cm.getCode().matches("350")) { // 프로필 이미지 설정
+						String imgPath = (String)cm.getData();
+						String username = cm.getId();
+						SetProfileImg(username,imgPath);
+						SendUserData();
+					}else if(cm.getCode().matches("700")){  // 방생성
 						String str = (String)cm.getData();
 						MakeRoom(str);
 						SendRoomData();
 					}else if(cm.getCode().matches("720")){  // setSleep
 						String username = cm.getId();
 						setSleepMode(username);
+						SendUserData();
+					}else if(cm.getCode().matches("730")){  // setWakeup
+						String username = cm.getId();
+						setWakeup(username);
 						SendUserData();
 					}
 

@@ -23,5 +23,6 @@ public class User{
     public void setState(String state){
         this.state = state;
     }
+    public void setImg(String ImgPath){this.img=ImgPath;}
 
 }
