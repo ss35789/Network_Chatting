@@ -1,5 +1,6 @@
 package Object;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class User{
@@ -7,9 +8,9 @@ public class User{
     String state; // Online or Sleep 모드 
     ArrayList<Integer> RoomAuth; // 유저가 접근 가능한 방 목록
     String userName; // 유저 이름
-    String img; // 유저의 프로필 사진
+    ImageIcon img; // 유저의 프로필 사진
 
-    public User(int uid, String state, ArrayList<Integer> roomAuth, String userName, String img) {
+    public User(int uid, String state, ArrayList<Integer> roomAuth, String userName, ImageIcon img) {
         this.uid = uid;
         this.state = state;
         RoomAuth = roomAuth;
@@ -23,7 +24,7 @@ public class User{
         private String state;
         private ArrayList<Integer> RoomAuth;
         private String userName;
-        private String img;
+        private ImageIcon img;
 
         public UserBuilder() {}
 
@@ -51,7 +52,7 @@ public class User{
             return this;
         }
 
-        public UserBuilder setImg(String img) {
+        public UserBuilder setImg(ImageIcon img) {
             this.img = img;
             return this;
         }
@@ -62,7 +63,7 @@ public class User{
             return user;
         }
     }
-    
+
     // Getters 선언
     public int getUid() {
         return uid;
@@ -80,7 +81,7 @@ public class User{
         return userName;
     }
 
-    public String getImg() {
+    public ImageIcon getImg() {
         return img;
     }
 }

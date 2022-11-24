@@ -84,6 +84,7 @@ public class LoginView extends JFrame{
             String port_no = txtPortNumber.getText().trim();
             controller = JavaObjClientMainViewController.getInstance();
             controller.setUser(username);
+            // controller.createSocket(ip_addr,port_no);
             try {
 //                App frame = new App(username, ip_addr, port_no);
 //                frame.setSize(500,600);
@@ -95,8 +96,10 @@ public class LoginView extends JFrame{
                 controller.setOOS(oos);
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 controller.setOIS(ois);
+                //controller.sendData(username,ip_addr,port_no);
                 ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
                 controller.SendObject(obcm);
+                controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
 
                 controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
 
@@ -104,14 +107,6 @@ public class LoginView extends JFrame{
                 ex.printStackTrace();
                 //AppendText("connect error");
             }
-
-//            App frame = new App(username, ip_addr, port_no);
-//            frame.setSize(500,600);
-//            frame.setVisible(true);
-//
-//            ChatRoomView chatRoomView = new ChatRoomView();
-//            chatRoomView.setSize(500,1000);
-//            chatRoomView.setVisible(true);
         }
     }
 }
