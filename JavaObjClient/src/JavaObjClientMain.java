@@ -16,6 +16,7 @@ public class JavaObjClientMain extends JFrame {
 			public void run() {
 				try {
 					JavaObjClientMainViewController main = JavaObjClientMainViewController.getInstance();
+
 					main.activate();
 				} catch (Exception e) {
 					e.printStackTrace();

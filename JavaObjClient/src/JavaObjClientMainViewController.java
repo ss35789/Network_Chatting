@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.util.Map;
-
 import Object.*;
 
 
@@ -21,6 +20,9 @@ public class JavaObjClientMainViewController {
     private User user; // User Object 정의
     private Map<Integer, User> UserList; // 현재 접속 중인 UserList
     private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
+    private App appView;
+    private LoginView loginView;
+
 
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
@@ -57,6 +59,15 @@ public class JavaObjClientMainViewController {
     public void setOOS(ObjectOutputStream oos) {
         this.oos = oos;
     }
+
+    public void setAppView(App appView) {
+        this.appView = appView;
+    }
+
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
+
     // Getter & Setter 끝
 
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
@@ -72,6 +83,8 @@ public class JavaObjClientMainViewController {
      * Controller가 실행됨
      */
     public void activate() {
+
+
         LoginView loginView = new LoginView();
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
 
@@ -298,6 +311,15 @@ public class JavaObjClientMainViewController {
 //            //AppendText("SendObject Error");
 //        }
 //    }
+public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
 
+    App appView = new App(username, ip_addr, port_no);
+    appView.setSize(700,800);
+    controller.setAppView(appView);
+    controller.loginView.setVisible(false);
+    controller.appView.setVisible(true);
+    ListenNetwork net = new ListenNetwork();
+    net.start();
+}
 }
 

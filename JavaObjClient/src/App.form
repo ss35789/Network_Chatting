@@ -62,16 +62,18 @@
                 </clientProperties>
                 <border type="none"/>
                 <children>
-                  <component id="b6e1b" class="javax.swing.JList" binding="userList">
+                  <grid id="356ea" binding="UserList" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                     <constraints/>
                     <properties>
-                      <font size="20"/>
-                      <maximumSize width="300" height="300"/>
-                      <model>
-                        <item value="user 1"/>
-                      </model>
+                      <autoscrolls value="true"/>
+                      <background color="-5649558"/>
+                      <focusTraversalPolicyProvider value="false"/>
+                      <foreground color="-16777216"/>
+                      <preferredSize width="0" height="0"/>
                     </properties>
-                  </component>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
                 </children>
               </scrollpane>
               <component id="4be29" class="javax.swing.JLabel" binding="user_MakeChatRoomButton">
@@ -83,12 +85,14 @@
                   <text value=""/>
                 </properties>
               </component>
-              <grid id="5ffcb" layout-manager="BorderLayout" hgap="0" vgap="0">
+              <grid id="5ffcb" binding="Profile" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
-                <border type="none"/>
+                <properties>
+                  <background color="-131075"/>
+                </properties>
+                <border type="line"/>
                 <children>
                   <component id="93cd1" class="javax.swing.JLabel" binding="myImg">
                     <constraints border-constraint="West"/>
@@ -105,7 +109,9 @@
                   <component id="db671" class="javax.swing.JLabel" binding="myName">
                     <constraints border-constraint="Center"/>
                     <properties>
+                      <background color="-3130"/>
                       <font/>
+                      <foreground color="-16777216"/>
                       <text value="Myname"/>
                     </properties>
                   </component>
@@ -170,7 +176,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="1277c" binding="Chatting_sideBar" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="1277c" binding="Chatting_sideBar" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="10" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -185,7 +191,7 @@
             <children>
               <vspacer id="69a6c">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="300"/>
                   </grid>
                 </constraints>
@@ -197,7 +203,7 @@
               </vspacer>
               <component id="5c703" class="javax.swing.JLabel" binding="chatting_userButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <icon value="unclickedUserImg.jpg"/>
@@ -206,13 +212,22 @@
               </component>
               <component id="36a39" class="javax.swing.JLabel" binding="chatting_chattingRoombutton">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <icon value="clickedChatImg.jpg"/>
                   <text value=""/>
                 </properties>
               </component>
+              <grid id="a394a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
             </children>
           </grid>
           <grid id="d2f36" binding="chattingHeader" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -228,15 +243,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="75179" class="javax.swing.JLabel" binding="chatting_myName">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font size="40"/>
-                  <text value="User1"/>
-                </properties>
-              </component>
               <component id="f6a30" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -246,14 +252,14 @@
                   <text value="채팅"/>
                 </properties>
               </component>
-              <scrollpane id="1956" binding="chatRoomList">
+              <scrollpane id="1956" binding="ChatRoomListPanel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="450" height="600"/>
                   </grid>
                 </constraints>
                 <properties>
-                  <autoscrolls value="false"/>
+                  <autoscrolls value="true"/>
                   <background color="-131075"/>
                   <foreground color="-131075"/>
                   <requestFocusEnabled value="false"/>
@@ -263,16 +269,12 @@
                 </clientProperties>
                 <border type="none"/>
                 <children>
-                  <component id="d39dd" class="javax.swing.JList" binding="RoomList">
+                  <grid id="42996" binding="ChatRoomList" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                     <constraints/>
-                    <properties>
-                      <font size="20"/>
-                      <maximumSize width="300" height="300"/>
-                      <model>
-                        <item value="Room1"/>
-                      </model>
-                    </properties>
-                  </component>
+                    <properties/>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
                 </children>
               </scrollpane>
               <component id="72a22" class="javax.swing.JLabel" binding="chatting_MakeChatRoomButton">
@@ -284,6 +286,38 @@
                   <text value=""/>
                 </properties>
               </component>
+              <grid id="30153" binding="chatting_Profile" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-131075"/>
+                </properties>
+                <border type="line"/>
+                <children>
+                  <component id="f2dc0" class="javax.swing.JLabel" binding="chatting_myImg">
+                    <constraints border-constraint="West"/>
+                    <properties>
+                      <background color="-131075"/>
+                      <enabled value="true"/>
+                      <foreground color="-131075"/>
+                      <maximumSize width="40" height="40"/>
+                      <minimumSize width="40" height="40"/>
+                      <preferredSize width="40" height="40"/>
+                      <text value="sdfdsf"/>
+                    </properties>
+                  </component>
+                  <component id="ea3b4" class="javax.swing.JLabel" binding="chatting_myName">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <background color="-3130"/>
+                      <font/>
+                      <foreground color="-16777216"/>
+                      <text value="Myname"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>

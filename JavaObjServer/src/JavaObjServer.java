@@ -16,8 +16,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 import java.awt.event.ActionEvent;
 
@@ -308,7 +306,7 @@ public class JavaObjServer extends JFrame {
 		}
 		public void SetProfileImg(String username, ImageIcon img){
 			ListData sld = JavaObjServer.getListData();
-			Map<Integer,User> userList = sld.userList;
+			Map<Integer, User> userList = sld.userList;
 			for(int i=0; i<userList.size();i++){
 				if(userList.get(i).userName .equals(username)){
 					userList.get(i).setImg(img);
@@ -320,7 +318,7 @@ public class JavaObjServer extends JFrame {
 		public void setSleepMode(String username){
 
 			ListData sld = JavaObjServer.getListData();
-			Map<Integer,User> userList = sld.userList;
+			Map<Integer, User> userList = sld.userList;
 			for(int i=0; i<userList.size();i++){
 				if(userList.get(i).userName .equals(username)){
 					userList.get(i).setState("Sleep");
@@ -332,7 +330,7 @@ public class JavaObjServer extends JFrame {
 
 		public void setWakeup(String username){
 			ListData sld = JavaObjServer.getListData();
-			Map<Integer,User> userList = sld.userList;
+			Map<Integer, User> userList = sld.userList;
 			for(int i=0; i<userList.size();i++){
 				if(userList.get(i).userName .equals(username)){
 					userList.get(i).setState("Online");

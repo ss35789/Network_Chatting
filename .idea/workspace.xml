@@ -3,11 +3,52 @@
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/JavaObjClient.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/JavaObjClient.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/ListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/ListData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatMsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/ChatRoomView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController$ListenNetwork.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/LoginView$Myaction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/LoginView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/Chat$ChatBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/Chat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/ListData$ListDataBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/ListData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/Room$RoomBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/Room.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/User$UserBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/Object/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/Chat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/Chat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$AcceptServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/ListData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/ListData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +170,8 @@
       <workItem from="1668989155286" duration="4238000" />
       <workItem from="1669096017377" duration="1277000" />
       <workItem from="1669265894427" duration="5754000" />
+      <workItem from="1669273597002" duration="15581000" />
+      <workItem from="1669289449761" duration="917000" />
     </task>
     <servers />
   </component>

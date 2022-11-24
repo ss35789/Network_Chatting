@@ -1,5 +1,5 @@
 import sun.rmi.runtime.Log;
-
+import Object.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -71,6 +71,8 @@ public class LoginView extends JFrame{
         txtUserName.addActionListener(action);
         txtIpAddress.addActionListener(action);
         txtPortNumber.addActionListener(action);
+
+
     }
 
     class Myaction implements ActionListener // 로그인 창 에서 ActionListener
@@ -83,6 +85,9 @@ public class LoginView extends JFrame{
             controller = JavaObjClientMainViewController.getInstance();
             controller.setUser(username);
             try {
+//                App frame = new App(username, ip_addr, port_no);
+//                frame.setSize(500,600);
+//                frame.setVisible(true);
                 Socket socket = new Socket(ip_addr, Integer.parseInt(port_no));
                 controller.setSocket(socket);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -92,6 +97,8 @@ public class LoginView extends JFrame{
                 controller.setOIS(ois);
                 ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
                 controller.SendObject(obcm);
+
+                controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
 
             } catch (IOException ex) {
                 ex.printStackTrace();
