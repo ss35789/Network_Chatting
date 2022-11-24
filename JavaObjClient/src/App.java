@@ -34,6 +34,7 @@ public class App extends JFrame{
 
     private JavaObjClientMainViewController controller; // controller
 
+
     public void setUser(String[] user) {
         this.user = user;
     }
@@ -60,8 +61,10 @@ public class App extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //controller.setMakeChatRoomView();
-                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
+                MakeChatRoomView makeChatRoomView = new MakeChatRoomView(controller.getMakeChatRoomViewIndex());
+                System.out.println("fuckchatting");
+                controller.getMakeChatRoomViewList().add(makeChatRoomView);
+                controller.increaseMakeChatRoomIndex(controller.getMakeChatRoomViewIndex());
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
@@ -82,8 +85,10 @@ public class App extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
-                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
+                MakeChatRoomView makeChatRoomView = new MakeChatRoomView(controller.getMakeChatRoomViewIndex());
+                System.out.println("fuckuser");
+                controller.getMakeChatRoomViewList().add(makeChatRoomView);
+                controller.increaseMakeChatRoomIndex(controller.getMakeChatRoomViewIndex());
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
@@ -108,8 +113,6 @@ public class App extends JFrame{
                 setContentPane(userPanel);
                 revalidate();
                 repaint();
-
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 

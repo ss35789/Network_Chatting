@@ -25,9 +25,10 @@ public class JavaObjClientMainViewController {
     private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
-    private ArrayList<ChatRoomView> chatRoomViewList =new ArrayList<ChatRoomView>(); // ChatRoomView
+    private ArrayList<ChatRoomView> chatRoomViewList = new ArrayList<ChatRoomView>(); // ChatRoomView
     private ArrayList<MakeChatRoomView> makeChatRoomViewList = new ArrayList<MakeChatRoomView>(); // MakeChatRoomView
-
+    private static int chatRoomViewIndex = 0;
+    private static int makeChatRoomViewIndex = 0;
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -47,10 +48,17 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
+    public int getChatRoomViewIndex() {
+        return chatRoomViewIndex;
+    }
+
+    public int getMakeChatRoomViewIndex() {
+        return makeChatRoomViewIndex;
+    }
+
     public void setUser(String username) {
         user = new User.UserBuilder().setUserName(username).build();
     }
-
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -76,14 +84,22 @@ public class JavaObjClientMainViewController {
         this.appView = appView;
     }
 
+    public ArrayList<ChatRoomView> getChatRoomViewList() {
+        return chatRoomViewList;
+    }
+
+    public ArrayList<MakeChatRoomView> getMakeChatRoomViewList() {
+        return makeChatRoomViewList;
+    }
+
     // Getter & Setter 끝
 
     //Controller setting methods 시작
 
 
-
     /**
      * chatRoomView를 받아서 controller의 chatRoomViewList에 추가하는 method
+     *
      * @param chatRoomView 추가할 View
      */
     public void addChatRoomView(ChatRoomView chatRoomView) {
@@ -94,10 +110,19 @@ public class JavaObjClientMainViewController {
 
     /**
      * makeChatRoomView를 받아서 controller의 maekChatroomViewList에 추가하는 method;
+     *
      * @param makeChatRoomView 추가할 채팅방 생성 view
      */
     public void addMakeChatRoomViewList(MakeChatRoomView makeChatRoomView) {
         this.makeChatRoomViewList.add(makeChatRoomView);
+    }
+
+    public void increaseChatRoomIndex(int data) {
+        chatRoomViewIndex = data + 1;
+    }
+
+    public void increaseMakeChatRoomIndex(int data) {
+        makeChatRoomViewIndex = data + 1;
     }
 
     //Controller setting methods 끝
@@ -117,7 +142,6 @@ public class JavaObjClientMainViewController {
     public void activate() {
         LoginView loginView = new LoginView();
         //App appView = new App();
-        MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
         ChatRoomView chatRoomView = new ChatRoomView();
 
         setLoginView(loginView);
@@ -333,7 +357,7 @@ public class JavaObjClientMainViewController {
 //        }
 //    }
 
-    //내가 짠 함수 들 
+    //내가 짠 함수 들
 
     /**
      * userName,socket 정보를 받아 LoginView -> AppView 전환 & ListenNetwork Thread run() 하는 함수

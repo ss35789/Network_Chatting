@@ -16,8 +16,9 @@ public class MakeChatRoomView extends JFrame  {
     private String[] friend = {"user1", "user2", "user3", "user4", "user5", "user6"};
     List selectionList;
     DefaultListModel selectedmodel = new DefaultListModel();
+    private int MCRID;
 
-    public MakeChatRoomView() {
+    public MakeChatRoomView(int MCRID) {
         setContentPane(contentPane);
         setTitle("채팅방 생성");
         setSize(500, 800);
