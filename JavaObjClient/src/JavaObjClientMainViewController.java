@@ -4,12 +4,10 @@
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import Object.*;
+import Object.User;
 
 import javax.swing.*;
 
@@ -57,6 +55,7 @@ public class JavaObjClientMainViewController {
     }
 
     public void setUser(String username) {
+
         user = new User.UserBuilder().setUserName(username).build();
     }
 
@@ -142,7 +141,7 @@ public class JavaObjClientMainViewController {
     public void activate() {
         LoginView loginView = new LoginView();
         //App appView = new App();
-        ChatRoomView chatRoomView = new ChatRoomView();
+        //ChatRoomView chatRoomView = new ChatRoomView();
 
         setLoginView(loginView);
         //setAppView(appView);
