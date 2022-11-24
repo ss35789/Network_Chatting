@@ -404,9 +404,8 @@ public class JavaObjClientMainViewController {
                 }
             }
 
-            // String img 를 경로 문자열로 변경(앞뒤 " 추가)
-            stringUserData[4] = "JavaObjClient\\"+stringUserData[4];
-            File file = new File("/JavaObjClinet/src/Img/Person.png");
+            // ImgIcon setting 용 File 생성 (앞에 \ 문자 제거)
+            File file = new File(stringUserData[4].substring(1));
 
             // user 생성
             User user = User.UserBuilder.anUser().

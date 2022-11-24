@@ -228,7 +228,7 @@ public class JavaObjServer extends JFrame {
 			User user;
 			int uid=0;
 			if(UserList.size() == 0){
-				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"src/Img/Person.png");
+				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"JavaObjClient/src/Img/Person.png");
 				UserList.put(uid,newUser);
 			}
 			else{
