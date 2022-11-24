@@ -152,6 +152,7 @@ public class App extends JFrame{
 
         myImg.setIcon(changeIcon);
 
+
         chatting_myName.setText(username);
         DefaultListModel model = new DefaultListModel();
         for(String s : user){

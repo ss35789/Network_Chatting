@@ -27,7 +27,7 @@ public class ListData extends Object{
             }
             str.append("],");
             str.append(user.userName+",");
-            str.append(user.img);
+            str.append(user.Profileimg.toString());
 
             str.append(" ");
         }
@@ -60,14 +60,15 @@ public class ListData extends Object{
             str.append(room.roomName+",");
 
             str.append(room.getChatToString());
-//            str.append("<");
-//            for(int c=0;c<room.chat.size();c++){
-//                str.append(room.chat.get(c).uid+"-");
-//                str.append(room.chat.get(c).msg+"-");
-//                str.append(room.chat.get(c).date.toString());
-//                if(c!=room.chat.size()-1)str.append("@");
-//            }
-//            str.append(">");
+            str.append("<");
+            for(int c=0;c<room.chat.size();c++){
+                str.append(room.chat.get(c).uid+"-");
+                str.append(room.chat.get(c).msg+"-");
+                str.append(room.chat.get(c).img);
+                str.append(room.chat.get(c).date);
+                if(c!=room.chat.size()-1)str.append("@");
+            }
+            str.append(">");
 
             str.append(" ");
         }

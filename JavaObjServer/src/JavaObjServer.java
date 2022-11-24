@@ -2,15 +2,9 @@
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,9 +16,10 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class JavaObjServer extends JFrame {
 
@@ -228,7 +223,7 @@ public class JavaObjServer extends JFrame {
 			User user;
 			int uid=0;
 			if(UserList.size() == 0){
-				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName);
 				UserList.put(uid,newUser);
 			}
 			else{
@@ -251,7 +246,7 @@ public class JavaObjServer extends JFrame {
 						}
 					}
 
-					User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+					User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName);
 					UserList.put(uid,newUser);
 
 
@@ -311,12 +306,12 @@ public class JavaObjServer extends JFrame {
 			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
 		}
-		public void SetProfileImg(String username, String imgPath){
+		public void SetProfileImg(String username, ImageIcon img){
 			ListData sld = JavaObjServer.getListData();
 			Map<Integer,User> userList = sld.userList;
 			for(int i=0; i<userList.size();i++){
 				if(userList.get(i).userName .equals(username)){
-					userList.get(i).setImg(imgPath);
+					userList.get(i).setImg(img);
 				}
 			}
 			JavaObjServer.setListData(sld);
@@ -373,22 +368,23 @@ public class JavaObjServer extends JFrame {
 			}
 		}
 
-		public void UpdateChatting(){
-			//특정방의 채팅내역만 업데이트하는게 아니라 전부 다 갱신
+		public String getUserName(int uid){
 			ListData sld = JavaObjServer.getListData();
-			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.getRoomListToString());
-			WriteAllObject(obcm);
 
+			return sld.userList.get(uid).userName;
 
 		}
 		public void Chatting(int rid, Chat chat){
+			//서버에 채팅 저장
 			ListData sld = JavaObjServer.getListData();
 			Room room = sld.roomList.get(rid);
 			room.createChat(chat);
 			JavaObjServer.setListData(sld);
 
-
-			UpdateChatting();
+			//채팅 전송
+			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
+			cm.setImg(chat.img);
+			WriteAllObject(cm);
 		}
 
 
@@ -582,19 +578,33 @@ public class JavaObjServer extends JFrame {
 								}
 							}
 						} else { // 일반 채팅 메시지
-							UserState = "Online";
-							//WriteAll(msg + "\n"); // Write All
-							WriteAllObject(cm);
+							String RidAndChat = (String)cm.getData();
+							//3,0-ぞしぞしぞぞ-date.toString()
+							String[] str = RidAndChat.split(",");
+							int rid = Integer.valueOf(str[0]);
+							String[] Chatstr = str[1].split("-");
+							int uid = Integer.valueOf(Chatstr[0]);
+
+							Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+							Chatting(rid, chat);
 						}
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else if (cm.getCode().matches("300")) {
-						WriteAllObject(cm);
+					} else if (cm.getCode().matches("300")) { // 이미지 전송
+						String RidAndChat = (String)cm.getData();
+						//3,0-ぞしぞしぞぞ-date.toString()
+						String[] str = RidAndChat.split(",");
+						int rid = Integer.valueOf(str[0]);
+						String[] Chatstr = str[1].split("-");
+						int uid = Integer.valueOf(Chatstr[0]);
+						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+						chat.setImg(cm.img);
+						Chatting(rid, chat);
 					} else if (cm.getCode().matches("350")) { // 프로필 이미지 설정
-						String imgPath = (String)cm.getData();
+						ImageIcon ProfileImg = cm.img;
 						String username = cm.getId();
-						SetProfileImg(username,imgPath);
+						SetProfileImg(username,ProfileImg);
 						SendUserData();
 					}else if(cm.getCode().matches("700")){  // 방생성
 						String str = (String)cm.getData();

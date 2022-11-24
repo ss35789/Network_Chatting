@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class User{
@@ -5,16 +6,23 @@ public class User{
     String state;
     ArrayList<Integer> RoomAuth;
     String userName;
-    String img;
+    ImageIcon Profileimg;
     public User(){}
 
-    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img) {
+    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName) {
         this.uid = uid;
         this.state = state;
         this.RoomAuth = RoomAuth;
         this.userName = userName;
-        this.img=img;
     }
+    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, ImageIcon Profileimg) {
+        this.uid = uid;
+        this.state = state;
+        this.RoomAuth = RoomAuth;
+        this.userName = userName;
+        this.Profileimg = Profileimg;
+    }
+
 
     public void setUserName(String Changing){
         this.userName = Changing;
@@ -23,6 +31,6 @@ public class User{
     public void setState(String state){
         this.state = state;
     }
-    public void setImg(String ImgPath){this.img=ImgPath;}
+    public void setImg(ImageIcon Img){this.Profileimg=Img;}
 
 }
