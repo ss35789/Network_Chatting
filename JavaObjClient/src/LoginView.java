@@ -91,9 +91,11 @@ public class LoginView extends JFrame{
                 controller.setOOS(oos);
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 controller.setOIS(ois);
+                //controller.sendData(username,ip_addr,port_no);
                 ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
                 controller.SendObject(obcm);
                 controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
+
             } catch (IOException ex) {
                 ex.printStackTrace();
                 //AppendText("connect error");

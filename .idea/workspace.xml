@@ -9,14 +9,18 @@
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/MakeChatRoomView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController$ListenNetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController$ListenNetwork.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/LoginView$Myaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/LoginView$Myaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/MakeChatRoomView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/JavaObjServer$UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +56,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient\images" />
       <recent name="C:\Users\ss357\OneDrive\문서\GitHub\Network_Chatting\JavaObjClient" />
+    </key>
+    <key name="CreateBuilderDialog.RecentsKey">
+      <recent name="Object" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -147,8 +154,8 @@
         </breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java</url>
-          <line>351</line>
-          <option name="timeStamp" value="21" />
+          <line>407</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>

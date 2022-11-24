@@ -1,13 +1,15 @@
 package Object;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class Chat {
     int uid;
     String msg;
-    Date date;
+    String date;
+    ImageIcon img;
 
-    public Chat(int uid, String msg, Date date) {
+    public Chat(int uid, String msg, String date) {
         this.uid = uid;
         this.msg = msg;
         this.date = date;
@@ -17,7 +19,7 @@ public class Chat {
     public static final class ChatBuilder {
         private int uid;
         private String msg;
-        private Date date;
+        private String date;
 
         public ChatBuilder() {
         }
@@ -36,7 +38,7 @@ public class Chat {
             return this;
         }
 
-        public ChatBuilder setDate(Date date) {
+        public ChatBuilder setDate(String date) {
             this.date = date;
             return this;
         }

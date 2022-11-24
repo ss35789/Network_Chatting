@@ -2,16 +2,16 @@
 // JavaObjClientView.java ObjecStram 기반 Client
 //실질적인 채팅 창
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import Object.*;
+
+import javax.swing.*;
 
 
 public class JavaObjClientMainViewController {
@@ -25,8 +25,8 @@ public class JavaObjClientMainViewController {
     private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
-    private ChatRoomView chatRoomView; // ChatRoomView
-    private MakeChatRoomView makeChatRoomView; // MakeChatRoomView
+    private ArrayList<ChatRoomView> chatRoomViewList =new ArrayList<ChatRoomView>(); // ChatRoomView
+    private ArrayList<MakeChatRoomView> makeChatRoomViewList = new ArrayList<MakeChatRoomView>(); // MakeChatRoomView
 
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
@@ -76,15 +76,31 @@ public class JavaObjClientMainViewController {
         this.appView = appView;
     }
 
-    public void setChatRoomView(ChatRoomView chatRoomView) {
-        this.chatRoomView = chatRoomView;
-    }
-
-    public void setMakeChatRoomView(MakeChatRoomView makeChatRoomView) {
-        this.makeChatRoomView = makeChatRoomView;
-    }
-
     // Getter & Setter 끝
+
+    //Controller setting methods 시작
+
+
+
+    /**
+     * chatRoomView를 받아서 controller의 chatRoomViewList에 추가하는 method
+     * @param chatRoomView 추가할 View
+     */
+    public void addChatRoomView(ChatRoomView chatRoomView) {
+        this.chatRoomViewList.add(chatRoomView);
+    }
+
+    //채팅방 생성 뷰 완료 누르면 chatroomView 삭제 해야됨 -> 안하면 무한정 늘어남
+
+    /**
+     * makeChatRoomView를 받아서 controller의 maekChatroomViewList에 추가하는 method;
+     * @param makeChatRoomView 추가할 채팅방 생성 view
+     */
+    public void addMakeChatRoomViewList(MakeChatRoomView makeChatRoomView) {
+        this.makeChatRoomViewList.add(makeChatRoomView);
+    }
+
+    //Controller setting methods 끝
 
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
@@ -106,8 +122,8 @@ public class JavaObjClientMainViewController {
 
         setLoginView(loginView);
         //setAppView(appView);
-        setChatRoomView(chatRoomView);
-        setMakeChatRoomView(makeChatRoomView);
+        //setChatRoomView(chatRoomView);
+        //setMakeChatRoomView(makeChatRoomView);
 
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
 
@@ -348,17 +364,18 @@ public class JavaObjClientMainViewController {
         String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
         String stringRoomList = receivedData[1]; // roomList
         Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-//            Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
-            controller.setUserList(userList);
+//      Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+        controller.setUserList(userList);
 //            controller.setUserList(userList);
     }
 
     /**
      * String으로 된 UserList를 보내면 Map<Integer, User> UserList로 변환해서 반환해주는 함수
-     * @param data  String으로 된 UserList를 보내면
+     *
+     * @param data String으로 된 UserList를 보내면
      * @return Map<Integer, User> UserList
      */
-    public Map<Integer, User> StringDatatoUserList(String data) {
+    public Map<Integer, User> StringDatatoUserList(String data) { // NULL 처리 필요!
         String[] StringUserListData = data.split(" ");
         Map<Integer, User> userList = new HashMap<Integer, User>(); //Map<Integer, User> <- User 삽입 하기위해 생성
 
@@ -367,7 +384,7 @@ public class JavaObjClientMainViewController {
             // User 생성을 위한 String & ArrayList 들 생성
             String[] deleteTarget = s.split(":");
             s = s.substring(deleteTarget[0].length() + 1); // 앞에 Map의 Key : 값 제거 ex) 1:
-            
+
             // stringUserData  생성
             String[] stringUserData = s.split(","); // 0 = uid, 1 = state , 2 = RoomAuth , 3 = userName, 4 = img
 
@@ -387,15 +404,19 @@ public class JavaObjClientMainViewController {
                 }
             }
 
+            // String img 를 경로 문자열로 변경(앞뒤 " 추가)
+            stringUserData[4] = "JavaObjClient\\"+stringUserData[4];
+            File file = new File("/JavaObjClinet/src/Img/Person.png");
+
             // user 생성
             User user = User.UserBuilder.anUser().
                     setUid(Integer.parseInt(stringUserData[0])).
                     setState(stringUserData[1]).
                     setRoomAuth(roomAuth).
                     setUserName(stringUserData[3]).
-                    setImg(stringUserData[4]).
+                    setImg(new ImageIcon(file.getPath())).
                     build();
-            
+
             // userList에 생성한 user 삽입
             userList.put(user.getUid(), user);
         }

@@ -32,6 +32,8 @@ public class App extends JFrame{
     private String port_no;
     private String [] user = {"user1", "user2", "user3"};
 
+    private JavaObjClientMainViewController controller; // controller
+
     public void setUser(String[] user) {
         this.user = user;
     }
@@ -52,11 +54,13 @@ public class App extends JFrame{
         this.username=username;
         this.ip_addr=ip_addr;
         this.port_no=port_no;
+
+        controller = JavaObjClientMainViewController.getInstance();
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
+                //controller.setMakeChatRoomView();
                 MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
