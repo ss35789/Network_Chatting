@@ -16,6 +16,7 @@ public class User {
         this.state = state;
         this.RoomAuth = RoomAuth;
         this.userName = userName;
+        this.Profileimg=new ImageIcon("JavaObjClient/images/defaultProfileImg.jpg");
     }
 
     public void setUserName(String Changing) {
