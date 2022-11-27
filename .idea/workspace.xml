@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaObjServer/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjServer/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/ChatRoomView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
