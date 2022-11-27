@@ -542,40 +542,8 @@ public class JavaObjServer extends JFrame {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
-						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
-							user.setState("Online");
-						} else if (args[1].matches("/exit")) {
-							Logout();
-							break;
-						} else if (args[1].matches("/list")) {
-							WriteOne("User list\n");
-							WriteOne("Name\tStatus\n");
-							WriteOne("-----------------------------\n");
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserState + "\n");
-							}
-							WriteOne("-----------------------------\n");
-						}
-						else if (args[1].matches("/wakeup")) {
-							UserState = "Online";
-						} else if (args[1].matches("/to")) { // 귓속말
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserState.matches("Online")) {
-									String msg2 = "";
-									for (int j = 3; j < args.length; j++) {// 실제 message 부분
-										msg2 += args[j];
-										if (j < args.length - 1)
-											msg2 += " ";
-									}
-									// /to 빼고.. [귓속말] [user1] Hello user2..
-									user.WriteChat(args[0] + " " + msg2 + "\n");
-									//user.WriteOne("[귓속말] " + args[0] + " " + msg2 + "\n");
-									break;
-								}
-							}
-						} else { // 일반 채팅 메시지
+
+						 // 일반 채팅 메시지
 							String RidAndChat = (String)cm.getData();
 							//3,0-ぞしぞしぞぞ-date.toString()
 							String[] str = RidAndChat.split(",");
@@ -585,7 +553,7 @@ public class JavaObjServer extends JFrame {
 
 							Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
 							Chatting(rid, chat);
-						}
+
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;

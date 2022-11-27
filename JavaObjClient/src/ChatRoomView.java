@@ -12,6 +12,7 @@ public class ChatRoomView extends JFrame{
     private JLabel lblRoomName;
     private JLabel lblRoomUserNum;
     private JLabel btnUserList;
+    private JTextArea ChatInput;
     private JLabel btnSubmit;
     private JLabel btnSendImg;
 
