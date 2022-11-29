@@ -32,7 +32,7 @@ public class JavaObjServer extends JFrame {
 
 	private ServerSocket socket; // 서버소켓
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
-	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
+	private Vector<UserService> UserVec = new Vector<>(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private static Map<Integer, User> userList = new HashMap<>();
 	private static Map<Integer, Room> roomList = new HashMap<>();
@@ -121,17 +121,20 @@ public class JavaObjServer extends JFrame {
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
-
+					boolean already= false;
 					AppendText("Waiting new clients ...");
 					client_socket = socket.accept(); // accept가 일어나기 전까지는 무한 대기중
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
 
+
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
 					// 만든 객체의 스레드 실행
 					AppendText("현재 참가자 수 " + UserVec.size());
 					new_user.start();
+
+
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -167,7 +170,7 @@ public class JavaObjServer extends JFrame {
 		private Map<Integer, User> UserList;
 		private Map<Integer, Room> RoomList;
 		private Socket client_socket;
-		private Vector user_vc;
+		private Vector<UserService> user_vc;
 		private String UserName;
 		public String UserState;
 
@@ -533,11 +536,31 @@ public class JavaObjServer extends JFrame {
 					} else
 						continue;
 					if (cm.getCode().matches("100")) {
-						UserName = cm.getId();
-						UserState = "Online";
+						boolean already=false;
 
-						//신규 유저면 userList에 추가, 아니면 user설정
-						Login();
+							for(int i=0;i<user_vc.size()-1;i++){// 같은 이름으로 여러클라이언트에서 로그인 못함
+								if(user_vc.get(i).UserName.equals(cm.getId())){
+									already=true;
+									ChatMsg o = new ChatMsg("SERVER", "120", "이미 로그인 중입니다.");
+									this.oos.writeObject(o);
+									UserVec.removeElement(this);
+									System.out.println("이미 로그인 중");
+								}
+							}
+
+						for(int i=0;i<user_vc.size();i++){
+							System.out.println(user_vc.get(i).UserName);
+						}
+
+						if(!already){
+							UserName = cm.getId();
+							UserState = "Online";
+
+
+							//신규 유저면 userList에 추가, 아니면 user설정
+							Login();
+						}
+
 
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
