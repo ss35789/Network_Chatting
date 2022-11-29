@@ -129,7 +129,7 @@ public class JavaObjServer extends JFrame {
 					UserService new_user = new UserService(client_socket);
 
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
-					 // 만든 객체의 스레드 실행
+					// 만든 객체의 스레드 실행
 					AppendText("현재 참가자 수 " + UserVec.size());
 					new_user.start();
 				} catch (IOException e) {
@@ -214,6 +214,7 @@ public class JavaObjServer extends JFrame {
 				AppendText("userService error");
 			}
 		}
+
 
 		public void Login() {
 
@@ -471,17 +472,17 @@ public class JavaObjServer extends JFrame {
 		public void WriteOneObject(Object ob) {
 			try {
 
-			    oos.writeObject(ob);
-			} 
+				oos.writeObject(ob);
+			}
 			catch (IOException e) {
-				AppendText("oos.writeObject(ob) error");		
+				AppendText("oos.writeObject(ob) error");
 				try {
 					ois.close();
 					oos.close();
 					client_socket.close();
 					client_socket = null;
 					ois = null;
-					oos = null;				
+					oos = null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -489,7 +490,7 @@ public class JavaObjServer extends JFrame {
 				Logout();
 			}
 		}
-		
+
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -536,23 +537,23 @@ public class JavaObjServer extends JFrame {
 						UserState = "Online";
 
 						//신규 유저면 userList에 추가, 아니면 user설정
-
 						Login();
+
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
 
-						 // 일반 채팅 메시지
-							String RidAndChat = (String)cm.getData();
-							//3,0-ぞしぞしぞぞ-date.toString()
-							String[] str = RidAndChat.split(",");
-							int rid = Integer.valueOf(str[0]);
-							String[] Chatstr = str[1].split("-");
-							int uid = Integer.valueOf(Chatstr[0]);
+						// 일반 채팅 메시지
+						String RidAndChat = (String)cm.getData();
+						//3,0-ぞしぞしぞぞ-date.toString()
+						String[] str = RidAndChat.split(",");
+						int rid = Integer.valueOf(str[0]);
+						String[] Chatstr = str[1].split("-");
+						int uid = Integer.valueOf(Chatstr[0]);
 
-							Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
-							Chatting(rid, chat);
+						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+						Chatting(rid, chat);
 
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
@@ -595,7 +596,7 @@ public class JavaObjServer extends JFrame {
 						ois.close();
 						oos.close();
 						client_socket.close();
-						 // 에러가난 현재 객체를 벡터에서 지운다
+						// 에러가난 현재 객체를 벡터에서 지운다
 						break;
 					} catch (Exception ee) {
 						break;

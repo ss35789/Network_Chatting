@@ -23,10 +23,8 @@ public class JavaObjClientMainViewController {
     private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
-    private ArrayList<ChatRoomView> chatRoomViewList = new ArrayList<ChatRoomView>(); // ChatRoomView
-    private ArrayList<MakeChatRoomView> makeChatRoomViewList = new ArrayList<MakeChatRoomView>(); // MakeChatRoomView
-    private static int chatRoomViewIndex = 0;
-    private static int makeChatRoomViewIndex = 0;
+    private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer,ChatRoomView>(); // ChatRoomViewList
+    private Map<Integer, MakeChatRoomView> makeChatRoomViewList = new HashMap<Integer,MakeChatRoomView>(); // MakeChatRoomViewList
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -44,14 +42,6 @@ public class JavaObjClientMainViewController {
     // Getter & Setter 시작
     public User getUser() {
         return user;
-    }
-
-    public int getChatRoomViewIndex() {
-        return chatRoomViewIndex;
-    }
-
-    public int getMakeChatRoomViewIndex() {
-        return makeChatRoomViewIndex;
     }
 
     public void setUser(String username) {
@@ -83,13 +73,9 @@ public class JavaObjClientMainViewController {
         this.appView = appView;
     }
 
-    public ArrayList<ChatRoomView> getChatRoomViewList() {
-        return chatRoomViewList;
-    }
+    public Map<Integer, ChatRoomView> getChatRoomViewList() { return chatRoomViewList; }
 
-    public ArrayList<MakeChatRoomView> getMakeChatRoomViewList() {
-        return makeChatRoomViewList;
-    }
+    public Map<Integer, MakeChatRoomView> getMakeChatRoomViewList() { return makeChatRoomViewList; }
 
     // Getter & Setter 끝
 
@@ -97,31 +83,29 @@ public class JavaObjClientMainViewController {
 
 
     /**
-     * chatRoomView를 받아서 controller의 chatRoomViewList에 추가하는 method
+     * chatRoomView를 받아서 controller의 chatRoomViewList 맨 끝에 추가하는 method
      *
      * @param chatRoomView 추가할 View
      */
     public void addChatRoomView(ChatRoomView chatRoomView) {
-        this.chatRoomViewList.add(chatRoomView);
+        this.chatRoomViewList.put(chatRoomViewList.size()+1,chatRoomView);
     }
 
     //채팅방 생성 뷰 완료 누르면 chatroomView 삭제 해야됨 -> 안하면 무한정 늘어남
 
     /**
-     * makeChatRoomView를 받아서 controller의 maekChatroomViewList에 추가하는 method;
+     * makeChatRoomView를 받아서 controller의 maekChatroomViewList 맨 끝에 추가하는 method;
      *
      * @param makeChatRoomView 추가할 채팅방 생성 view
      */
     public void addMakeChatRoomViewList(MakeChatRoomView makeChatRoomView) {
-        this.makeChatRoomViewList.add(makeChatRoomView);
+        this.makeChatRoomViewList.put(makeChatRoomViewList.size()+1,makeChatRoomView);
     }
 
     public void increaseChatRoomIndex(int data) {
-        chatRoomViewIndex = data + 1;
     }
 
     public void increaseMakeChatRoomIndex(int data) {
-        makeChatRoomViewIndex = data + 1;
     }
 
     //Controller setting methods 끝
@@ -140,21 +124,8 @@ public class JavaObjClientMainViewController {
      */
     public void activate() {
         LoginView loginView = new LoginView();
-        //App appView = new App();
-        //ChatRoomView chatRoomView = new ChatRoomView();
-
         setLoginView(loginView);
-        //setAppView(appView);
-        //setChatRoomView(chatRoomView);
-        //setMakeChatRoomView(makeChatRoomView);
-
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
-
-
-        //SendMessage("/login " + UserName);
-
-        //SendObject(obcm);
-
 //        ListenNetwork net = new ListenNetwork();
 //        net.start();
     }
@@ -192,6 +163,9 @@ public class JavaObjClientMainViewController {
                         case "600":
                             System.out.println("Client received " + msg);
                             dataReformat(msg);
+                            break;
+                        case "610":
+                            System.out.println("Client received " + msg);
                             break;
                     }
                 } catch (IOException e) {
@@ -366,12 +340,12 @@ public class JavaObjClientMainViewController {
      * @param port_no  접속할 포트 번호
      */
     public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
+        ListenNetwork net = new ListenNetwork();
+        net.start();
         App appView = new App(username, ip_addr, port_no);
         controller.setAppView(appView);
         controller.loginView.setVisible(false);
         controller.appView.setVisible(true);
-        ListenNetwork net = new ListenNetwork();
-        net.start();
     }
 
     /**
