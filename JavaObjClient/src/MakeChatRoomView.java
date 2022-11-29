@@ -16,9 +16,9 @@ public class MakeChatRoomView extends JFrame  {
     private String[] friend = {"user1", "user2", "user3", "user4", "user5", "user6"};
     List selectionList;
     DefaultListModel selectedmodel = new DefaultListModel();
-    private int MCRID;
+    //private int MCRID;
 
-    public MakeChatRoomView(int MCRID) {
+    public MakeChatRoomView(/*int MCRID*/) {
         setContentPane(contentPane);
         setTitle("채팅방 생성");
         setSize(500, 800);
@@ -41,7 +41,13 @@ public class MakeChatRoomView extends JFrame  {
         friendList.setModel(model);
         friendList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         //완료 버튼
-        btnComplete.addActionListener(event -> setVisible(false));
+        btnComplete.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(selectionList);
+                setVisible(false);
+            }
+        });
 
 
         MouseListener mouseListener = new MouseAdapter() {

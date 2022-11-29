@@ -50,12 +50,6 @@ public class App extends JFrame{
 
 
     }
-//    public static void setUserList(Map<Integer, User> UserList){
-//        userList=UserList;
-//    }
-//    public static void setRoomList(Map<Integer, Room> RoomList){
-//        roomList=RoomList;
-//    }
 
     public App(String username, String ip_addr,String port_no){
         this.username=username;
@@ -68,9 +62,8 @@ public class App extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-//
-//                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
-//                makeChatRoomView.setVisible(true);
+                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
+                makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             @Override
@@ -91,8 +84,8 @@ public class App extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-//                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
-//                makeChatRoomView.setVisible(true);
+                MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
+                makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             @Override
