@@ -89,7 +89,6 @@ public class ListData extends Object {
         }
         str.deleteCharAt(str.length()-1);
         str.append("]");
-        System.out.println("getRoomToString result is "+str.toString());
         return str.toString();
     }
 

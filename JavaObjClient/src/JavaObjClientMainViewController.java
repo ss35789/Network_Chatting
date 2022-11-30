@@ -158,12 +158,9 @@ public class JavaObjClientMainViewController {
                         case "600":
                             System.out.println("Client received " + msg);
                             dataReformat(msg);
-                            System.out.println("controller UserList" + controller.UserList);
                             break;
                         case "610":
                             System.out.println("Client received " + msg);
-                            dataReformat(msg);
-                            System.out.println("controller.UserList" + controller.UserList);
                             break;
                         case "620":
                             System.out.println("Client received " + msg);
@@ -429,8 +426,8 @@ public class JavaObjClientMainViewController {
     /**
      * MakeChatRoomView 에서 선택한 UserName으로 선택한 ArrayList를 받아 Uid ArrayList로 반환해주는 함수
      *
-     * @param selectionList
-     * @return
+     * @param selectionList 변환 할 userName ArrayList
+     * @return ArrayList<Integer> Uid로 변환한 ArrayList
      */
     public ArrayList<Integer> uesrNameToUserID(ArrayList<String> selectionList) {
 
@@ -438,8 +435,9 @@ public class JavaObjClientMainViewController {
         ArrayList<Integer> uidList = new ArrayList<Integer>();
 
         //Server에서 UserList를 받을때 까지 대기
-        while (controller.UserList.isEmpty()) ;
+        while (controller.UserList.isEmpty());
 
+        // UserName => Uid로 변환
         for (Integer key : controller.UserList.keySet()) {
             int index = 0;
             while (index < selectionList.size()) {
