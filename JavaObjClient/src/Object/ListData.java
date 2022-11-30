@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListData extends Object{
+public class ListData extends Object {
 
-    Map<Integer,User> userList;
-    Map<Integer,Room> roomList;
+    Map<Integer, User> userList;
+    Map<Integer, Room> roomList;
+    Room room;
 
-    public ListData(Map<Integer,User> userList, Map<Integer,Room> roomList){
-        this.roomList = roomList;
-        this.userList = userList;
+    public ListData() {
     }
 
+
     //(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img)
-    public String getUserListToString(){
-        StringBuilder str= new StringBuilder();
-        for(int i=0;i<userList.size();i++){
+    public String getUserListToString() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < userList.size(); i++) {
             User user = userList.get(i);
-            str.append(i+":");
-            str.append(user.uid+",");
-            str.append(user.state+",");
+            str.append(i + ":");
+            str.append(user.uid + ",");
+            str.append(user.state + ",");
             str.append("[");
-            for(int j=0;j<user.RoomAuth.size();i++){
+            for (int j = 0; j < user.RoomAuth.size(); i++) {
                 str.append(user.RoomAuth.get(j));
-                if(j!=user.RoomAuth.size()-1)str.append(".");
+                if (j != user.RoomAuth.size() - 1) str.append(".");
 
             }
             str.append("],");
-            str.append(user.userName+",");
+            str.append(user.userName + ",");
             str.append(user.img);
 
             str.append(" ");
@@ -46,21 +46,21 @@ public class ListData extends Object{
 //
 //    Map<Integer, Chat> chat = new HashMap<>();
 
-    public String getRoomListToString(){
-        StringBuilder str= new StringBuilder();
-        for(int i=0;i<roomList.size();i++){
+    public String getRoomListToString() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < roomList.size(); i++) {
             Room room = roomList.get(i);
 
-            str.append(i+":");
-            str.append(room.rid+",");
+            str.append(i + ":");
+            str.append(room.rid + ",");
 
             str.append("[");
-            for(int j=0;j<room.userAuth.size();j++){
-                str.append(room.userAuth.get(j)+".");
+            for (int j = 0; j < room.userAuth.size(); j++) {
+                str.append(room.userAuth.get(j) + ".");
             }
             str.append("],");
 
-            str.append(room.roomName+",");
+            str.append(room.roomName + ",");
 
             str.append(room.getChatToString());
 //            str.append("<");
@@ -79,8 +79,23 @@ public class ListData extends Object{
     }
     //0:0,[1,4,5],roomnameLLL,<0-????????????-date.toString()@1-???????-date.toString()@...> ...
 
-    public String AllListData(){
-        String allList="";
+    public String getRoomToString() {
+        StringBuilder str = new StringBuilder();
+        str.append(room.roomName);
+        str.append(",");
+        str.append("[");
+        for (int i = 0; i < room.userAuth.size(); i++) {
+            str.append(room.userAuth.get(i)+".");
+        }
+        str.deleteCharAt(str.length()-1);
+        str.append("]");
+        System.out.println("getRoomToString result is "+str.toString());
+        return str.toString();
+    }
+
+
+    public String AllListData() {
+        String allList = "";
         allList = getUserListToString();
         allList += "|";
         allList += getRoomListToString();
@@ -91,6 +106,7 @@ public class ListData extends Object{
     public static final class ListDataBuilder {
         private Map<Integer, User> userList;
         private Map<Integer, Room> roomList;
+        private Room room;
 
         public ListDataBuilder() {
         }
@@ -109,8 +125,17 @@ public class ListData extends Object{
             return this;
         }
 
+        public ListDataBuilder setRoom(Room room) {
+            this.room = room;
+            return this;
+        }
+
         public ListData build() {
-            return new ListData(userList, roomList);
+            ListData listData = new ListData();
+            listData.userList = this.userList;
+            listData.room = this.room;
+            listData.roomList = this.roomList;
+            return listData;
         }
     }
 }

@@ -17,7 +17,8 @@ public class ChatRoomView extends JFrame{
     private JLabel btnSendImg;
 
     public ChatRoomView(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 800);
         setContentPane(mainPanel);
 
         btnSendImg.addMouseListener(new MouseAdapter() {
@@ -28,8 +29,6 @@ public class ChatRoomView extends JFrame{
                 setContentPane(mainPanel);
                 revalidate();
                 repaint();
-
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
@@ -42,7 +41,6 @@ public class ChatRoomView extends JFrame{
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -69,13 +67,10 @@ public class ChatRoomView extends JFrame{
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
     }
-
-
 
 
     private void createUIComponents() {

@@ -83,7 +83,6 @@ public class App extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
                 MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
