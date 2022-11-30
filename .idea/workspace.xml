@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/ListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/ListData.java" afterDir="false" />
-    </list>
+    <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,6 +130,7 @@
       <workItem from="1669515346266" duration="18000" />
       <workItem from="1669743773587" duration="2755000" />
       <workItem from="1669780012774" duration="359000" />
+      <workItem from="1669788990217" duration="348000" />
     </task>
     <servers />
   </component>
