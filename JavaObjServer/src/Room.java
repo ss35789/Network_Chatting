@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Room {
     int rid;
-    ArrayList<Integer> userAuth = new ArrayList<>();
+    ArrayList<Integer> userAuth;
     String  roomName;
 
     ArrayList<Chat> chat = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Room {
         str.append("<");
         for(int i=0;i<chat.size();i++){
             Chat c= chat.get(i);
-            str.append(c.uid+"-"+c.msg+"-"+c.date.toString());
+            str.append(c.uid+"-"+c.msg+"-"+c.date);
             if(i!=chat.size()-1)str.append("@");
         }
         str.append(">");

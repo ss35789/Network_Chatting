@@ -1,8 +1,6 @@
 package Object;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Room {
     int rid;
@@ -10,11 +8,9 @@ public class Room {
     String  roomName;
     ArrayList<Chat> chat = new ArrayList<>();
 
-    public Room(int rid, ArrayList<Integer> userAuth, String roomName){
-        this.rid = rid;
+    public Room(ArrayList<Integer> userAuth, String roomName) {
         this.userAuth = userAuth;
         this.roomName = roomName;
-
     }
 
     public String getChatToString(){
@@ -34,7 +30,7 @@ public class Room {
         this.chat.add(chatting);
     }
 
-    //Use Builder pattern
+
     public static final class RoomBuilder {
         private int rid;
         private ArrayList<Integer> userAuth;
@@ -69,8 +65,9 @@ public class Room {
         }
 
         public Room build() {
-            Room room = new Room(rid, userAuth, roomName);
+            Room room = new Room(userAuth, roomName);
             room.chat = this.chat;
+            room.rid = this.rid;
             return room;
         }
     }

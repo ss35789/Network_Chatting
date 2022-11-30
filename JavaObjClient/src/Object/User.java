@@ -26,8 +26,7 @@ public class User{
         private String userName;
         private ImageIcon img;
 
-        public UserBuilder() {
-        }
+        public UserBuilder() {}
 
         public static UserBuilder anUser() {
             return new UserBuilder();

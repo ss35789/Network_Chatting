@@ -1,27 +1,34 @@
+import javax.swing.*;
 import java.util.ArrayList;
 
-public class User{
+public class User {
     int uid;
     String state;
     ArrayList<Integer> RoomAuth;
     String userName;
-    String img;
-    public User(){}
+    ImageIcon Profileimg;
 
-    public User(int uid,String state, ArrayList<Integer> RoomAuth, String userName, String img) {
+    public User() {
+    }
+
+    public User(int uid, String state, ArrayList<Integer> RoomAuth, String userName) {
         this.uid = uid;
         this.state = state;
         this.RoomAuth = RoomAuth;
         this.userName = userName;
-        this.img=img;
+        this.Profileimg=new ImageIcon("JavaObjClient/images/defaultProfileImg.jpg");
     }
 
-    public void setUserName(String Changing){
+    public void setUserName(String Changing) {
         this.userName = Changing;
     }
 
-    public void setState(String state){
+    public void setState(String state) {
         this.state = state;
     }
+    public void setImg(ImageIcon img){
+        this.Profileimg=img;
+    }
+
 
 }

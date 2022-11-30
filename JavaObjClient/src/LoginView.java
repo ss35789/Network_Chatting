@@ -1,5 +1,5 @@
 import sun.rmi.runtime.Log;
-
+import Object.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -71,6 +71,8 @@ public class LoginView extends JFrame{
         txtUserName.addActionListener(action);
         txtIpAddress.addActionListener(action);
         txtPortNumber.addActionListener(action);
+
+
     }
 
     class Myaction implements ActionListener // 로그인 창 에서 ActionListener
@@ -80,10 +82,11 @@ public class LoginView extends JFrame{
             String username = txtUserName.getText().trim();
             String ip_addr = txtIpAddress.getText().trim();
             String port_no = txtPortNumber.getText().trim();
+            // Controller 가져오기
             controller = JavaObjClientMainViewController.getInstance();
             controller.setUser(username);
-            // controller.createSocket(ip_addr,port_no);
             try {
+                //Controller socket, oos,ois 세팅
                 Socket socket = new Socket(ip_addr, Integer.parseInt(port_no));
                 controller.setSocket(socket);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -91,11 +94,15 @@ public class LoginView extends JFrame{
                 controller.setOOS(oos);
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 controller.setOIS(ois);
-                //controller.sendData(username,ip_addr,port_no);
-                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
-                controller.SendObject(obcm);
-                controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
 
+                //Controller에 보낼 msg 세팅
+                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "100", controller.getUser().getUserName() + " Log in");
+
+                //Controller에서 100 protocol Send
+                controller.SendObject(obcm);
+
+                //Controller에서 로그인 성공 시 AppView로 전환
+                controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
             } catch (IOException ex) {
                 ex.printStackTrace();
                 //AppendText("connect error");
