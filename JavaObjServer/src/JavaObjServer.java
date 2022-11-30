@@ -347,11 +347,11 @@ public class JavaObjServer extends JFrame {
 			String[] str=data.split(",");
 			ArrayList<Integer> userAuth = new ArrayList<>();
 			String roomName =str[0];
-			StringBuffer userAuthToStringBuffer = new StringBuffer(str[1]);
+			StringBuilder userAuthToStringBuilder = new StringBuilder(str[1]);
 			//[,] Á¦°Å
-			userAuthToStringBuffer.deleteCharAt(userAuthToStringBuffer.length());
-			userAuthToStringBuffer.deleteCharAt(0);
-			String userAuthToString = userAuthToStringBuffer.toString();
+			userAuthToStringBuilder.deleteCharAt(userAuthToStringBuilder.length());
+			userAuthToStringBuilder.deleteCharAt(0);
+			String userAuthToString = userAuthToStringBuilder.toString();
 			String[] arr = userAuthToString.split(",");
 			for(String s : arr){
 				int uid = Integer.parseInt(s);
