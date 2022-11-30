@@ -1,13 +1,12 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class ListData extends Object{
 
-    Map<Integer,User> userList;
+    Map<Integer, User> userList;
     Map<Integer,Room> roomList;
     public ListData(
-            Map<Integer,User> userList, Map<Integer,Room> roomList){
+            Map<Integer, User> userList, Map<Integer,Room> roomList){
         this.roomList = roomList;
         this.userList = userList;
     }
@@ -27,7 +26,7 @@ public class ListData extends Object{
             }
             str.append("],");
             str.append(user.userName+",");
-            str.append(user.img);
+            str.append(user.Profileimg.toString());
 
             str.append(" ");
         }
@@ -53,7 +52,10 @@ public class ListData extends Object{
 
             str.append("[");
             for(int j=0;j<room.userAuth.size();j++){
-                str.append(room.userAuth.get(j)+".");
+                str.append(room.userAuth.get(j));
+                if(j!=room.userAuth.size()-1){
+                    str.append(".");
+                }
             }
             str.append("],");
 
@@ -64,7 +66,8 @@ public class ListData extends Object{
 //            for(int c=0;c<room.chat.size();c++){
 //                str.append(room.chat.get(c).uid+"-");
 //                str.append(room.chat.get(c).msg+"-");
-//                str.append(room.chat.get(c).date.toString());
+//                str.append(room.chat.get(c).img);
+//                str.append(room.chat.get(c).date);
 //                if(c!=room.chat.size()-1)str.append("@");
 //            }
 //            str.append(">");

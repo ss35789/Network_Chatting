@@ -2,15 +2,9 @@
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,7 +18,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 
 public class JavaObjServer extends JFrame {
 
@@ -39,7 +32,7 @@ public class JavaObjServer extends JFrame {
 
 	private ServerSocket socket; // 서버소켓
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
-	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
+	private Vector<UserService> UserVec = new Vector<>(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private static Map<Integer, User> userList = new HashMap<>();
 	private static Map<Integer, Room> roomList = new HashMap<>();
@@ -128,17 +121,20 @@ public class JavaObjServer extends JFrame {
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
-
+					boolean already= false;
 					AppendText("Waiting new clients ...");
 					client_socket = socket.accept(); // accept가 일어나기 전까지는 무한 대기중
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
 
+
 					UserVec.add(new_user); // 새로운 참가자 배열에 추가
-					 // 만든 객체의 스레드 실행
+					// 만든 객체의 스레드 실행
 					AppendText("현재 참가자 수 " + UserVec.size());
 					new_user.start();
+
+
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -174,9 +170,9 @@ public class JavaObjServer extends JFrame {
 		private Map<Integer, User> UserList;
 		private Map<Integer, Room> RoomList;
 		private Socket client_socket;
-		private Vector user_vc;
+		private Vector<UserService> user_vc;
 		private String UserName;
-		public String UserStatus;
+		public String UserState;
 
 		//user.UserName 과 UserName은 같은 것임
 		public void setUser(User user){
@@ -215,12 +211,13 @@ public class JavaObjServer extends JFrame {
 //
 //				//String[] msg = line1.split(" ");
 //				//UserName = msg[1].trim();
-//				UserStatus = "O"; // Online 상태
+//				UserState = "O"; // Online 상태
 //				Login();
 			} catch (Exception e) {
 				AppendText("userService error");
 			}
 		}
+
 
 		public void Login() {
 
@@ -228,7 +225,7 @@ public class JavaObjServer extends JFrame {
 			User user;
 			int uid=0;
 			if(UserList.size() == 0){
-				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+				User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName);
 				UserList.put(uid,newUser);
 			}
 			else{
@@ -251,7 +248,7 @@ public class JavaObjServer extends JFrame {
 						}
 					}
 
-					User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName,"file");
+					User newUser =  new User(uid,"Online",new ArrayList<Integer>(), this.UserName);
 					UserList.put(uid,newUser);
 
 
@@ -284,14 +281,13 @@ public class JavaObjServer extends JFrame {
 		}
 
 		public void Logout() {
+			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			ListData ld = JavaObjServer.getListData();
 			for(int i=0;i<ld.userList.size();i++){
 				if(UserName.equals(ld.userList.get(i).userName))ld.userList.get(i).setState("Offline");
 			}
 			JavaObjServer.setListData(ld);
-			SendListData();
-			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
-			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
+			SendUserData();
 			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
 
 
@@ -302,38 +298,96 @@ public class JavaObjServer extends JFrame {
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
 			WriteAllObject(obcm);
 		}
-		public void MakeRoom(String roomName, ArrayList<Integer> userAuth){
+		public void SendUserData(){
 			ListData sld = JavaObjServer.getListData();
-			int rid=-1;
+			ChatMsg obcm = new ChatMsg("SERVER", "610", sld.getUserListToString());
+			WriteAllObject(obcm);
+		}
+		public void SendRoomData(){
+			ListData sld = JavaObjServer.getListData();
+			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
+			WriteAllObject(obcm);
+		}
+		public void SetProfileImg(String username, ImageIcon img){
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer, User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setImg(img);
+				}
+			}
+			JavaObjServer.setListData(sld);
+		}
 
+		public void setSleepMode(String username){
+
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer, User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setState("Sleep");
+				}
+			}
+			JavaObjServer.setListData(sld);
+
+		}
+
+		public void setWakeup(String username){
+			ListData sld = JavaObjServer.getListData();
+			Map<Integer, User> userList = sld.userList;
+			for(int i=0; i<userList.size();i++){
+				if(userList.get(i).userName .equals(username)){
+					userList.get(i).setState("Online");
+				}
+			}
+			JavaObjServer.setListData(sld);
+		}
+
+		public void MakeRoom(String data){
+			String[] str=data.split(",");
+			ArrayList<Integer> userAuth = new ArrayList<>();
+			String roomName =str[0];
+			StringBuilder userAuthToStringBuilder = new StringBuilder(str[1]);
+			//[,] 제거
+			userAuthToStringBuilder.deleteCharAt(userAuthToStringBuilder.length()-1);
+			userAuthToStringBuilder.deleteCharAt(0);
+			String userAuthToString = userAuthToStringBuilder.toString();
+			String[] arr = userAuthToString.split(",");
+			for(String s : arr){
+				int uid = Integer.parseInt(s);
+				userAuth.add(uid);
+			}
+
+			ListData sld = JavaObjServer.getListData();
 			for(int i=0;i<=roomList.size();i++){
 				if(!roomList.containsKey(i)){
-					rid=i;
+					Room room = new Room(i, userAuth, roomName);
+					room.createChat(new Chat(1,"더미채팅 ㅓㅐㅓㅐㅓ","sdfsdf"));//생략가능 테스트용
+					sld.roomList.put(i, room);
+					JavaObjServer.setListData(sld);
+					SendListData();
 					break;
 				}
 			}
-
-			Room room = new Room(rid, userAuth, roomName);
-			sld.roomList.put(rid, room);
-			JavaObjServer.setListData(sld);
-			SendListData();
 		}
 
-		public void UpdateChatting(int rid){
-//			ListData sld = JavaObjServer.getListData();
-//			Room room = sld.roomList.get(rid);
-//			ChatMsg obcm = new ChatMsg("SERVER", "600", room.getChatToString());
-//			WriteAllObject(obcm);
+		public String getUserName(int uid){
+			ListData sld = JavaObjServer.getListData();
+
+			return sld.userList.get(uid).userName;
 
 		}
 		public void Chatting(int rid, Chat chat){
+			//서버에 채팅 저장
 			ListData sld = JavaObjServer.getListData();
 			Room room = sld.roomList.get(rid);
 			room.createChat(chat);
 			JavaObjServer.setListData(sld);
 
-
-			UpdateChatting(rid);
+			//채팅 전송
+			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
+			cm.setImg(chat.img);
+			WriteAllObject(cm);
 		}
 
 
@@ -344,7 +398,8 @@ public class JavaObjServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus.equals("Online"))
+
+				if (user.UserState.equals("Online"))
 					user.WriteOneObject(ob);
 			}
 		}
@@ -421,17 +476,17 @@ public class JavaObjServer extends JFrame {
 		public void WriteOneObject(Object ob) {
 			try {
 
-			    oos.writeObject(ob);
-			} 
+				oos.writeObject(ob);
+			}
 			catch (IOException e) {
-				AppendText("oos.writeObject(ob) error");		
+				AppendText("oos.writeObject(ob) error");
 				try {
 					ois.close();
 					oos.close();
 					client_socket.close();
 					client_socket = null;
 					ois = null;
-					oos = null;				
+					oos = null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -439,7 +494,7 @@ public class JavaObjServer extends JFrame {
 				Logout();
 			}
 		}
-		
+
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -482,73 +537,90 @@ public class JavaObjServer extends JFrame {
 					} else
 						continue;
 					if (cm.getCode().matches("100")) {
-						UserName = cm.getId();
-						UserStatus = "Online";
+						boolean already=false;
 
-						//신규 유저면 userList에 추가, 아니면 user설정
+							for(int i=0;i<user_vc.size()-1;i++){// 같은 이름으로 여러클라이언트에서 로그인 못함
+								if(user_vc.get(i).UserName.equals(cm.getId())){
+									already=true;
+									ChatMsg o = new ChatMsg("SERVER", "120", "이미 로그인 중입니다.");
+									this.oos.writeObject(o);
+									UserVec.removeElement(this);
+									System.out.println("이미 로그인 중");
+								}
+							}
 
-						Login();
+						for(int i=0;i<user_vc.size();i++){
+							System.out.println(user_vc.get(i).UserName);
+						}
+
+						if(!already){
+							UserName = cm.getId();
+							UserState = "Online";
+
+
+							//신규 유저면 userList에 추가, 아니면 user설정
+							Login();
+						}
+
+
 					} else if (cm.getCode().matches("200")) {
 						msg = String.format("[%s] %s", cm.getId(), cm.getData());
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
-						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
-							user.setState("Online");
-						} else if (args[1].matches("/exit")) {
-							Logout();
-							break;
-						} else if (args[1].matches("/list")) {
-							WriteOne("User list\n");
-							WriteOne("Name\tStatus\n");
-							WriteOne("-----------------------------\n");
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserStatus + "\n");
-							}
-							WriteOne("-----------------------------\n");
-						} else if (args[1].matches("/sleep")) {
-							UserStatus = "Sleep";
-						} else if (args[1].matches("/wakeup")) {
-							UserStatus = "Online";
-						} else if (args[1].matches("/to")) { // 귓속말
-							for (int i = 0; i < user_vc.size(); i++) {
-								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserStatus.matches("Online")) {
-									String msg2 = "";
-									for (int j = 3; j < args.length; j++) {// 실제 message 부분
-										msg2 += args[j];
-										if (j < args.length - 1)
-											msg2 += " ";
-									}
-									// /to 빼고.. [귓속말] [user1] Hello user2..
-									user.WriteChat(args[0] + " " + msg2 + "\n");
-									//user.WriteOne("[귓속말] " + args[0] + " " + msg2 + "\n");
-									break;
-								}
-							}
-						} else { // 일반 채팅 메시지
-							UserStatus = "Online";
-							//WriteAll(msg + "\n"); // Write All
-							WriteAllObject(cm);
-						}
+
+						// 일반 채팅 메시지
+						String RidAndChat = (String)cm.getData();
+						//3,0-ぞしぞしぞぞ-date.toString()
+						String[] str = RidAndChat.split(",");
+						int rid = Integer.valueOf(str[0]);
+						String[] Chatstr = str[1].split("-");
+						int uid = Integer.valueOf(Chatstr[0]);
+
+						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+						Chatting(rid, chat);
+
 					} else if (cm.getCode().matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else if (cm.getCode().matches("300")) {
-						WriteAllObject(cm);
-					} else if(cm.getCode().matches("700")){  // 방생성
-						MakeChattingRoomOrder mo = (MakeChattingRoomOrder) cm.getData();
-						MakeRoom(mo.roomName, mo.userAuth);
+					} else if (cm.getCode().matches("300")) { // 이미지 전송
+						String RidAndChat = (String)cm.getData();
+						//3,0-ぞしぞしぞぞ-date.toString()
+						String[] str = RidAndChat.split(",");
+						int rid = Integer.valueOf(str[0]);
+						String[] Chatstr = str[1].split("-");
+						int uid = Integer.valueOf(Chatstr[0]);
+						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+						chat.setImg(cm.img);
+						Chatting(rid, chat);
+					} else if (cm.getCode().matches("350")) { // 프로필 이미지 설정
+						ImageIcon ProfileImg = cm.img;
+						String username = cm.getId();
+						SetProfileImg(username,ProfileImg);
+						SendUserData();
+					}else if(cm.getCode().matches("700")){  // 방생성
+						String str = (String)cm.getData();
+						MakeRoom(str);
+						SendRoomData();
+					}else if(cm.getCode().matches("720")){  // setSleep
+						String username = cm.getId();
+						setSleepMode(username);
+						SendUserData();
+					}else if(cm.getCode().matches("730")){  // setWakeup
+						String username = cm.getId();
+						setWakeup(username);
+						SendUserData();
 					}
+
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
+						Logout();
 //						dos.close();
 //						dis.close();
 						ois.close();
 						oos.close();
 						client_socket.close();
-						Logout(); // 에러가난 현재 객체를 벡터에서 지운다
+						// 에러가난 현재 객체를 벡터에서 지운다
 						break;
 					} catch (Exception ee) {
 						break;

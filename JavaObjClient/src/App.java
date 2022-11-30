@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import Object.User;
 
 public class App extends JFrame{
 
@@ -17,41 +20,50 @@ public class App extends JFrame{
     private JPanel ChattingPannel;
     private JPanel Chatting_sideBar;
     private JPanel chattingHeader;
-    private JScrollPane chatRoomList;
+    private JScrollPane ChatRoomListPanel;
     private JLabel chatting_myName;
-    private JList userList;
+
     private JLabel UserButton;
     private JLabel chatting_chattingRoombutton;
     private JLabel user_MakeChatRoomButton;
     private JLabel chatting_MakeChatRoomButton;
-    private JList RoomList;
     private JLabel myImg;
+    private JPanel UserList;
+    private JPanel ChatRoomList;
+    private JPanel Profile;
+    private JLabel chatting_myImg;
+    private JPanel chatting_Profile;
 
+    private JPanel userListSpace;
+    private JavaObjClientMainViewController controller;
     private String username;
     private String ip_addr;
     private String port_no;
-    private String [] user = {"user1", "user2", "user3"};
-    private String MyimgPath ="JavaObjClient/images/lion.jpg";
+    public static Map<Integer, User> user = new HashMap<>();
+    public static String [] room = {"room1", "room2","room3"};
+
+    private String MyimgPath ="JavaObjClient/images/defaultProfileImg.jpg";
     private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         mainPanel = new JPanel();
-
-
     }
-    public App(){}
 
     public App(String username, String ip_addr,String port_no){
         this.username=username;
         this.ip_addr=ip_addr;
         this.port_no=port_no;
+
+        controller = JavaObjClientMainViewController.getInstance();
+
+        user =  controller.getUserList();
+
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
                 MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -73,7 +85,6 @@ public class App extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
                 MakeChatRoomView makeChatRoomView = new MakeChatRoomView();
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -150,31 +161,85 @@ public class App extends JFrame{
 
         ImageIcon changeIcon = new ImageIcon(changeImg);
 
+
+        chatting_myImg.setIcon(changeIcon);
         myImg.setIcon(changeIcon);
 
         chatting_myName.setText(username);
-        DefaultListModel model = new DefaultListModel();
-        for(String s : user){
-            model.addElement(s);
-        }
-        userList.setModel(model);
-        userList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        userList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        userList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                String clickedUser = (String)userList.getSelectedValue();
-                if(arr.contains(clickedUser)){
-                    arr.remove(clickedUser);
-                }
-                else{
-                    arr.add(clickedUser);
-                }
 
 
-                System.out.println(arr);
+//        DefaultListModel model = new DefaultListModel();
+//        for(User s : user){
+//            model.addElement(s.userName);
+//        }
+//        userList.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                String clickedUser = (String)userList.getSelectedValue();
+//                if(arr.contains(clickedUser)){
+//                    arr.remove(clickedUser);
+//                }
+//                else{
+//                    arr.add(clickedUser);
+//                }
+//
+//
+//                System.out.println(arr);
+//            }
+//        });
+
+
+
+
+
+        for(int i=0 ; i<100;i++){
+
+            JPanel u = new JPanel();
+            if(user.size()>i){
+                u.setLayout(new BorderLayout());
+                JLabel jl = new JLabel(user.get(i).getUserName());
+                jl.setIcon(changeIcon);
+                jl.setFont(new Font("Serif", Font.BOLD,31));
+                u.add(jl,BorderLayout.WEST);
+                JLabel state = new JLabel("Online");
+
+                u.add(state,BorderLayout.EAST);
+                u.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
+
             }
-        });
+            u.setBackground(Color.WHITE);
+
+            UserList.add(u);
+        }
+        UserList.setLayout(new BoxLayout(UserList,BoxLayout.Y_AXIS));
+        userListPanel.setViewportView(UserList);
+
+        for(int i=0 ; i<100;i++){
+
+            JPanel u = new JPanel();
+            if(room.length>i){
+                u.setLayout(new BorderLayout());
+
+                JLabel jl = new JLabel(App.room[i]);
+                jl.setIcon(changeIcon);
+                jl.setFont(new Font("Serif", Font.BOLD,31));
+                u.add(jl,BorderLayout.WEST);
+
+                JLabel JoinUser = new JLabel("sangminlee, sdfdsf, sd");
+                JoinUser.setBackground(Color.gray);
+                u.add(JoinUser,BorderLayout.EAST);
+                u.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
+
+            }
+            u.setBackground(Color.WHITE);
+
+            ChatRoomList.add(u);
+        }
+        ChatRoomList.setLayout(new BoxLayout(ChatRoomList,BoxLayout.Y_AXIS));
+        ChatRoomListPanel.setViewportView(ChatRoomList);
+
+
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
 
