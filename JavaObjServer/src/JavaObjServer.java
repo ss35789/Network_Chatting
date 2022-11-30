@@ -349,7 +349,7 @@ public class JavaObjServer extends JFrame {
 			String roomName =str[0];
 			StringBuilder userAuthToStringBuilder = new StringBuilder(str[1]);
 			//[,] Á¦°Å
-			userAuthToStringBuilder.deleteCharAt(userAuthToStringBuilder.length());
+			userAuthToStringBuilder.deleteCharAt(userAuthToStringBuilder.length()-1);
 			userAuthToStringBuilder.deleteCharAt(0);
 			String userAuthToString = userAuthToStringBuilder.toString();
 			String[] arr = userAuthToString.split(",");
