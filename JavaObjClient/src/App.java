@@ -3,7 +3,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import Object.User;
 
 public class App extends JFrame{
 
@@ -37,7 +39,7 @@ public class App extends JFrame{
     private String username;
     private String ip_addr;
     private String port_no;
-    public static String [] user = {"user1", "user2", "user3"};
+    public static Map<Integer, User> user = new HashMap<>();
     public static String [] room = {"room1", "room2","room3"};
 
     private String MyimgPath ="JavaObjClient/images/defaultProfileImg.jpg";
@@ -47,8 +49,6 @@ public class App extends JFrame{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         mainPanel = new JPanel();
-
-
     }
 
     public App(String username, String ip_addr,String port_no){
@@ -57,6 +57,8 @@ public class App extends JFrame{
         this.port_no=port_no;
 
         controller = JavaObjClientMainViewController.getInstance();
+
+        user =  controller.getUserList();
 
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -164,10 +166,12 @@ public class App extends JFrame{
         myImg.setIcon(changeIcon);
 
         chatting_myName.setText(username);
-        DefaultListModel model = new DefaultListModel();
-        for(String s : user){
-            model.addElement(s);
-        }
+
+
+//        DefaultListModel model = new DefaultListModel();
+//        for(User s : user){
+//            model.addElement(s.userName);
+//        }
 //        userList.addMouseListener(new MouseAdapter() {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {
@@ -191,9 +195,9 @@ public class App extends JFrame{
         for(int i=0 ; i<100;i++){
 
             JPanel u = new JPanel();
-            if(user.length>i){
+            if(user.size()>i){
                 u.setLayout(new BorderLayout());
-                JLabel jl = new JLabel(App.user[i]);
+                JLabel jl = new JLabel(user.get(i).getUserName());
                 jl.setIcon(changeIcon);
                 jl.setFont(new Font("Serif", Font.BOLD,31));
                 u.add(jl,BorderLayout.WEST);

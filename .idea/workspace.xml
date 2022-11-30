@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/ListData.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/ListData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController$ListenNetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController$ListenNetwork.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaObjClient/JavaObjClientMainViewController.class" afterDir="false" />
     </list>
@@ -160,11 +161,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/JavaObjClient/src/App.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java</url>
           <line>303</line>

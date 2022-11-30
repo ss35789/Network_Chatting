@@ -47,6 +47,14 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
+    public Map<Integer, ChatRoomView> getChatRoomViewList() {
+        return chatRoomViewList;
+    }
+
+    public Map<Integer, User> getUserList() {
+        return UserList;
+    }
+
     public void setUser(String username) {
         user = new User.UserBuilder().setUserName(username).build();
     }
@@ -67,16 +75,16 @@ public class JavaObjClientMainViewController {
         UserList = userList;
     }
 
+    public void setRoomList(Map<Integer, Room> roomList){
+        RoomList = roomList;
+    }
+
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
 
     public void setAppView(App appView) {
         this.appView = appView;
-    }
-
-    public Map<Integer, ChatRoomView> getChatRoomViewList() {
-        return chatRoomViewList;
     }
 
     // Getter & Setter 끝
@@ -121,8 +129,6 @@ public class JavaObjClientMainViewController {
         LoginView loginView = new LoginView();
         setLoginView(loginView);
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
-//        ListenNetwork net = new ListenNetwork();
-//        net.start();
     }
 
     // Server Message를 수신해서 화면에 표시
@@ -354,15 +360,23 @@ public class JavaObjClientMainViewController {
      */
     public void dataReformat(String data) {
         data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
+
+        // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
         String[] deleteTarget = data.split(" ");
-        data = data.substring(deleteTarget[0].length() + 1); // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
+        data = data.substring(deleteTarget[0].length() + 1);
+
+        //UserList 문자열과 RoomList 문자열로 구분
         String[] receivedData = data.split("\\|");
         String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
         //String stringRoomList = receivedData[1]; // roomList
+
+        //UserList 문자열을 데이터 형식으로 변환
         Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-//      Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+        //RoomList 문자열을 데이터 형식으로 변환
+        //Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+
         controller.setUserList(userList);
-//            controller.setUserList(userList);
+        //controller.setRoomList(roomlist);
     }
 
     /**
