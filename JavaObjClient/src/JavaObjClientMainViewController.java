@@ -7,9 +7,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import Object.User;
+import Object.Room;
 
 import javax.swing.*;
+
+import static java.sql.Types.NULL;
 
 
 public class JavaObjClientMainViewController {
@@ -19,12 +23,11 @@ public class JavaObjClientMainViewController {
     private ObjectInputStream ois; // 입력용 객체
     private ObjectOutputStream oos; // 출력용 객체
     private User user; // User Object 정의
-    private Map<Integer, User> UserList; // 현재 접속 중인 UserList
-    private Map<Integer, Room> RoomList; // 현재 존재 하는 RoomList
+    private Map<Integer, User> UserList = new HashMap<>(); // 현재 접속 중인 UserList
+    private Map<Integer, Room> RoomList = new HashMap<>(); // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
-    private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer,ChatRoomView>(); // ChatRoomViewList
-    private Map<Integer, MakeChatRoomView> makeChatRoomViewList = new HashMap<Integer,MakeChatRoomView>(); // MakeChatRoomViewList
+    private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -44,8 +47,15 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
-    public void setUser(String username) {
+    public Map<Integer, ChatRoomView> getChatRoomViewList() {
+        return chatRoomViewList;
+    }
 
+    public Map<Integer, User> getUserList() {
+        return UserList;
+    }
+
+    public void setUser(String username) {
         user = new User.UserBuilder().setUserName(username).build();
     }
 
@@ -65,6 +75,10 @@ public class JavaObjClientMainViewController {
         UserList = userList;
     }
 
+    public void setRoomList(Map<Integer, Room> roomList){
+        RoomList = roomList;
+    }
+
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
@@ -72,10 +86,6 @@ public class JavaObjClientMainViewController {
     public void setAppView(App appView) {
         this.appView = appView;
     }
-
-    public Map<Integer, ChatRoomView> getChatRoomViewList() { return chatRoomViewList; }
-
-    public Map<Integer, MakeChatRoomView> getMakeChatRoomViewList() { return makeChatRoomViewList; }
 
     // Getter & Setter 끝
 
@@ -88,19 +98,9 @@ public class JavaObjClientMainViewController {
      * @param chatRoomView 추가할 View
      */
     public void addChatRoomView(ChatRoomView chatRoomView) {
-        this.chatRoomViewList.put(chatRoomViewList.size()+1,chatRoomView);
+        this.chatRoomViewList.put(chatRoomViewList.size() + 1, chatRoomView);
     }
 
-    //채팅방 생성 뷰 완료 누르면 chatroomView 삭제 해야됨 -> 안하면 무한정 늘어남
-
-    /**
-     * makeChatRoomView를 받아서 controller의 maekChatroomViewList 맨 끝에 추가하는 method;
-     *
-     * @param makeChatRoomView 추가할 채팅방 생성 view
-     */
-    public void addMakeChatRoomViewList(MakeChatRoomView makeChatRoomView) {
-        this.makeChatRoomViewList.put(makeChatRoomViewList.size()+1,makeChatRoomView);
-    }
 
     public void increaseChatRoomIndex(int data) {
     }
@@ -112,6 +112,9 @@ public class JavaObjClientMainViewController {
 
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
+            ChatMsg cm = (ChatMsg)ob;
+            String msg = String.format("[%s] %s", cm.getId(), cm.getData());
+            System.out.println("client send " + msg );
             oos.writeObject(ob);
         } catch (IOException e) {
             // textArea.append("메세지 송신 에러!!\n");
@@ -126,8 +129,6 @@ public class JavaObjClientMainViewController {
         LoginView loginView = new LoginView();
         setLoginView(loginView);
         loginView.setVisible(true);// 처음 실행되면 Login 창을 생성함, userName,ip_Addr,portNo 설정
-//        ListenNetwork net = new ListenNetwork();
-//        net.start();
     }
 
     // Server Message를 수신해서 화면에 표시
@@ -167,6 +168,10 @@ public class JavaObjClientMainViewController {
                         case "610":
                             System.out.println("Client received " + msg);
                             break;
+                        case "620":
+                            System.out.println("Client received " + msg);
+                            break;
+
                     }
                 } catch (IOException e) {
                     //AppendText("ois.readObject() error");
@@ -355,15 +360,23 @@ public class JavaObjClientMainViewController {
      */
     public void dataReformat(String data) {
         data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
+
+        // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
         String[] deleteTarget = data.split(" ");
-        data = data.substring(deleteTarget[0].length() + 1); // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
+        data = data.substring(deleteTarget[0].length() + 1);
+
+        //UserList 문자열과 RoomList 문자열로 구분
         String[] receivedData = data.split("\\|");
         String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-        String stringRoomList = receivedData[1]; // roomList
+        //String stringRoomList = receivedData[1]; // roomList
+
+        //UserList 문자열을 데이터 형식으로 변환
         Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-//      Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+        //RoomList 문자열을 데이터 형식으로 변환
+        //Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+
         controller.setUserList(userList);
-//            controller.setUserList(userList);
+        //controller.setRoomList(roomlist);
     }
 
     /**
@@ -422,6 +435,34 @@ public class JavaObjClientMainViewController {
     public Map<Integer, Room> StringDatatoRoomList(String data) {
         Map<Integer, Room> room = new HashMap<Integer, Room>();
         return room;
+    }
+
+    /**
+     * MakeChatRoomView 에서 선택한 UserName으로 선택한 ArrayList를 받아 Uid ArrayList로 반환해주는 함수
+     *
+     * @param selectionList 변환 할 userName ArrayList
+     * @return ArrayList<Integer> Uid로 변환한 ArrayList
+     */
+    public ArrayList<Integer> uesrNameToUserID(ArrayList<String> selectionList) {
+
+        // return 할 데이터
+        ArrayList<Integer> uidList = new ArrayList<Integer>();
+
+        //Server에서 UserList를 받을때 까지 대기
+        while (controller.UserList.isEmpty());
+
+        // UserName => Uid로 변환
+        for (Integer key : controller.UserList.keySet()) {
+            int index = 0;
+            while (index < selectionList.size()) {
+                if (controller.UserList.get(key).getUserName().equals(selectionList.get(index))) {
+                    uidList.add(controller.UserList.get(key).getUid());
+                    break;
+                }
+                index++;
+            }
+        }
+        return uidList;
     }
 }
 
