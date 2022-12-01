@@ -479,7 +479,9 @@ public class JavaObjClientMainViewController {
         }
         return userList;
     }
-
+    public void test(){
+        System.out.println("test");
+    }
     public Map<Integer, Room> StringDatatoRoomList(String data) {
         String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
