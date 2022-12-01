@@ -11,6 +11,7 @@ import java.util.*;
 import Object.User;
 import Object.Room;
 import Object.Chat;
+import Object.DivString;
 
 import javax.swing.*;
 
@@ -30,11 +31,6 @@ public class JavaObjClientMainViewController {
     private String username;
     private String ip_addr;
     private String port_no;
-    String ListDiv = "\\|\\_#\\$%";
-    String RoomListDiv = "\\$#@";
-    String RoomDiv = "<\\_\\^\\$%#";
-    String ChatDiv = "-\\_%\\^#@";
-    String ChatListDiv = "@\\_&%\\^&";
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -402,7 +398,7 @@ public class JavaObjClientMainViewController {
         data = data.substring(deleteTarget[0].length() + 1);
 
         //UserList 문자열과 RoomList 문자열로 구분
-        String[] receivedData = data.split(ListDiv);
+        String[] receivedData = data.split(DivString.ListDiv);
         //receivedData[0] = userList , receivedData[1] = RoomList
         
         //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
@@ -485,7 +481,7 @@ public class JavaObjClientMainViewController {
     }
 
     public Map<Integer, Room> StringDatatoRoomList(String data) {
-        String[] StringRoomListData = data.split(RoomListDiv); // Room 별로 분할
+        String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
 
         //Room 생성 후 삽입
@@ -495,7 +491,7 @@ public class JavaObjClientMainViewController {
             s = s.substring(s.indexOf(":")+1);
 
             // stringRoomData  생성
-            String[] stringRoomData = s.split(RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
+            String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
 
             //userAuth 처리
             ArrayList<Integer> userAuth = new ArrayList<Integer>();
@@ -522,11 +518,11 @@ public class JavaObjClientMainViewController {
             strb.deleteCharAt(0);
             strb.deleteCharAt(strb.length()-1);
             stringChat = strb.toString();
-            String[] stringChatList = stringChat .split(ChatListDiv);
+            String[] stringChatList = stringChat .split(DivString.ChatListDiv);
             //Chat이 존재하면
             if (!stringChatList[0].isEmpty()) {
                 for (String rb : stringChatList) {
-                    String[] stringChatDataArray = rb.split(ChatDiv); //0 = uid, 1 = msg , 2 = date
+                    String[] stringChatDataArray = rb.split(DivString.ChatDiv); //0 = uid, 1 = msg , 2 = date
                     Chat chat = Chat.ChatBuilder.aChat().
                             setUid(Integer.parseInt(stringChatDataArray[0])).
                             setMsg(stringChatDataArray[1]).
