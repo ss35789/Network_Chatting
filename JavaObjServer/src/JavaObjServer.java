@@ -307,6 +307,7 @@ public class JavaObjServer extends JFrame {
 			ListData sld = JavaObjServer.getListData();
 			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
+
 		}
 		public void SetProfileImg(String username, ImageIcon img){
 			ListData sld = JavaObjServer.getListData();
@@ -576,10 +577,10 @@ public class JavaObjServer extends JFrame {
 						// 일반 채팅 메시지
 						String RidAndChat = (String)cm.getData();
 						//3,0-ぞしぞしぞぞ-date.toString()
-						String[] str = RidAndChat.split(",");
-						int rid = Integer.valueOf(str[0]);
-						String[] Chatstr = str[1].split("-");
-						int uid = Integer.valueOf(Chatstr[0]);
+						String[] str = RidAndChat.split(DivString.RoomDiv); //","
+						int rid = Integer.parseInt(str[0]);
+						String[] Chatstr = str[1].split(DivString.ChatDiv); // "-"
+						int uid = Integer.parseInt(Chatstr[0]);
 
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
 						Chatting(rid, chat);
@@ -590,10 +591,10 @@ public class JavaObjServer extends JFrame {
 					} else if (cm.getCode().matches("300")) { // 이미지 전송
 						String RidAndChat = (String)cm.getData();
 						//3,0-ぞしぞしぞぞ-date.toString()
-						String[] str = RidAndChat.split(",");
-						int rid = Integer.valueOf(str[0]);
-						String[] Chatstr = str[1].split("-");
-						int uid = Integer.valueOf(Chatstr[0]);
+						String[] str = RidAndChat.split(DivString.RoomDiv);
+						int rid = Integer.parseInt(str[0]);
+						String[] Chatstr = str[1].split(DivString.ChatDiv);
+						int uid = Integer.parseInt(Chatstr[0]);
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
 						chat.setImg(cm.img);
 						Chatting(rid, chat);

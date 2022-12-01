@@ -5,9 +5,9 @@ public class ListData extends Object{
 
     Map<Integer, User> userList;
     Map<Integer,Room> roomList;
-    String ListDiv = "|_#$%";
-    String RoomListDiv = "$#@";
-    String RoomDiv = "<_^$%#";
+    String ListDiv = DivString.ListDiv;
+    String RoomListDiv = DivString.RoomListDiv;
+    String RoomDiv = DivString.RoomDiv;
 
 
     public ListData(

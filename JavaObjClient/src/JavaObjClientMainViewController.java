@@ -425,6 +425,7 @@ public class JavaObjClientMainViewController {
             stringRoomAuth = str.delete(0, stringRoomAuth.length()).toString();
 
             //stringRoomAuth ","로 분할
+
             String[] stringRoomAuthRid = stringRoomAuth.split(",");
 
             // RoomAuth가 존재하면 setting

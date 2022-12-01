@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Div;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +10,8 @@ public class Room {
     String  roomName;
 
     ArrayList<Chat> chat = new ArrayList<>();
-    String ChatDiv = "-_%^#@";
-    String ChatListDiv = "@_&%^&";
+    String ChatDiv = DivString.ChatDiv;
+    String ChatListDiv = DivString.ChatListDiv;
     public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
         this.userAuth = userAuth;
