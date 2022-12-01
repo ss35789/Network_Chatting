@@ -16,7 +16,7 @@ public class MakeChatRoomView extends JFrame  {
     private JScrollPane friendScrollPane;
     private JList friendList;
     private JList selectedFriendList;
-    private String[] friend = {"user1", "user2", "user3", "user4", "user5", "user6"};
+    private String[] friend = {};
     List selectionList;
     DefaultListModel selectedmodel = new DefaultListModel();
     JavaObjClientMainViewController controller = JavaObjClientMainViewController.getInstance();
@@ -37,9 +37,11 @@ public class MakeChatRoomView extends JFrame  {
             }
         });
 
+        //친구 목록 띄우기
+
         DefaultListModel model = new DefaultListModel();
-        for (String s : friend) {
-            model.addElement(s);
+        for (Integer i : controller.getUserList().keySet()) {
+            model.addElement(controller.getUserList().get(i).getUserName());
         }
         friendList.setModel(model);
         friendList.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
