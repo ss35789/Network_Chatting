@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.operations.Div;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +23,8 @@ public class Room {
         str.append("<");
         for(int i=0;i<chat.size();i++){
             Chat c= chat.get(i);
-            str.append(c.uid+"-"+c.msg+"-"+c.date);
-            if(i!=chat.size()-1)str.append("@");
+            str.append(c.uid+DivString.ChatDiv+c.msg+DivString.ChatDiv+c.date+DivString.ChatDiv+c.img);
+            if(i!=chat.size()-1)str.append(DivString.ChatListDiv);
         }
         str.append(">");
         return str.toString();

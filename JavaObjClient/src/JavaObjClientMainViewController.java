@@ -4,9 +4,9 @@
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import Object.User;
 import Object.Room;
@@ -28,6 +28,9 @@ public class JavaObjClientMainViewController {
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
     private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList
+    private String username;
+    private String ip_addr;
+    private String port_no;
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -47,21 +50,21 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
-    public Map<Integer, ChatRoomView> getChatRoomViewList() {
-        return chatRoomViewList;
-    }
+    public Map<Integer, ChatRoomView> getChatRoomViewList() { return chatRoomViewList;}
+
+    public String getUsername() { return username; }
+
+    public String getPort_no() { return port_no;}
+
+    public String getIp_addr() { return ip_addr; }
 
     public Map<Integer, User> getUserList() {
         return UserList;
     }
 
-    public void setUser(String username) {
-        user = new User.UserBuilder().setUserName(username).build();
-    }
+    public void setUser(String username) { user = new User.UserBuilder().setUserName(username).build(); }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
+    public void setSocket(Socket socket) { this.socket = socket; }
 
     public void setOIS(ObjectInputStream ois) {
         this.ois = ois;
@@ -75,7 +78,7 @@ public class JavaObjClientMainViewController {
         UserList = userList;
     }
 
-    public void setRoomList(Map<Integer, Room> roomList){
+    public void setRoomList(Map<Integer, Room> roomList) {
         RoomList = roomList;
     }
 
@@ -85,6 +88,16 @@ public class JavaObjClientMainViewController {
 
     public void setAppView(App appView) {
         this.appView = appView;
+    }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public void setIp_addr(String ip_addr) {
+        this.ip_addr = ip_addr;
+    }
+
+    public void setPort_no(String port_no) {
+        this.port_no = port_no;
     }
 
     // Getter & Setter 끝
@@ -112,9 +125,8 @@ public class JavaObjClientMainViewController {
 
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
-            ChatMsg cm = (ChatMsg)ob;
-            String msg = String.format("[%s] %s", cm.getId(), cm.getData());
-            System.out.println("client send " + msg );
+            ChatMsg cm = (ChatMsg) ob;
+            System.out.println("client send "+cm.getCode() +" "+ cm.getId() + " " + cm.getData());
             oos.writeObject(ob);
         } catch (IOException e) {
             // textArea.append("메세지 송신 에러!!\n");
@@ -162,14 +174,21 @@ public class JavaObjClientMainViewController {
                             //AppendImage(cm.img);
                             break;
                         case "600":
-                            System.out.println("Client received " + msg);
+                            System.out.println("Client received 600 " + msg);
+//                            DateToString(LocalTime.now());
                             dataReformat(msg);
+                            //신규 유저 접속 시 유저리스트 갱신
+                            if (!(controller.appView == null)) {
+                                controller.appView.dispose();
+                                controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
+                                controller.appView.setVisible(true);
+                            }
                             break;
                         case "610":
-                            System.out.println("Client received " + msg);
+                            System.out.println("Client received 610" + msg);
                             break;
                         case "620":
-                            System.out.println("Client received " + msg);
+                            System.out.println("Client received 620 " + msg);
                             break;
 
                     }
@@ -355,6 +374,7 @@ public class JavaObjClientMainViewController {
 
     /**
      * 서버에서 받은 문자열로 UserList,RoomList,RoomAuth ..으로 변환하는 함수
+     * 600,610,620 프로토콜로 받은 모든 문자열 적용 가능
      *
      * @param data Server에서 받은 데이터
      */
@@ -405,6 +425,7 @@ public class JavaObjClientMainViewController {
             stringRoomAuth = str.delete(0, stringRoomAuth.length()).toString();
 
             //stringRoomAuth ","로 분할
+
             String[] stringRoomAuthRid = stringRoomAuth.split(",");
 
             // RoomAuth가 존재하면 setting
@@ -414,8 +435,8 @@ public class JavaObjClientMainViewController {
                 }
             }
 
-            // ImgIcon setting 용 File 생성 (앞에 \ 문자 제거)
-            File file = new File(stringUserData[4].substring(1));
+            // ImgIcon setting 용 File 생성
+            File file = new File(stringUserData[4]);
 
             // user 생성
             User user = User.UserBuilder.anUser().
@@ -431,7 +452,9 @@ public class JavaObjClientMainViewController {
         }
         return userList;
     }
-
+    public void test(){
+        System.out.println("test");
+    }
     public Map<Integer, Room> StringDatatoRoomList(String data) {
         Map<Integer, Room> room = new HashMap<Integer, Room>();
         return room;
@@ -449,7 +472,7 @@ public class JavaObjClientMainViewController {
         ArrayList<Integer> uidList = new ArrayList<Integer>();
 
         //Server에서 UserList를 받을때 까지 대기
-        while (controller.UserList.isEmpty());
+        while (controller.UserList.isEmpty()) ;
 
         // UserName => Uid로 변환
         for (Integer key : controller.UserList.keySet()) {
@@ -464,5 +487,15 @@ public class JavaObjClientMainViewController {
         }
         return uidList;
     }
+
+    /***
+     * LocalTime 형 변수를 받아서 원하는 형식으로 변환 후 변환한 형식의 문자열로 반환해주는 함수
+     * @param time 변환 할 LocalTime 형 변수
+     * @return 원하는 형식으로 변환한 문자열
+     */
+//    public String DateToString(LocalTime time){
+//        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+//        return "오전 0:00";
+//    }
 }
 

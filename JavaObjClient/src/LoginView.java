@@ -82,9 +82,13 @@ public class LoginView extends JFrame{
             String username = txtUserName.getText().trim();
             String ip_addr = txtIpAddress.getText().trim();
             String port_no = txtPortNumber.getText().trim();
-            // Controller 가져오기
+            // Controller 가져오기 & 세팅
             controller = JavaObjClientMainViewController.getInstance();
             controller.setUser(username);
+            controller.setUsername(username);
+            controller.setIp_addr(ip_addr);
+            controller.setPort_no(port_no);
+
             try {
                 //Controller socket, oos,ois 세팅
                 Socket socket = new Socket(ip_addr, Integer.parseInt(port_no));
