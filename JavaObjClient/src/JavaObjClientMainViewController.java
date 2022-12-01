@@ -388,15 +388,15 @@ public class JavaObjClientMainViewController {
         //UserList 문자열과 RoomList 문자열로 구분
         String[] receivedData = data.split("\\|");
         String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-        //String stringRoomList = receivedData[1]; // roomList
+        String stringRoomList = receivedData[1]; // roomList
 
         //UserList 문자열을 데이터 형식으로 변환
         Map<Integer, User> userList = StringDatatoUserList(stringUserList);
         //RoomList 문자열을 데이터 형식으로 변환
-        //Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
+        Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
 
         controller.setUserList(userList);
-        //controller.setRoomList(roomlist);
+        controller.setRoomList(roomList);
     }
 
     /**
