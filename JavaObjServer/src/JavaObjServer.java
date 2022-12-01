@@ -217,7 +217,9 @@ public class JavaObjServer extends JFrame {
 				AppendText("userService error");
 			}
 		}
-
+	public void test(){
+			System.out.println("test");
+	}
 
 		public void Login() {
 
