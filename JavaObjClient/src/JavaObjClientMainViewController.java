@@ -64,6 +64,10 @@ public class JavaObjClientMainViewController {
         return UserList;
     }
 
+    public Map<Integer, Room> getRoomList() {
+        return RoomList;
+    }
+
     public void setUser(String username) { user = new User.UserBuilder().setUserName(username).build(); }
 
     public void setSocket(Socket socket) { this.socket = socket; }

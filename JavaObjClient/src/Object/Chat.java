@@ -47,4 +47,21 @@ public class Chat {
             return new Chat(uid, msg, date);
         }
     }
+    //Getters
+
+    public int getUid() {
+        return uid;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ImageIcon getImg() {
+        return img;
+    }
 }
