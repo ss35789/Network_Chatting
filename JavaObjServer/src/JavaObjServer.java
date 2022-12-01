@@ -305,7 +305,7 @@ public class JavaObjServer extends JFrame {
 		}
 		public void SendRoomData(){
 			ListData sld = JavaObjServer.getListData();
-			ChatMsg obcm = new ChatMsg("SERVER", "620", "0:0,[1.4.5],roomnameLLL,<0-첫번째 채팅-Sun Sep 01 20:41:56 KST 2019@1-두번째 채팅-Sun Sep 01 20:42:00 KST 2019@1-세번째 채팅-Sun Sep 01 20:43:00 KST 2019>");
+			ChatMsg obcm = new ChatMsg("SERVER", "620", sld.getRoomListToString());
 			WriteAllObject(obcm);
 		}
 		public void SetProfileImg(String username, ImageIcon img){
@@ -349,13 +349,18 @@ public class JavaObjServer extends JFrame {
 			String roomName =str[0];
 			StringBuilder userAuthToStringBuilder = new StringBuilder(str[1]);
 			//[,] 제거
+
 			userAuthToStringBuilder.deleteCharAt(userAuthToStringBuilder.length()-1);
 			userAuthToStringBuilder.deleteCharAt(0);
+
+
 			String userAuthToString = userAuthToStringBuilder.toString();
-			String[] arr = userAuthToString.split(",");
+			String[] arr = userAuthToString.split("\\.");
+
 			for(String s : arr){
 				int uid = Integer.parseInt(s);
 				userAuth.add(uid);
+
 			}
 
 			ListData sld = JavaObjServer.getListData();
@@ -598,8 +603,8 @@ public class JavaObjServer extends JFrame {
 						SetProfileImg(username,ProfileImg);
 						SendUserData();
 					}else if(cm.getCode().matches("700")){  // 방생성
-//						String str = (String)cm.getData();
-//						MakeRoom(str);
+						String str = (String)cm.getData();
+						MakeRoom(str);
 						SendRoomData();
 
 					}else if(cm.getCode().matches("720")){  // setSleep

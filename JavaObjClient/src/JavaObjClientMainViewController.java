@@ -175,7 +175,7 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
-                            DateToString(LocalTime.now());
+//                            DateToString(LocalTime.now());
                             dataReformat(msg);
                             //신규 유저 접속 시 유저리스트 갱신
                             if (!(controller.appView == null)) {
@@ -490,9 +490,9 @@ public class JavaObjClientMainViewController {
      * @param time 변환 할 LocalTime 형 변수
      * @return 원하는 형식으로 변환한 문자열
      */
-    public String DateToString(LocalTime time){
-        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
-        return "오전 0:00";
-    }
+//    public String DateToString(LocalTime time){
+//        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+//        return "오전 0:00";
+//    }
 }
 
