@@ -4,9 +4,9 @@
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import Object.User;
 import Object.Room;
@@ -175,7 +175,9 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
+                            DateToString(LocalTime.now());
                             dataReformat(msg);
+                            //신규 유저 접속 시 유저리스트 갱신
                             if (!(controller.appView == null)) {
                                 controller.appView.dispose();
                                 controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
@@ -372,6 +374,7 @@ public class JavaObjClientMainViewController {
 
     /**
      * 서버에서 받은 문자열로 UserList,RoomList,RoomAuth ..으로 변환하는 함수
+     * 600,610,620 프로토콜로 받은 모든 문자열 적용 가능
      *
      * @param data Server에서 받은 데이터
      */
@@ -480,6 +483,16 @@ public class JavaObjClientMainViewController {
             }
         }
         return uidList;
+    }
+
+    /***
+     * LocalTime 형 변수를 받아서 원하는 형식으로 변환 후 변환한 형식의 문자열로 반환해주는 함수
+     * @param time 변환 할 LocalTime 형 변수
+     * @return 원하는 형식으로 변환한 문자열
+     */
+    public String DateToString(LocalTime time){
+        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+        return "오전 0:00";
     }
 }
 
