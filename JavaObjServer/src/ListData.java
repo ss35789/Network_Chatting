@@ -5,6 +5,11 @@ public class ListData extends Object{
 
     Map<Integer, User> userList;
     Map<Integer,Room> roomList;
+    String ListDiv = "|_#$%";
+    String RoomListDiv = "$#@";
+    String RoomDiv = "<_^$%#";
+
+
     public ListData(
             Map<Integer, User> userList, Map<Integer,Room> roomList){
         this.roomList = roomList;
@@ -48,7 +53,7 @@ public class ListData extends Object{
             Room room = roomList.get(i);
 
             str.append(i+":");
-            str.append(room.rid+",");
+            str.append(room.rid+RoomDiv);
 
             str.append("[");
             for(int j=0;j<room.userAuth.size();j++){
@@ -57,9 +62,9 @@ public class ListData extends Object{
                     str.append(".");
                 }
             }
-            str.append("],");
+            str.append("]"+RoomDiv);
 
-            str.append(room.roomName+",");
+            str.append(room.roomName+RoomDiv);
 
             str.append(room.getChatToString());
 //            str.append("<");
@@ -72,17 +77,18 @@ public class ListData extends Object{
 //            }
 //            str.append(">");
 
-            str.append(" ");
+            str.append(RoomListDiv);
         }
 
         return str.toString();
     }
-    //0:0,[1.4.5],roomnameLLL,<0-ぞしぞしぞぞ-date.toString()@1-でででででで-date.toString()@...> ...
+    //0:0RoomDiv[1.4.5]RoomDivroomnameLLLRoomDiv<0ChatDivぞしぞしぞぞChatDivdate.toString()ChatListDiv1ChatDivででででででChatDivdate.toString()ChatListDiv...> ...
 
     public String AllListData(){
+
         String allList="";
         allList = getUserListToString();
-        allList += "|";
+        allList += ListDiv;
         allList += getRoomListToString();
         return allList;
     }

@@ -8,7 +8,8 @@ public class Room {
     String  roomName;
 
     ArrayList<Chat> chat = new ArrayList<>();
-
+    String ChatDiv = "-_%^#@";
+    String ChatListDiv = "@_&%^&";
     public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
         this.userAuth = userAuth;
@@ -21,8 +22,8 @@ public class Room {
         str.append("<");
         for(int i=0;i<chat.size();i++){
             Chat c= chat.get(i);
-            str.append(c.uid+"-"+c.msg+"-"+c.date);
-            if(i!=chat.size()-1)str.append("@");
+            str.append(c.uid+ChatDiv+c.msg+ChatDiv+c.date);
+            if(i!=chat.size()-1)str.append(ChatListDiv);
         }
         str.append(">");
         return str.toString();
