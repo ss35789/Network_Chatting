@@ -10,8 +10,7 @@ public class Room {
     String  roomName;
 
     ArrayList<Chat> chat = new ArrayList<>();
-    String ChatDiv = DivString.ChatDiv;
-    String ChatListDiv = DivString.ChatListDiv;
+
     public Room(int rid, ArrayList<Integer> userAuth, String roomName){
         this.rid = rid;
         this.userAuth = userAuth;
@@ -24,8 +23,8 @@ public class Room {
         str.append("<");
         for(int i=0;i<chat.size();i++){
             Chat c= chat.get(i);
-            str.append(c.uid+ChatDiv+c.msg+ChatDiv+c.date+ChatDiv+c.img);
-            if(i!=chat.size()-1)str.append(ChatListDiv);
+            str.append(c.uid+DivString.ChatDiv+c.msg+DivString.ChatDiv+c.date+DivString.ChatDiv+c.img);
+            if(i!=chat.size()-1)str.append(DivString.ChatListDiv);
         }
         str.append(">");
         return str.toString();
