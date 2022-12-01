@@ -6,7 +6,7 @@ public class DivString {
     // "@" => ChatListDiv
     // "," => RoomDiv
     // " " => RoomListDiv
-    public static String ListDiv = "\\|\\_#\\$%";  //|_#$%
+    public static String ListDiv = "\\|_#\\$%";  //|_#$%
     public static String RoomListDiv ="\\$#@";  //$#@
     public static String RoomDiv = ",#\\$\\^#"; //,#$^#
     public static String ChatDiv = "-\\^\\$%#"; //-^$%#

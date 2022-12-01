@@ -10,6 +10,8 @@ import java.util.*;
 
 import Object.User;
 import Object.Room;
+import Object.Chat;
+import Object.DivString;
 
 import javax.swing.*;
 
@@ -456,8 +458,70 @@ public class JavaObjClientMainViewController {
         System.out.println("test");
     }
     public Map<Integer, Room> StringDatatoRoomList(String data) {
-        Map<Integer, Room> room = new HashMap<Integer, Room>();
-        return room;
+        String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
+        Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
+
+        //Room 생성 후 삽입
+        for(String s:StringRoomListData){
+            // Room 생성을 위한 String & ArrayList 들 생성
+            // 앞에 Map의 Key : 값 제거 ex) 1:
+            s = s.substring(s.indexOf(":")+1);
+
+            // stringRoomData  생성
+            String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
+
+            //userAuth 처리
+            ArrayList<Integer> userAuth = new ArrayList<Integer>();
+            // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
+            String stringUserAuth = stringRoomData[1];
+            StringBuffer str = new StringBuffer(stringUserAuth);
+            str.deleteCharAt(0);
+            str.deleteCharAt(str.length()-1);
+            stringUserAuth = str.toString();
+            //stringRoomAuth "."로 분할
+            String[] stringUserAuthRid = stringUserAuth.split("\\.");
+            // RoomAuth가 존재하면 setting
+            if (!stringUserAuthRid[0].isEmpty()) {
+                for (String ra : stringUserAuthRid) {
+                    userAuth.add(Integer.parseInt(ra));
+                }
+            }
+
+            //Chat 처리
+            ArrayList<Chat> chatArrayList = new ArrayList<Chat>();
+            // ArrayList<Integer> Chat에 넣기 위한 data reformate(앞뒤[]제거)
+            String stringChat = stringRoomData[3];
+            StringBuffer strb = new StringBuffer(stringChat);
+            strb.deleteCharAt(0);
+            strb.deleteCharAt(strb.length()-1);
+            stringChat = strb.toString();
+            String[] stringChatList = stringChat .split(DivString.ChatListDiv);
+
+            //Chat이 존재하면
+            if (!stringChatList[0].isEmpty()) {
+                for (String rb : stringChatList) {
+                    String[] stringChatDataArray = rb.split(DivString.ChatDiv); //0 = uid, 1 = msg , 2 = date
+                    Chat chat = Chat.ChatBuilder.aChat().
+                            setUid(Integer.parseInt(stringChatDataArray[0])).
+                            setMsg(stringChatDataArray[1]).
+                            setDate(stringChatDataArray[2]).
+                            build();
+                    chatArrayList.add(chat);
+                }
+            }
+
+
+            // Room 생성
+            Room room = Room.RoomBuilder.aRoom().setRid(Integer.parseInt(stringRoomData[0])).
+                    setUserAuth(userAuth).
+                    setRoomName(stringRoomData[2]).
+                    setChat(chatArrayList).
+                    build();
+
+            // userList에 생성한 user 삽입
+            roomList.put(room.getRid(), room);
+        }
+        return roomList;
     }
 
     /**
