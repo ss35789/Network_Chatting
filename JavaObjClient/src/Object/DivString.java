@@ -6,9 +6,9 @@ public class DivString {
     // "@" => ChatListDiv
     // "," => RoomDiv
     // " " => RoomListDiv
-    public static String ListDiv = "\\|#\\$%";
-    public static String RoomListDiv ="\\$#@";
-    public static String RoomDiv = ",#\\$\\^#";
-    public static String ChatDiv = "-\\^\\$%#";
-    public static String ChatListDiv = "@&%\\^&";
+    public static String ListDiv = "\\|#\\$%";  //|#$%
+    public static String RoomListDiv ="\\$#@";  //$#@
+    public static String RoomDiv = ",#\\$\\^#"; //,#$^#
+    public static String ChatDiv = "-\\^\\$%#"; //-^$%#
+    public static String ChatListDiv = "@&%\\^&"; //@&%^&
 }
