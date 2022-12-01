@@ -53,8 +53,6 @@ public class ChatRoomView extends JFrame{
                 setContentPane(mainPanel);
                 revalidate();
                 repaint();
-
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 

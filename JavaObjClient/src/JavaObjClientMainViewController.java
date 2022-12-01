@@ -126,7 +126,7 @@ public class JavaObjClientMainViewController {
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
             ChatMsg cm = (ChatMsg) ob;
-            System.out.println("client send, userID: " + cm.getId() + " Protocol: " + cm.getCode() + " Data: " + cm.getData());
+            System.out.println("client send "+cm.getCode() +" "+ cm.getId() + " " + cm.getData());
             oos.writeObject(ob);
         } catch (IOException e) {
             // textArea.append("메세지 송신 에러!!\n");
@@ -177,7 +177,7 @@ public class JavaObjClientMainViewController {
                             System.out.println("Client received 600 " + msg);
                             dataReformat(msg);
                             if (!(controller.appView == null)) {
-                                controller.appView.setVisible(false);
+                                controller.appView.dispose();
                                 controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
                                 controller.appView.setVisible(true);
                             }

@@ -114,8 +114,6 @@ public class App extends JFrame {
                 setContentPane(userPanel);
                 revalidate();
                 repaint();
-
-
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
