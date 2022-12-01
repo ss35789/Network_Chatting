@@ -24,7 +24,7 @@ public class Room {
         str.append("<");
         for(int i=0;i<chat.size();i++){
             Chat c= chat.get(i);
-            str.append(c.uid+ChatDiv+c.msg+ChatDiv+c.date);
+            str.append(c.uid+ChatDiv+c.msg+ChatDiv+c.date+ChatDiv+c.img);
             if(i!=chat.size()-1)str.append(ChatListDiv);
         }
         str.append(">");
