@@ -452,7 +452,9 @@ public class JavaObjClientMainViewController {
         }
         return userList;
     }
-
+    public void test(){
+        System.out.println("test");
+    }
     public Map<Integer, Room> StringDatatoRoomList(String data) {
         Map<Integer, Room> room = new HashMap<Integer, Room>();
         return room;
