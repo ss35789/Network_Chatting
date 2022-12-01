@@ -389,7 +389,7 @@ public class JavaObjServer extends JFrame {
 			Room room = sld.roomList.get(rid);
 			room.createChat(chat);
 			JavaObjServer.setListData(sld);
-
+//sdf
 			//채팅 전송
 			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
 			cm.setImg(chat.img);
