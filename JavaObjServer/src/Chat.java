@@ -5,8 +5,8 @@ public class Chat {
     int uid;
     String msg;
     String date;
-    public ImageIcon img;
 
+    public ImageIcon img;
     public Chat(int uid,String msg,String date){
         this.uid=uid;
         this.msg = msg;

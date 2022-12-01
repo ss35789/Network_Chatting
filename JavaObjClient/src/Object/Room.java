@@ -71,13 +71,4 @@ public class Room {
             return room;
         }
     }
-    //Getters 선언
-
-    public int getRid() { return rid; }
-
-    public ArrayList<Integer> getUserAuth() { return userAuth; }
-
-    public String getRoomName() { return roomName; }
-
-    public ArrayList<Chat> getChat() { return chat; }
 }

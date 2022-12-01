@@ -10,10 +10,10 @@ import java.util.*;
 
 import Object.User;
 import Object.Room;
-import Object.Chat;
-import Object.DivString;
 
 import javax.swing.*;
+
+import static java.sql.Types.NULL;
 
 
 public class JavaObjClientMainViewController {
@@ -50,33 +50,21 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
-    public Map<Integer, ChatRoomView> getChatRoomViewList() {
-        return chatRoomViewList;
-    }
+    public Map<Integer, ChatRoomView> getChatRoomViewList() { return chatRoomViewList;}
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
-    public String getPort_no() {
-        return port_no;
-    }
+    public String getPort_no() { return port_no;}
 
-    public String getIp_addr() {
-        return ip_addr;
-    }
+    public String getIp_addr() { return ip_addr; }
 
     public Map<Integer, User> getUserList() {
         return UserList;
     }
 
-    public void setUser(String username) {
-        user = new User.UserBuilder().setUserName(username).build();
-    }
+    public void setUser(String username) { user = new User.UserBuilder().setUserName(username).build(); }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
+    public void setSocket(Socket socket) { this.socket = socket; }
 
     public void setOIS(ObjectInputStream ois) {
         this.ois = ois;
@@ -102,9 +90,7 @@ public class JavaObjClientMainViewController {
         this.appView = appView;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setUsername(String username) { this.username = username; }
 
     public void setIp_addr(String ip_addr) {
         this.ip_addr = ip_addr;
@@ -140,7 +126,7 @@ public class JavaObjClientMainViewController {
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
             ChatMsg cm = (ChatMsg) ob;
-            System.out.println("client send " + cm.getCode() + " " + cm.getId() + " " + cm.getData());
+            System.out.println("client send "+cm.getCode() +" "+ cm.getId() + " " + cm.getData());
             oos.writeObject(ob);
         } catch (IOException e) {
             // textArea.append("메세지 송신 에러!!\n");
@@ -189,7 +175,8 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
-                            data600Reformat(msg);
+//                            DateToString(LocalTime.now());
+                            dataReformat(msg);
                             //신규 유저 접속 시 유저리스트 갱신
                             if (!(controller.appView == null)) {
                                 controller.appView.dispose();
@@ -203,6 +190,7 @@ public class JavaObjClientMainViewController {
                         case "620":
                             System.out.println("Client received 620 " + msg);
                             break;
+
                     }
                 } catch (IOException e) {
                     //AppendText("ois.readObject() error");
@@ -390,38 +378,25 @@ public class JavaObjClientMainViewController {
      *
      * @param data Server에서 받은 데이터
      */
-    public void data600Reformat(String data) {
-        //data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
+    public void dataReformat(String data) {
+        data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
 
         // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
         String[] deleteTarget = data.split(" ");
         data = data.substring(deleteTarget[0].length() + 1);
 
         //UserList 문자열과 RoomList 문자열로 구분
-        String[] receivedData = data.split(DivString.ListDiv);
-        //receivedData[0] = userList , receivedData[1] = RoomList
-        
-        //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
-        if (receivedData.length > 1) {
-            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-            String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
+        String[] receivedData = data.split("\\|");
+        String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+        //String stringRoomList = receivedData[1]; // roomList
 
-            //UserList 문자열을 데이터 형식으로 변환
-            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-            //RoomList 문자열을 데이터 형식으로 변환
-            Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
+        //UserList 문자열을 데이터 형식으로 변환
+        Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+        //RoomList 문자열을 데이터 형식으로 변환
+        //Map<Integer, Room> RoomList = StringDatatoRoomList(stringRoomList);
 
-            controller.setUserList(userList);
-            controller.setRoomList(roomList);
-        }
-        //RoomList가 존재 하지 않으면 UserList만 세팅
-        else{
-            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-            //UserList 문자열을 데이터 형식으로 변환
-            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-
-            controller.setUserList(userList);
-        }
+        controller.setUserList(userList);
+        //controller.setRoomList(roomlist);
     }
 
     /**
@@ -431,7 +406,7 @@ public class JavaObjClientMainViewController {
      * @return Map<Integer, User> UserList
      */
     public Map<Integer, User> StringDatatoUserList(String data) { // NULL 처리 필요!
-        String[] StringUserListData = data.split(" "); // User별로 분할
+        String[] StringUserListData = data.split(" ");
         Map<Integer, User> userList = new HashMap<Integer, User>(); //Map<Integer, User> <- User 삽입 하기위해 생성
 
         // User 생성 후 UserList에 삽입
@@ -443,14 +418,11 @@ public class JavaObjClientMainViewController {
             // stringUserData  생성
             String[] stringUserData = s.split(","); // 0 = uid, 1 = state , 2 = RoomAuth , 3 = userName, 4 = img
 
-            //RoomAuth 처리
             ArrayList<Integer> roomAuth = new ArrayList<Integer>();
             // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
             String stringRoomAuth = stringUserData[2];
             StringBuffer str = new StringBuffer(stringRoomAuth);
-            str.deleteCharAt(0);
-            str.deleteCharAt(str.length()-1);
-            stringRoomAuth = str.toString();
+            stringRoomAuth = str.delete(0, stringRoomAuth.length()).toString();
 
             //stringRoomAuth ","로 분할
 
@@ -482,69 +454,8 @@ public class JavaObjClientMainViewController {
     }
 
     public Map<Integer, Room> StringDatatoRoomList(String data) {
-        String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
-        Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
-
-        //Room 생성 후 삽입
-        for(String s:StringRoomListData){
-            // Room 생성을 위한 String & ArrayList 들 생성
-            // 앞에 Map의 Key : 값 제거 ex) 1:
-            s = s.substring(s.indexOf(":")+1);
-
-            // stringRoomData  생성
-            String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
-
-            //userAuth 처리
-            ArrayList<Integer> userAuth = new ArrayList<Integer>();
-            // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
-            String stringUserAuth = stringRoomData[1];
-            StringBuffer str = new StringBuffer(stringUserAuth);
-            str.deleteCharAt(0);
-            str.deleteCharAt(str.length()-1);
-            stringUserAuth = str.toString();
-            //stringRoomAuth "."로 분할
-            String[] stringUserAuthRid = stringUserAuth.split("\\.");
-            // RoomAuth가 존재하면 setting
-            if (!stringUserAuthRid[0].isEmpty()) {
-                for (String ra : stringUserAuthRid) {
-                    userAuth.add(Integer.parseInt(ra));
-                }
-            }
-
-            //Chat 처리
-            ArrayList<Chat> chatArrayList = new ArrayList<Chat>();
-            // ArrayList<Integer> Chat에 넣기 위한 data reformate(앞뒤[]제거)
-            String stringChat = stringRoomData[3];
-            StringBuffer strb = new StringBuffer(stringChat);
-            strb.deleteCharAt(0);
-            strb.deleteCharAt(strb.length()-1);
-            stringChat = strb.toString();
-            String[] stringChatList = stringChat .split(DivString.ChatListDiv);
-            //Chat이 존재하면
-            if (!stringChatList[0].isEmpty()) {
-                for (String rb : stringChatList) {
-                    String[] stringChatDataArray = rb.split(DivString.ChatDiv); //0 = uid, 1 = msg , 2 = date
-                    Chat chat = Chat.ChatBuilder.aChat().
-                            setUid(Integer.parseInt(stringChatDataArray[0])).
-                            setMsg(stringChatDataArray[1]).
-                            setDate(stringChatDataArray[2]).
-                            build();
-                    chatArrayList.add(chat);
-                }
-            }
-
-
-            // Room 생성
-            Room room = Room.RoomBuilder.aRoom().setRid(Integer.parseInt(stringRoomData[0])).
-                    setUserAuth(userAuth).
-                    setRoomName(stringRoomData[2]).
-                    setChat(chatArrayList).
-                    build();
-
-            // userList에 생성한 user 삽입
-            roomList.put(room.getRid(), room);
-        }
-        return roomList;
+        Map<Integer, Room> room = new HashMap<Integer, Room>();
+        return room;
     }
 
     /**
@@ -580,9 +491,9 @@ public class JavaObjClientMainViewController {
      * @param time 변환 할 LocalTime 형 변수
      * @return 원하는 형식으로 변환한 문자열
      */
-    public String DateToString(LocalTime time) {
-        String formatedString = time.format(DateTimeFormatter.ofPattern("a KK:mm").withLocale(Locale.forLanguageTag("ko")));
-        return formatedString;
-    }
+//    public String DateToString(LocalTime time){
+//        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+//        return "오전 0:00";
+//    }
 }
 
