@@ -5,9 +5,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import Object.User;
 
-public class App extends JFrame{
+public class App extends JFrame {
 
     private JPanel mainPanel;
     private JPanel sideBarPanel;
@@ -40,9 +41,9 @@ public class App extends JFrame{
     private String ip_addr;
     private String port_no;
     public static Map<Integer, User> user = new HashMap<>();
-    public static String [] room = {"room1", "room2","room3"};
+    public static String[] room = {"room1", "room2", "room3"};
 
-    private String MyimgPath ="JavaObjClient/images/defaultProfileImg.jpg";
+    private String MyimgPath = "JavaObjClient/images/defaultProfileImg.jpg";
     private ArrayList<String> arr = new ArrayList<>();
     //더미 유저들
 
@@ -51,14 +52,15 @@ public class App extends JFrame{
         mainPanel = new JPanel();
     }
 
-    public App(String username, String ip_addr,String port_no){
-        this.username=username;
-        this.ip_addr=ip_addr;
-        this.port_no=port_no;
+    //생성자 함수
+    public App(String username, String ip_addr, String port_no) {
+        this.username = username;
+        this.ip_addr = ip_addr;
+        this.port_no = port_no;
 
         controller = JavaObjClientMainViewController.getInstance();
 
-        user =  controller.getUserList();
+        user = controller.getUserList();
 
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -68,6 +70,7 @@ public class App extends JFrame{
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
@@ -89,6 +92,7 @@ public class App extends JFrame{
                 makeChatRoomView.setVisible(true);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
@@ -155,9 +159,11 @@ public class App extends JFrame{
         });
 
         myName.setText(username);
-        ImageIcon icon = new ImageIcon(MyimgPath);;
+
+        ImageIcon icon = new ImageIcon(MyimgPath);
+
         Image img = icon.getImage();
-        Image changeImg = img.getScaledInstance(40,40,Image.SCALE_SMOOTH);
+        Image changeImg = img.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
         ImageIcon changeIcon = new ImageIcon(changeImg);
 
@@ -167,7 +173,7 @@ public class App extends JFrame{
 
         chatting_myName.setText(username);
 
-
+        //마우스 클릭시 userList 반응
 //        DefaultListModel model = new DefaultListModel();
 //        for(User s : user){
 //            model.addElement(s.userName);
@@ -189,55 +195,31 @@ public class App extends JFrame{
 //        });
 
 
+        setUserListPanel();
 
-
-
-        for(int i=0 ; i<100;i++){
-
-            JPanel u = new JPanel();
-            if(user.size()>i){
-                u.setLayout(new BorderLayout());
-                JLabel jl = new JLabel(user.get(i).getUserName());
-                jl.setIcon(changeIcon);
-                jl.setFont(new Font("Serif", Font.BOLD,31));
-                u.add(jl,BorderLayout.WEST);
-                JLabel state = new JLabel("Online");
-
-                u.add(state,BorderLayout.EAST);
-                u.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
-
-            }
-            u.setBackground(Color.WHITE);
-
-            UserList.add(u);
-        }
-        UserList.setLayout(new BoxLayout(UserList,BoxLayout.Y_AXIS));
-        userListPanel.setViewportView(UserList);
-
-        for(int i=0 ; i<100;i++){
+        for (int i = 0; i < 100; i++) {
 
             JPanel u = new JPanel();
-            if(room.length>i){
+            if (room.length > i) {
                 u.setLayout(new BorderLayout());
 
                 JLabel jl = new JLabel(App.room[i]);
                 jl.setIcon(changeIcon);
-                jl.setFont(new Font("Serif", Font.BOLD,31));
-                u.add(jl,BorderLayout.WEST);
+                jl.setFont(new Font("Serif", Font.BOLD, 31));
+                u.add(jl, BorderLayout.WEST);
 
                 JLabel JoinUser = new JLabel("sangminlee, sdfdsf, sd");
                 JoinUser.setBackground(Color.gray);
-                u.add(JoinUser,BorderLayout.EAST);
-                u.setBorder(BorderFactory.createEmptyBorder(10 , 10 , 10 , 10));
+                u.add(JoinUser, BorderLayout.EAST);
+                u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
             }
             u.setBackground(Color.WHITE);
 
             ChatRoomList.add(u);
         }
-        ChatRoomList.setLayout(new BoxLayout(ChatRoomList,BoxLayout.Y_AXIS));
+        ChatRoomList.setLayout(new BoxLayout(ChatRoomList, BoxLayout.Y_AXIS));
         ChatRoomListPanel.setViewportView(ChatRoomList);
-
 
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -248,5 +230,40 @@ public class App extends JFrame{
 
     }
 
+    public void setUserListPanel() {
+        for (int i = 0; i < 100; i++) {
+
+            JPanel u = new JPanel();
+            if (user.size() > i) {
+                u.setLayout(new BorderLayout());
+                JLabel jl = new JLabel(user.get(i).getUserName());
+
+                // 이미지 스케일 조정
+                ImageIcon originImg = user.get(i).getImg();
+                Image targetImg = originImg.getImage();
+                Image scaledImg = targetImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                ImageIcon profileImg = new ImageIcon(scaledImg);
+                jl.setIcon(profileImg);
+
+                jl.setFont(new Font("Serif", Font.BOLD, 31));
+                u.add(jl, BorderLayout.WEST);
+                JLabel state = new JLabel("Online");
+
+                u.add(state, BorderLayout.EAST);
+                u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            }
+            u.setBackground(Color.WHITE);
+
+            UserList.add(u);
+        }
+        UserList.setLayout(new BoxLayout(UserList, BoxLayout.Y_AXIS));
+        userListPanel.setViewportView(UserList);
+    }
+
+    // Getter & Setter
+    public static void setUser(Map<Integer, User> user) {
+        App.user = user;
+    }
 
 }
