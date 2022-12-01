@@ -245,7 +245,8 @@ public class App extends JFrame {
             JPanel u = new JPanel();
             if (roomList.size() > i) {
                 u.setLayout(new BorderLayout());
-
+                
+                //채팅방 이름과 이미지를 가져옴
                 JLabel jl = new JLabel(roomList.get(i).getRoomName());
                 jl.setIcon(changeIcon);
                 jl.setFont(new Font("Serif", Font.BOLD, 31));

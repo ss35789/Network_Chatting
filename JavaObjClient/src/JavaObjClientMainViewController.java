@@ -2,6 +2,7 @@
 // JavaObjClientView.java ObjecStram 기반 Client
 //실질적인 채팅 창
 
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalTime;
@@ -181,12 +182,13 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
-//                            DateToString(LocalTime.now());
                             dataReformat(msg);
                             //신규 유저 접속 시 유저리스트 갱신
                             if (!(controller.appView == null)) {
+                                Point positon = controller.appView.getLocation();
                                 controller.appView.dispose();
                                 controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
+                                controller.appView.setLocation(positon);
                                 controller.appView.setVisible(true);
                             }
                             break;
