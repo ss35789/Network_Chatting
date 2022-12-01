@@ -381,24 +381,37 @@ public class JavaObjClientMainViewController {
      * @param data Server에서 받은 데이터
      */
     public void dataReformat(String data) {
-        data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
+        //data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
 
         // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
         String[] deleteTarget = data.split(" ");
         data = data.substring(deleteTarget[0].length() + 1);
 
         //UserList 문자열과 RoomList 문자열로 구분
-        String[] receivedData = data.split("\\|");
-        String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-        String stringRoomList = receivedData[1]; // roomList
+        String[] receivedData = data.split(DivString.ListDiv);
+        //receivedData[0] = userList , receivedData[1] = RoomList
 
-        //UserList 문자열을 데이터 형식으로 변환
-        Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-        //RoomList 문자열을 데이터 형식으로 변환
-        Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
+        //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
+        if (receivedData.length > 1) {
+            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+            String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
 
-        controller.setUserList(userList);
-        controller.setRoomList(roomList);
+            //UserList 문자열을 데이터 형식으로 변환
+            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+            //RoomList 문자열을 데이터 형식으로 변환
+            Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
+
+            controller.setUserList(userList);
+            controller.setRoomList(roomList);
+        }
+        //RoomList가 존재 하지 않으면 UserList만 세팅
+        else{
+            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+            //UserList 문자열을 데이터 형식으로 변환
+            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+
+            controller.setUserList(userList);
+        }
     }
 
     /**
