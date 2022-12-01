@@ -25,7 +25,7 @@ public class JavaObjClientMainViewController {
     private Socket socket; // 연결소켓
     private ObjectInputStream ois; // 입력용 객체
     private ObjectOutputStream oos; // 출력용 객체
-    private User user; // User Object 정의
+    private User user; // 접속하고 있는 User 본인
     private Map<Integer, User> UserList = new HashMap<>(); // 현재 접속 중인 UserList
     private Map<Integer, Room> RoomList = new HashMap<>(); // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
@@ -182,21 +182,19 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
-                            dataReformat(msg);
+                            dataReformat(cm.getCode(),msg);
                             //신규 유저 접속 시 유저리스트 갱신
-                            if (!(controller.appView == null)) {
-                                Point positon = controller.appView.getLocation();
-                                controller.appView.dispose();
-                                controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
-                                controller.appView.setLocation(positon);
-                                controller.appView.setVisible(true);
-                            }
+                            reGenerateAppView();
                             break;
                         case "610":
                             System.out.println("Client received 610" + msg);
+                            dataReformat(cm.getCode(),msg);
+                            reGenerateAppView();
                             break;
                         case "620":
                             System.out.println("Client received 620 " + msg);
+                            dataReformat(cm.getCode(),msg);
+                            reGenerateAppView();
                             break;
 
                     }
@@ -218,6 +216,7 @@ public class JavaObjClientMainViewController {
             }
         }
     }
+
 
 
 //	// keyboard enter key 치면 서버로 전송
@@ -386,44 +385,56 @@ public class JavaObjClientMainViewController {
      *
      * @param data Server에서 받은 데이터
      */
-    public void dataReformat(String data) {
+    public void dataReformat(String code,String data) {
         //data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
 
         // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
         String[] deleteTarget = data.split(" ");
         data = data.substring(deleteTarget[0].length() + 1);
 
-        //UserList 문자열과 RoomList 문자열로 구분
-        String[] receivedData = data.split(DivString.ListDiv);
-        //receivedData[0] = userList , receivedData[1] = RoomList
+        if(code.equals("600")) {
+            //UserList 문자열과 RoomList 문자열로 구분
+            String[] receivedData = data.split(DivString.ListDiv);
+            //receivedData[0] = userList , receivedData[1] = RoomList
 
-        //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
-        if (receivedData.length > 1) {
-            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
-            String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
+            //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
+            if (receivedData.length > 1) {
+                String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+                String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
 
-            //UserList 문자열을 데이터 형식으로 변환
-            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-            //RoomList 문자열을 데이터 형식으로 변환
-            Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
+                //UserList 문자열을 데이터 형식으로 변환
+                Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+                //RoomList 문자열을 데이터 형식으로 변환
+                Map<Integer, Room> roomList = StringDatatoRoomList(stringRoomList);
 
-            controller.setUserList(userList);
-            controller.setRoomList(roomList);
+                controller.setUserList(userList);
+                controller.setRoomList(roomList);
+            }
+            //RoomList가 존재 하지 않으면 UserList만 세팅
+            else {
+                String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+                //UserList 문자열을 데이터 형식으로 변환
+                Map<Integer, User> userList = StringDatatoUserList(stringUserList);
+
+                controller.setUserList(userList);
+            }
         }
-        //RoomList가 존재 하지 않으면 UserList만 세팅
-        else{
-            String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
+        if(code.equals("610")){
             //UserList 문자열을 데이터 형식으로 변환
-            Map<Integer, User> userList = StringDatatoUserList(stringUserList);
-
+            Map<Integer, User> userList = StringDatatoUserList(data);
             controller.setUserList(userList);
+        }
+        if(code.equals("620")){
+            //RoomList 문자열을 데이터 형식으로 변환
+            Map<Integer, Room> roomList = StringDatatoRoomList(data);
+            controller.setRoomList(roomList);
         }
     }
 
     /**
      * String으로 된 UserList를 보내면 Map<Integer, User> UserList로 변환해서 반환해주는 함수
      *
-     * @param data String으로 된 UserList를 보내면
+     * @param data 변환 하기전 String으로 된 UserList를 보내면
      * @return Map<Integer, User> UserList
      */
     public Map<Integer, User> StringDatatoUserList(String data) { // NULL 처리 필요!
@@ -473,9 +484,12 @@ public class JavaObjClientMainViewController {
         }
         return userList;
     }
-    public void test(){
-        System.out.println("test");
-    }
+
+    /***
+     * String으로 된 RoomList를 보내면 Map<Integer, Room> RoomList로 변환해서 반환해주는 함수
+     * @param data 변환하기 전 String으로 된 RoomList
+     * @return Map<Integer, Room> RoomList
+     */
     public Map<Integer, Room> StringDatatoRoomList(String data) {
         String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
@@ -576,9 +590,22 @@ public class JavaObjClientMainViewController {
      * @param time 변환 할 LocalTime 형 변수
      * @return 원하는 형식으로 변환한 문자열
      */
-//    public String DateToString(LocalTime time){
-//        String formatedNow = now.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
-//        return "오전 0:00";
-//    }
+    public String DateToString(LocalTime time){
+        String formatedNow = time.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+        return "오전 0:00";
+    }
+
+    /***
+     * Controller의 AppView를 갱신을 위해 AppView 삭제 후 같은 위치에 재생성하는 함수
+     */
+    public void reGenerateAppView() {
+        if (!(controller.appView == null)) {
+            Point positon = controller.appView.getLocation();
+            controller.appView.dispose();
+            controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
+            controller.appView.setLocation(positon);
+            controller.appView.setVisible(true);
+        }
+    }
 }
 

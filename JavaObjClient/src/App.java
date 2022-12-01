@@ -239,29 +239,37 @@ public class App extends JFrame {
         UserList.setLayout(new BoxLayout(UserList, BoxLayout.Y_AXIS));
         userListPanel.setViewportView(UserList);
     }
+
     public void setRoomListPanel(ImageIcon changeIcon) {
-        for (int i = 0; i < 100; i++) {
-
+        //RoomList를 순회
+        for (Integer i : roomList.keySet()) {
             JPanel u = new JPanel();
-            if (roomList.size() > i) {
-                u.setLayout(new BorderLayout());
-                
-                //채팅방 이름과 이미지를 가져옴
-                JLabel jl = new JLabel(roomList.get(i).getRoomName());
-                jl.setIcon(changeIcon);
-                jl.setFont(new Font("Serif", Font.BOLD, 31));
-                u.add(jl, BorderLayout.WEST);
-                
-                //맨 끝 채팅을 가져옴
-                JLabel JoinUser = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size()-1).getMsg());
-                JoinUser.setBackground(Color.gray);
-                u.add(JoinUser, BorderLayout.EAST);
-                u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            //Room의 userAuth를 순회
+            for (Integer j : roomList.get(i).getUserAuth()) {
+                //Room의 userAuth(접근권한) Uid(유저가 있으면) JLabel 추가
+                if (j == controller.getUser().getUid()) {
+                    u.setLayout(new BorderLayout());
 
+                    //채팅방 이름과 이미지를 가져옴
+                    JLabel jl = new JLabel(roomList.get(i).getRoomName());
+                    jl.setIcon(changeIcon);
+                    jl.setFont(new Font("Serif", Font.BOLD, 31));
+                    u.add(jl, BorderLayout.WEST);
+
+                    //맨 끝 채팅을 가져옴
+                    JLabel JoinUser = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
+                    JoinUser.setBackground(Color.gray);
+                    u.add(JoinUser, BorderLayout.EAST);
+                    u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    u.setBackground(Color.WHITE);
+
+                    ChatRoomList.add(u);
+                }
+                //유저가 이 Room에 접근권한이 있다는 것이 확인되면
+                // 다음 Room의 userAuth 체크하기 위해 break
+                break;
             }
-            u.setBackground(Color.WHITE);
 
-            ChatRoomList.add(u);
         }
         ChatRoomList.setLayout(new BoxLayout(ChatRoomList, BoxLayout.Y_AXIS));
         ChatRoomListPanel.setViewportView(ChatRoomList);
