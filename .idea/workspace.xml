@@ -7,7 +7,8 @@
     <list default="true" id="237bc96f-cc92-431e-8aa6-c9446c186b0d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/JavaObjServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjClient/src/Object/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjClient/src/Object/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaObjServer/src/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaObjServer/src/Chat.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,6 +147,16 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>jar://$USER_HOME$/.jdks/corretto-1.8.0_332/src.zip!/sun/font/TrueTypeFont.java</url>
+          <line>332</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JavaObjClient/src/JavaObjClientMainViewController.java</url>
+          <line>418</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
