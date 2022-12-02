@@ -594,7 +594,7 @@ public class JavaObjServer extends JFrame {
 							Login();
 
 							ChatMsg ob = new ChatMsg("SERVER", "110", getMyUserDataToString(getUserForUsername(UserName)));
-							WriteAllObject(ob);
+							WriteOneObject(ob);
 
 
 						}
