@@ -382,6 +382,32 @@ public class JavaObjServer extends JFrame {
 			return sld.userList.get(uid).userName;
 
 		}
+
+		public User getUserForUsername(String name){
+			ListData sld = JavaObjServer.getListData();
+			for(int i=0;i<sld.userList.size();i++){
+				if(sld.userList.get(i).userName.equals(name)){
+					return sld.userList.get(i);
+				}
+			}
+			return new User();
+		}
+		public String getMyUserDataToString(User my){
+			//0,Online,[1.2.4],user1,file
+			ArrayList <Integer>myRoomAuth = new ArrayList<>();
+			myRoomAuth = my.RoomAuth;
+			StringBuffer strbuf =new StringBuffer();
+			strbuf.append(my.uid+","+my.state+",");
+			strbuf.append("[");
+			for(int i=0;i<myRoomAuth.size();i++){
+				int x = myRoomAuth.get(i);
+				strbuf.append(x);
+				if(i!=myRoomAuth.size()-1)strbuf.append(".");
+			}
+			strbuf.append("]");
+			strbuf.append(my.Profileimg);
+			return strbuf.toString();
+		}
 		public void Chatting(int rid, Chat chat){
 			//서버에 채팅 저장
 			ListData sld = JavaObjServer.getListData();
@@ -564,7 +590,13 @@ public class JavaObjServer extends JFrame {
 
 
 							//신규 유저면 userList에 추가, 아니면 user설정
+							ListData sld = JavaObjServer.getListData();
 							Login();
+
+							ChatMsg ob = new ChatMsg("SERVER", "110", getMyUserDataToString(getUserForUsername(UserName)));
+							WriteAllObject(ob);
+
+
 						}
 
 
