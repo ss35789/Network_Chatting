@@ -217,9 +217,6 @@ public class JavaObjServer extends JFrame {
 				AppendText("userService error");
 			}
 		}
-	public void test(){
-			System.out.println("test");
-	}
 
 		public void Login() {
 
@@ -260,15 +257,10 @@ public class JavaObjServer extends JFrame {
 
 			JavaObjServer.setListData(new ListData(UserList, RoomList));
 			setListData();
-			for(int j=0;j<UserList.size();j++){
-				System.out.println("id : "+ Integer.toString(UserList.get(j).uid) +", name : " + UserList.get(j).userName);
 
-			}
 
 
 			AppendText("새로운 참가자 " + UserName + " 입장.");
-			WriteOne("Welcome to Java chat server\n");
-			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 			AppendText(msg);
 
@@ -297,6 +289,7 @@ public class JavaObjServer extends JFrame {
 
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
+			System.out.println(sld.userList.get(0).userName + ", ["+sld.userList.get(0).RoomAuth+"]");
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
 			WriteAllObject(obcm);
 		}
@@ -372,11 +365,15 @@ public class JavaObjServer extends JFrame {
 					Room room = new Room(i, userAuth, roomName);
 					room.createChat(new Chat(1,"더미채팅 ㅓㅐㅓㅐㅓ","9:11"));//생략가능 테스트용
 					sld.roomList.put(i, room);
-					JavaObjServer.setListData(sld);
-					SendListData();
+					for(int j=0;j<room.userAuth.size();j++){
+						sld.userList.get(room.userAuth.get(j)).RoomAuth.add(i);
+					}
 					break;
 				}
 			}
+
+
+			JavaObjServer.setListData(sld);
 		}
 
 		public String getUserName(int uid){
@@ -384,6 +381,32 @@ public class JavaObjServer extends JFrame {
 
 			return sld.userList.get(uid).userName;
 
+		}
+
+		public User getUserForUsername(String name){
+			ListData sld = JavaObjServer.getListData();
+			for(int i=0;i<sld.userList.size();i++){
+				if(sld.userList.get(i).userName.equals(name)){
+					return sld.userList.get(i);
+				}
+			}
+			return new User();
+		}
+		public String getMyUserDataToString(User my){
+			//0,Online,[1.2.4],user1,file
+			ArrayList <Integer>myRoomAuth = new ArrayList<>();
+			myRoomAuth = my.RoomAuth;
+			StringBuffer strbuf =new StringBuffer();
+			strbuf.append(my.uid+","+my.state+",");
+			strbuf.append("[");
+			for(int i=0;i<myRoomAuth.size();i++){
+				int x = myRoomAuth.get(i);
+				strbuf.append(x);
+				if(i!=myRoomAuth.size()-1)strbuf.append(".");
+			}
+			strbuf.append("]");
+			strbuf.append(my.Profileimg);
+			return strbuf.toString();
 		}
 		public void Chatting(int rid, Chat chat){
 			//서버에 채팅 저장
@@ -567,7 +590,13 @@ public class JavaObjServer extends JFrame {
 
 
 							//신규 유저면 userList에 추가, 아니면 user설정
+							ListData sld = JavaObjServer.getListData();
 							Login();
+
+							ChatMsg ob = new ChatMsg("SERVER", "110", getMyUserDataToString(getUserForUsername(UserName)));
+							WriteOneObject(ob);
+
+
 						}
 
 
@@ -608,7 +637,7 @@ public class JavaObjServer extends JFrame {
 					}else if(cm.getCode().matches("700")){  // 방생성
 						String str = (String)cm.getData();
 						MakeRoom(str);
-						SendRoomData();
+						SendListData();
 
 					}else if(cm.getCode().matches("720")){  // setSleep
 						String username = cm.getId();
