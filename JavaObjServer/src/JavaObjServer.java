@@ -267,8 +267,6 @@ public class JavaObjServer extends JFrame {
 
 
 			AppendText("새로운 참가자 " + UserName + " 입장.");
-			WriteOne("Welcome to Java chat server\n");
-			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
 			AppendText(msg);
 
