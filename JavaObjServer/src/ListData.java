@@ -1,12 +1,17 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
 public class ListData extends Object{
 
-    Map<Integer, User> userList;
-    Map<Integer,Room> roomList;
+    Map<Integer, User> userList = new HashMap<>();
+    Map<Integer,Room> roomList = new HashMap<>();
     public ListData(
             Map<Integer, User> userList, Map<Integer,Room> roomList){
+        this.roomList = roomList;
+        this.userList = userList;
+    }
+    public void setListData(Map<Integer, User> userList, Map<Integer,Room> roomList){
         this.roomList = roomList;
         this.userList = userList;
     }
@@ -15,17 +20,17 @@ public class ListData extends Object{
         StringBuilder str= new StringBuilder();
         for(int i=0;i<userList.size();i++){
             User user = userList.get(i);
-            str.append(i+":");
-            str.append(user.uid+",");
-            str.append(user.state+",");
+            str.append(i).append(":");
+            str.append(user.uid).append(",");
+            str.append(user.state).append(",");
             str.append("[");
-            for(int j=0;j<user.RoomAuth.size();i++){
+            for(int j=0;j<user.RoomAuth.size();j++){
                 str.append(user.RoomAuth.get(j));
                 if(j!=user.RoomAuth.size()-1)str.append(".");
 
             }
             str.append("],");
-            str.append(user.userName+",");
+            str.append(user.userName).append(",");
             str.append(user.Profileimg.toString());
 
             str.append(" ");

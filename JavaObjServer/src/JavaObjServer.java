@@ -217,9 +217,6 @@ public class JavaObjServer extends JFrame {
 				AppendText("userService error");
 			}
 		}
-	public void test(){
-			System.out.println("test");
-	}
 
 		public void Login() {
 
@@ -260,10 +257,7 @@ public class JavaObjServer extends JFrame {
 
 			JavaObjServer.setListData(new ListData(UserList, RoomList));
 			setListData();
-			for(int j=0;j<UserList.size();j++){
-				System.out.println("id : "+ Integer.toString(UserList.get(j).uid) +", name : " + UserList.get(j).userName);
 
-			}
 
 
 			AppendText("새로운 참가자 " + UserName + " 입장.");
@@ -295,6 +289,7 @@ public class JavaObjServer extends JFrame {
 
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
+			System.out.println(sld.userList.get(0).userName + ", ["+sld.userList.get(0).RoomAuth+"]");
 			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
 			WriteAllObject(obcm);
 		}
@@ -370,10 +365,15 @@ public class JavaObjServer extends JFrame {
 					Room room = new Room(i, userAuth, roomName);
 					room.createChat(new Chat(1,"더미채팅 ㅓㅐㅓㅐㅓ","9:11"));//생략가능 테스트용
 					sld.roomList.put(i, room);
-					JavaObjServer.setListData(sld);
+					for(int j=0;j<room.userAuth.size();j++){
+						sld.userList.get(room.userAuth.get(j)).RoomAuth.add(i);
+					}
 					break;
 				}
 			}
+
+
+			JavaObjServer.setListData(sld);
 		}
 
 		public String getUserName(int uid){
@@ -637,7 +637,7 @@ public class JavaObjServer extends JFrame {
 					}else if(cm.getCode().matches("700")){  // 방생성
 						String str = (String)cm.getData();
 						MakeRoom(str);
-						SendRoomData();
+						SendListData();
 
 					}else if(cm.getCode().matches("720")){  // setSleep
 						String username = cm.getId();
