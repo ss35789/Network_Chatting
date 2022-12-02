@@ -30,7 +30,7 @@ public class JavaObjClientMainViewController {
     private Map<Integer, Room> RoomList = new HashMap<>(); // 현재 존재 하는 RoomList
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
-    private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList
+    private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList Key: Rid Value: ChatRoomView
     private String username;
     private String ip_addr;
     private String port_no;
@@ -173,12 +173,23 @@ public class JavaObjClientMainViewController {
                     } else
                         continue;
                     switch (cm.getCode()) {
+                        case "110":
+                            System.out.println("Client received 110 " + msg);
+                            break;
+                        case "120":
+                            System.out.println("Client received 120 " + msg);
+                            break;
                         case "200": // chat message
                             //AppendText(msg);
+                            System.out.println("Client received 200 " + msg);
+                            break;
+                        case "230":
+                            System.out.println("Client received 230 " + msg);
                             break;
                         case "300": // Image 첨부
                             //AppendText("[" + cm.getId() + "]");
                             //AppendImage(cm.img);
+                            System.out.println("Client received 300 " + msg);
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);

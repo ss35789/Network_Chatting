@@ -90,4 +90,8 @@ public class MakeChatRoomView extends JFrame  {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
+
+    //map 기존 키값 변경 코드
+    //map.put("update_menu_id", map.remove("menu_id"));
+
 }
