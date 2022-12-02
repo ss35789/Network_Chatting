@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Object.User;
+import Object.Room;
 
 public class App extends JFrame {
 
@@ -40,8 +41,8 @@ public class App extends JFrame {
     private String username;
     private String ip_addr;
     private String port_no;
-    public static Map<Integer, User> user = new HashMap<>();
-    public static String[] room = {"room1", "room2", "room3"};
+    public static Map<Integer, User> userList = new HashMap<>();
+    public static Map<Integer, Room> roomList = new HashMap<>();
 
     private String MyimgPath = "JavaObjClient/images/defaultProfileImg.jpg";
     private ArrayList<String> arr = new ArrayList<>();
@@ -60,7 +61,8 @@ public class App extends JFrame {
 
         controller = JavaObjClientMainViewController.getInstance();
 
-        user = controller.getUserList();
+        userList = controller.getUserList();
+        roomList = controller.getRoomList();
 
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -195,29 +197,7 @@ public class App extends JFrame {
 
         setUserListPanel();
 
-        for (int i = 0; i < 100; i++) {
-
-            JPanel u = new JPanel();
-            if (room.length > i) {
-                u.setLayout(new BorderLayout());
-
-                JLabel jl = new JLabel(App.room[i]);
-                jl.setIcon(changeIcon);
-                jl.setFont(new Font("Serif", Font.BOLD, 31));
-                u.add(jl, BorderLayout.WEST);
-
-                JLabel JoinUser = new JLabel("sangminlee, sdfdsf, sd");
-                JoinUser.setBackground(Color.gray);
-                u.add(JoinUser, BorderLayout.EAST);
-                u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-            }
-            u.setBackground(Color.WHITE);
-
-            ChatRoomList.add(u);
-        }
-        ChatRoomList.setLayout(new BoxLayout(ChatRoomList, BoxLayout.Y_AXIS));
-        ChatRoomListPanel.setViewportView(ChatRoomList);
+        setRoomListPanel(changeIcon);
 
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,16 +208,17 @@ public class App extends JFrame {
 
     }
 
+
     public void setUserListPanel() {
         for (int i = 0; i < 100; i++) {
 
             JPanel u = new JPanel();
-            if (user.size() > i) {
+            if (userList.size() > i) {
                 u.setLayout(new BorderLayout());
-                JLabel jl = new JLabel(user.get(i).getUserName());
+                JLabel jl = new JLabel(userList.get(i).getUserName());
 
                 // 이미지 스케일 조정
-                ImageIcon originImg = user.get(i).getImg();
+                ImageIcon originImg = userList.get(i).getImg();
                 Image targetImg = originImg.getImage();
                 Image scaledImg = targetImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                 ImageIcon profileImg = new ImageIcon(scaledImg);
@@ -245,7 +226,7 @@ public class App extends JFrame {
 
                 jl.setFont(new Font("Serif", Font.BOLD, 31));
                 u.add(jl, BorderLayout.WEST);
-                JLabel state = new JLabel("Online");
+                JLabel state = new JLabel(userList.get(i).getState());
 
                 u.add(state, BorderLayout.EAST);
                 u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -259,9 +240,44 @@ public class App extends JFrame {
         userListPanel.setViewportView(UserList);
     }
 
+    public void setRoomListPanel(ImageIcon changeIcon) {
+        //RoomList를 순회
+        for (Integer i : roomList.keySet()) {
+            JPanel u = new JPanel();
+            //Room의 userAuth를 순회
+            for (Integer j : roomList.get(i).getUserAuth()) {
+                //Room의 userAuth(접근권한) Uid(유저가 있으면) JLabel 추가
+                if (j == controller.getUser().getUid()) {
+                    u.setLayout(new BorderLayout());
+
+                    //채팅방 이름과 이미지를 가져옴
+                    JLabel jl = new JLabel(roomList.get(i).getRoomName());
+                    jl.setIcon(changeIcon);
+                    jl.setFont(new Font("Serif", Font.BOLD, 31));
+                    u.add(jl, BorderLayout.WEST);
+
+                    //맨 끝 채팅을 가져옴
+                    JLabel JoinUser = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
+                    JoinUser.setBackground(Color.gray);
+                    u.add(JoinUser, BorderLayout.EAST);
+                    u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                    u.setBackground(Color.WHITE);
+
+                    ChatRoomList.add(u);
+                }
+                //유저가 이 Room에 접근권한이 있다는 것이 확인되면
+                // 다음 Room의 userAuth 체크하기 위해 break
+                break;
+            }
+
+        }
+        ChatRoomList.setLayout(new BoxLayout(ChatRoomList, BoxLayout.Y_AXIS));
+        ChatRoomListPanel.setViewportView(ChatRoomList);
+    }
+
     // Getter & Setter
-    public static void setUser(Map<Integer, User> user) {
-        App.user = user;
+    public static void setUserList(Map<Integer, User> userList) {
+        App.userList = userList;
     }
 
 }
