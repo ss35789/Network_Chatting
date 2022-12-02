@@ -252,7 +252,7 @@ public class App extends JFrame {
             //Room의 userAuth를 순회
 
             //RoomList 의 패널을 먼저 추가 시킴
-            if (i < roomListSize -1 ) {
+            if (i < roomListSize ) {
 
                 for (Integer j : roomList.get(i).getUserAuth()) {
 
