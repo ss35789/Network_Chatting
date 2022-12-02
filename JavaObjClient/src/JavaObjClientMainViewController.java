@@ -16,8 +16,6 @@ import Object.DivString;
 
 import javax.swing.*;
 
-import static java.sql.Types.NULL;
-
 
 public class JavaObjClientMainViewController {
     private static final long serialVersionUID = 1L;
@@ -31,9 +29,9 @@ public class JavaObjClientMainViewController {
     private LoginView loginView; // LoginView
     private App appView; // AppView(MainView)
     private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList Key: Rid Value: ChatRoomView
-    private String username;
     private String ip_addr;
     private String port_no;
+    //private ListenNetwork net ;
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -53,13 +51,17 @@ public class JavaObjClientMainViewController {
         return user;
     }
 
-    public Map<Integer, ChatRoomView> getChatRoomViewList() { return chatRoomViewList;}
+    public Map<Integer, ChatRoomView> getChatRoomViewList() {
+        return chatRoomViewList;
+    }
 
-    public String getUsername() { return username; }
+    public String getPort_no() {
+        return port_no;
+    }
 
-    public String getPort_no() { return port_no;}
-
-    public String getIp_addr() { return ip_addr; }
+    public String getIp_addr() {
+        return ip_addr;
+    }
 
     public Map<Integer, User> getUserList() {
         return UserList;
@@ -69,9 +71,17 @@ public class JavaObjClientMainViewController {
         return RoomList;
     }
 
-    public void setUser(String username) { user = new User.UserBuilder().setUserName(username).build(); }
+//    public ListenNetwork getNet() {
+//        return net;
+//    }
 
-    public void setSocket(Socket socket) { this.socket = socket; }
+    public void setUserUserName(String username) {
+        user = new User.UserBuilder().setUserName(username).build();
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
 
     public void setOIS(ObjectInputStream ois) {
         this.ois = ois;
@@ -97,8 +107,6 @@ public class JavaObjClientMainViewController {
         this.appView = appView;
     }
 
-    public void setUsername(String username) { this.username = username; }
-
     public void setIp_addr(String ip_addr) {
         this.ip_addr = ip_addr;
     }
@@ -106,6 +114,14 @@ public class JavaObjClientMainViewController {
     public void setPort_no(String port_no) {
         this.port_no = port_no;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+//    public void setNet(ListenNetwork net) {
+//        this.net = net;
+//    }
 
     // Getter & Setter 끝
 
@@ -133,7 +149,7 @@ public class JavaObjClientMainViewController {
     public void SendObject(Object ob) { // 서버로 메세지를 보내는 메소드
         try {
             ChatMsg cm = (ChatMsg) ob;
-            System.out.println("client send "+cm.getCode() +" "+ cm.getId() + " " + cm.getData());
+            System.out.println("client send " + cm.getCode() + " " + cm.getId() + " " + cm.getData());
             oos.writeObject(ob);
         } catch (IOException e) {
             // textArea.append("메세지 송신 에러!!\n");
@@ -175,6 +191,7 @@ public class JavaObjClientMainViewController {
                     switch (cm.getCode()) {
                         case "110":
                             System.out.println("Client received 110 " + msg);
+                            dataSetUser(msg);
                             break;
                         case "120":
                             System.out.println("Client received 120 " + msg);
@@ -193,18 +210,18 @@ public class JavaObjClientMainViewController {
                             break;
                         case "600":
                             System.out.println("Client received 600 " + msg);
-                            dataReformat(cm.getCode(),msg);
+                            dataReformat(cm.getCode(), msg);
                             //신규 유저 접속 시 유저리스트 갱신
                             reGenerateAppView();
                             break;
                         case "610":
                             System.out.println("Client received 610" + msg);
-                            dataReformat(cm.getCode(),msg);
+                            dataReformat(cm.getCode(), msg);
                             reGenerateAppView();
                             break;
                         case "620":
                             System.out.println("Client received 620 " + msg);
-                            dataReformat(cm.getCode(),msg);
+                            dataReformat(cm.getCode(), msg);
                             reGenerateAppView();
                             break;
 
@@ -226,8 +243,8 @@ public class JavaObjClientMainViewController {
 
             }
         }
-    }
 
+    }
 
 
 //	// keyboard enter key 치면 서버로 전송
@@ -383,6 +400,7 @@ public class JavaObjClientMainViewController {
      */
     public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
         ListenNetwork net = new ListenNetwork();
+        //controller.setNet(net);
         net.start();
         App appView = new App(username, ip_addr, port_no);
         controller.setAppView(appView);
@@ -390,20 +408,72 @@ public class JavaObjClientMainViewController {
         controller.appView.setVisible(true);
     }
 
+    /***
+     * LocalTime 형 변수를 받아서 원하는 형식으로 변환 후 변환한 형식의 문자열로 반환해주는 함수
+     * @param time 변환 할 LocalTime 형 변수
+     * @return 원하는 형식으로 변환한 문자열
+     */
+    public String DateToString(LocalTime time) {
+        String formatedNow = time.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
+        return "오전 0:00";
+    }
+
+    /***
+     * Controller의 AppView를 갱신을 위해 AppView 삭제 후 같은 위치에 재생성하는 함수
+     */
+    public void reGenerateAppView() {
+        if (!(controller.appView == null)) {
+            Point positon = controller.appView.getLocation();
+            controller.appView.dispose();
+            controller.setAppView(new App(controller.getUser().getUserName(), controller.ip_addr, controller.port_no));
+            controller.appView.setLocation(positon);
+            controller.appView.setVisible(true);
+        }
+    }
+    /***
+     *  110 protocol로 받은 문자열 userData로 controller의 User를 세팅하는 함수
+     * @param data 110 protocol로 받은 문자열 userData
+     */
+    public void dataSetUser(String data) {
+        data = removeProtocolString(data);
+        String[] userData = data.split(","); // 0=uid, 1=state, 2=RoomAuth, 3=userName, 4=ImgPath
+
+        ArrayList<Integer> roomAuth = getArrayListFromAuthString(userData[2]);
+        
+
+        User user = new User.UserBuilder().
+                setUid(Integer.parseInt(userData[0])).
+                setState(userData[1]).
+                setRoomAuth(roomAuth).
+                setUserName(userData[3]).
+                setImg(new ImageIcon(userData[4])).
+                build();
+
+        controller.setUser(user);
+    }
+    /***
+     * 문자열 Data 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거 해주는 함수
+     * @param data 제거 하기 전 String data
+     * @return 제거 된 String data
+     */
+    public String removeProtocolString(String data) {
+        // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
+        String[] deleteTarget = data.split(" ");
+        data = data.substring(deleteTarget[0].length() + 1);
+        return data;
+    }
     /**
      * 서버에서 받은 문자열로 UserList,RoomList,RoomAuth ..으로 변환하는 함수
      * 600,610,620 프로토콜로 받은 모든 문자열 적용 가능
      *
      * @param data Server에서 받은 데이터
      */
-    public void dataReformat(String code,String data) {
+    public void dataReformat(String code, String data) {
         //data = data + " "; //[SERVER] 0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2 | roomList
 
-        // 앞에 protocol 코드 + 공백 제거=> ex.) [Server],600 제거
-        String[] deleteTarget = data.split(" ");
-        data = data.substring(deleteTarget[0].length() + 1);
+        data = removeProtocolString(data);
 
-        if(code.equals("600")) {
+        if (code.equals("600")) {
             //UserList 문자열과 RoomList 문자열로 구분
             String[] receivedData = data.split(DivString.ListDiv);
             //receivedData[0] = userList , receivedData[1] = RoomList
@@ -430,17 +500,18 @@ public class JavaObjClientMainViewController {
                 controller.setUserList(userList);
             }
         }
-        if(code.equals("610")){
+        if (code.equals("610")) {
             //UserList 문자열을 데이터 형식으로 변환
             Map<Integer, User> userList = StringDatatoUserList(data);
             controller.setUserList(userList);
         }
-        if(code.equals("620")){
+        if (code.equals("620")) {
             //RoomList 문자열을 데이터 형식으로 변환
             Map<Integer, Room> roomList = StringDatatoRoomList(data);
             controller.setRoomList(roomList);
         }
     }
+
 
     /**
      * String으로 된 UserList를 보내면 Map<Integer, User> UserList로 변환해서 반환해주는 함수
@@ -460,23 +531,9 @@ public class JavaObjClientMainViewController {
 
             // stringUserData  생성
             String[] stringUserData = s.split(","); // 0 = uid, 1 = state , 2 = RoomAuth , 3 = userName, 4 = img
-
-            ArrayList<Integer> roomAuth = new ArrayList<Integer>();
-            // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
             String stringRoomAuth = stringUserData[2];
-            StringBuffer str = new StringBuffer(stringRoomAuth);
-            stringRoomAuth = str.delete(0, stringRoomAuth.length()).toString();
 
-            //stringRoomAuth ","로 분할
-
-            String[] stringRoomAuthRid = stringRoomAuth.split(",");
-
-            // RoomAuth가 존재하면 setting
-            if (!stringRoomAuthRid[0].isEmpty()) {
-                for (String ra : stringRoomAuthRid) {
-                    roomAuth.add(Integer.parseInt(ra));
-                }
-            }
+            ArrayList<Integer> roomAuth = getArrayListFromAuthString(stringRoomAuth);
 
             // ImgIcon setting 용 File 생성
             File file = new File(stringUserData[4]);
@@ -496,6 +553,7 @@ public class JavaObjClientMainViewController {
         return userList;
     }
 
+
     /***
      * String으로 된 RoomList를 보내면 Map<Integer, Room> RoomList로 변환해서 반환해주는 함수
      * @param data 변환하기 전 String으로 된 RoomList
@@ -506,40 +564,24 @@ public class JavaObjClientMainViewController {
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
 
         //Room 생성 후 삽입
-        for(String s:StringRoomListData){
+        for (String s : StringRoomListData) {
             // Room 생성을 위한 String & ArrayList 들 생성
             // 앞에 Map의 Key : 값 제거 ex) 1:
-            s = s.substring(s.indexOf(":")+1);
+            s = s.substring(s.indexOf(":") + 1);
 
             // stringRoomData  생성
             String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
 
             //userAuth 처리
-            ArrayList<Integer> userAuth = new ArrayList<Integer>();
-            // ArrayList<Integer> roomAuth에 넣기 위한 data reformate(앞뒤[]제거)
-            String stringUserAuth = stringRoomData[1];
-            StringBuffer str = new StringBuffer(stringUserAuth);
-            str.deleteCharAt(0);
-            str.deleteCharAt(str.length()-1);
-            stringUserAuth = str.toString();
-            //stringRoomAuth "."로 분할
-            String[] stringUserAuthRid = stringUserAuth.split("\\.");
-            // RoomAuth가 존재하면 setting
-            if (!stringUserAuthRid[0].isEmpty()) {
-                for (String ra : stringUserAuthRid) {
-                    userAuth.add(Integer.parseInt(ra));
-                }
-            }
+            ArrayList<Integer> userAuth = getArrayListFromAuthString(stringRoomData[1]);
 
             //Chat 처리
             ArrayList<Chat> chatArrayList = new ArrayList<Chat>();
             // ArrayList<Integer> Chat에 넣기 위한 data reformate(앞뒤[]제거)
             String stringChat = stringRoomData[3];
-            StringBuffer strb = new StringBuffer(stringChat);
-            strb.deleteCharAt(0);
-            strb.deleteCharAt(strb.length()-1);
-            stringChat = strb.toString();
-            String[] stringChatList = stringChat .split(DivString.ChatListDiv);
+            stringChat = deleteCharStarEnd(stringChat);
+
+            String[] stringChatList = stringChat.split(DivString.ChatListDiv);
 
             //Chat이 존재하면
             if (!stringChatList[0].isEmpty()) {
@@ -566,6 +608,19 @@ public class JavaObjClientMainViewController {
             roomList.put(room.getRid(), room);
         }
         return roomList;
+    }
+
+    /***
+     * Stirng data 를 받아서 앞 뒤 문자를 제거해주는 함수
+     * @param data
+     * @return
+     */
+    public String deleteCharStarEnd(String data) {
+        StringBuffer str = new StringBuffer(data);
+        str.deleteCharAt(0);
+        str.deleteCharAt(str.length() - 1);
+        data = str.toString();
+        return data;
     }
 
     /**
@@ -597,26 +652,28 @@ public class JavaObjClientMainViewController {
     }
 
     /***
-     * LocalTime 형 변수를 받아서 원하는 형식으로 변환 후 변환한 형식의 문자열로 반환해주는 함수
-     * @param time 변환 할 LocalTime 형 변수
-     * @return 원하는 형식으로 변환한 문자열
+     * 권한 형식으로 되어 있는 문자열 ex) [1.2.3] 을 받아 ArrayList<Integer> 형식으로 변환해주는 함수
+     * @param stringAuthData 권한 형식으로 되어 있는 문자열 ex) [1.2.3]
+     * @return
      */
-    public String DateToString(LocalTime time){
-        String formatedNow = time.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
-        return "오전 0:00";
+    public ArrayList<Integer> getArrayListFromAuthString(String stringAuthData) {
+        //반환용 빈 ArrayList<Integer> 선언
+        ArrayList<Integer> Auth = new ArrayList<Integer>();
+
+        // ArrayList<Integer> Auth에 넣기 위한 data reformate(앞뒤[]제거)
+        stringAuthData = deleteCharStarEnd(stringAuthData);
+        
+        //stringRoomAuth ","로 분할
+        String[] eachAuth = stringAuthData.split("\\.");
+
+        // Auth가 존재하면 setting
+        if (!eachAuth[0].isEmpty()) {
+            for (String ra : eachAuth) {
+                Auth.add(Integer.parseInt(ra));
+            }
+        }
+        return Auth;
     }
 
-    /***
-     * Controller의 AppView를 갱신을 위해 AppView 삭제 후 같은 위치에 재생성하는 함수
-     */
-    public void reGenerateAppView() {
-        if (!(controller.appView == null)) {
-            Point positon = controller.appView.getLocation();
-            controller.appView.dispose();
-            controller.setAppView(new App(controller.username, controller.ip_addr, controller.username));
-            controller.appView.setLocation(positon);
-            controller.appView.setVisible(true);
-        }
-    }
 }
 

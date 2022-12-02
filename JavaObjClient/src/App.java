@@ -241,33 +241,55 @@ public class App extends JFrame {
     }
 
     public void setRoomListPanel(ImageIcon changeIcon) {
+
+        // server에서 110 protocol 수신을 대기
+        while (controller.getUser().getState() == null) ;
+        int roomListSize = roomList.size(); 
+        
         //RoomList를 순회
-        for (Integer i : roomList.keySet()) {
+        for (int i = 0; i < 100; i++) {
             JPanel u = new JPanel();
             //Room의 userAuth를 순회
-            for (Integer j : roomList.get(i).getUserAuth()) {
-                //Room의 userAuth(접근권한) Uid(유저가 있으면) JLabel 추가
-                if (j == controller.getUser().getUid()) {
-                    u.setLayout(new BorderLayout());
 
-                    //채팅방 이름과 이미지를 가져옴
-                    JLabel jl = new JLabel(roomList.get(i).getRoomName());
-                    jl.setIcon(changeIcon);
-                    jl.setFont(new Font("Serif", Font.BOLD, 31));
-                    u.add(jl, BorderLayout.WEST);
+            //RoomList 의 패널을 먼저 추가 시킴
+            if (i < roomListSize -1 ) {
 
-                    //맨 끝 채팅을 가져옴
-                    JLabel JoinUser = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
-                    JoinUser.setBackground(Color.gray);
-                    u.add(JoinUser, BorderLayout.EAST);
-                    u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                    u.setBackground(Color.WHITE);
+                for (Integer j : roomList.get(i).getUserAuth()) {
 
-                    ChatRoomList.add(u);
+                    //Room의 userAuth(접근권한) Uid(유저가 있으면) JLabel 추가
+                    if (j == controller.getUser().getUid()) {
+                        u.setLayout(new BorderLayout());
+
+                        //채팅방 이름과 이미지를 가져옴
+                        JLabel jl = new JLabel(roomList.get(i).getRoomName());
+                        jl.setIcon(changeIcon);
+                        jl.setFont(new Font("Serif", Font.BOLD, 31));
+                        u.add(jl, BorderLayout.WEST);
+
+                        //맨 끝 채팅을 가져옴
+                        JLabel lastChat = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
+                        lastChat.setBackground(Color.gray);
+                        u.add(lastChat, BorderLayout.EAST);
+                        u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                        u.setBackground(Color.WHITE);
+
+                        //아래 쪽에 빈 패널 추가(동남쪽에 패널 배치용)
+                        JPanel southPanel = new JPanel(new BorderLayout());
+                        u.add(southPanel,BorderLayout.SOUTH);
+
+                        //맨 끝 채팅의 시간을 가져옴
+                        JLabel lastChatTime = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getDate());
+                        lastChatTime.setBackground(Color.gray);
+                        southPanel.add(lastChatTime,BorderLayout.EAST);
+                        southPanel.setBackground(Color.WHITE);
+
+                        ChatRoomList.add(u);
+                    }
                 }
-                //유저가 이 Room에 접근권한이 있다는 것이 확인되면
-                // 다음 Room의 userAuth 체크하기 위해 break
-                break;
+            }
+            //roomList 패널 먼저 추가 한 후 빈 패널을 아래에 배치
+            else{
+                ChatRoomList.add(u);
             }
 
         }

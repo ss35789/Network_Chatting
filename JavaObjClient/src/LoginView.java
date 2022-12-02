@@ -1,5 +1,3 @@
-import sun.rmi.runtime.Log;
-import Object.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -84,8 +82,7 @@ public class LoginView extends JFrame{
             String port_no = txtPortNumber.getText().trim();
             // Controller 가져오기 & 세팅
             controller = JavaObjClientMainViewController.getInstance();
-            controller.setUser(username);
-            controller.setUsername(username);
+            controller.setUserUserName(username);
             controller.setIp_addr(ip_addr);
             controller.setPort_no(port_no);
 
