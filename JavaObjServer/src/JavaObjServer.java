@@ -373,7 +373,6 @@ public class JavaObjServer extends JFrame {
 					room.createChat(new Chat(1,"더미채팅 ㅓㅐㅓㅐㅓ","9:11"));//생략가능 테스트용
 					sld.roomList.put(i, room);
 					JavaObjServer.setListData(sld);
-					SendListData();
 					break;
 				}
 			}
