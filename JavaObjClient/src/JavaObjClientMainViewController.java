@@ -133,8 +133,8 @@ public class JavaObjClientMainViewController {
      *
      * @param chatRoomView 추가할 View
      */
-    public void addChatRoomView(ChatRoomView chatRoomView) {
-        this.chatRoomViewList.put(chatRoomViewList.size() + 1, chatRoomView);
+    public void addChatRoomView(Integer rid,ChatRoomView chatRoomView) {
+        this.chatRoomViewList.put(rid, chatRoomView);
     }
 
 
@@ -211,7 +211,6 @@ public class JavaObjClientMainViewController {
                         case "600":
                             System.out.println("Client received 600 " + msg);
                             dataReformat(cm.getCode(), msg);
-                            initChatRoomView(controller.getChatRoomViewList());
                             reGenerateAppView();
                             break;
                         case "610":
@@ -223,6 +222,13 @@ public class JavaObjClientMainViewController {
                             System.out.println("Client received 620 " + msg);
                             dataReformat(cm.getCode(), msg);
                             reGenerateAppView();
+                            break;
+                        case "710":
+                            System.out.println("Client received 710 " + msg);
+                            ChatRoomView c = initChatRoomView(msg);
+                            int rid = getRidfromData(msg);
+                            controller.addChatRoomView(rid,c);
+                            c.setVisible(true);
                             break;
 
                     }
@@ -676,12 +682,37 @@ public class JavaObjClientMainViewController {
         return Auth;
     }
 
-    /***
-     * Controller의 채팅방뷰 리스트를 받아서 초기화가 되지 않은 ChatRoomView를 초기화 함
-     * @param chatRoomViewList
+    /**
+     * 710 Protocol data를 받아서 ChatRoomView를 초기화 하는 함수
+     * @param data 서버에서 710으로 수신받은 문자열 데이터
      */
-    public void initChatRoomView(Map<Integer,ChatRoomView> chatRoomViewList) {
+    public ChatRoomView initChatRoomView(String data) {
+        //protocol 코드 제거 [server]
+        data = removeProtocolString(data);
+        String[] roomData = data.split(","); // 0= Rid, 1= roomName, 2= userAuth
 
+        //user 인원 수 세기
+        String userAuth = deleteCharStarEnd(roomData[2]); // 앞뒤 [] 제거
+        int userNum = 0;
+        String[] num = userAuth.split(".");
+        for(String s : num)
+            userNum++;
+
+        ChatRoomView c = new ChatRoomView(roomData[1],Integer.toString(userNum));
+        return c;
+    }
+
+    /***
+     * 710 Protocol data를 받아서 RoomID를 반환하는 함수
+     * @param data 서버에서 710으로 수신받은 문자열 데이터
+     * @return
+     */
+    public int getRidfromData(String data) {
+        //protocol 코드 제거 [server]
+        data = removeProtocolString(data);
+        String[] roomData = data.split(","); // 0= Rid, 1= roomName, 2= userAuth
+
+        return Integer.parseInt(roomData[0]);
     }
 
 }

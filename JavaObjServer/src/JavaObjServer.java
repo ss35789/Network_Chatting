@@ -375,6 +375,7 @@ public class JavaObjServer extends JFrame {
 					for(int j=0;j<room.userAuth.size();j++){
 						sld.userList.get(room.userAuth.get(j)).RoomAuth.add(i);
 					}
+					SendMakeRoomSucData(i,roomName,userAuth);
 					break;
 				}
 			}
@@ -382,7 +383,22 @@ public class JavaObjServer extends JFrame {
 
 			JavaObjServer.setListData(sld);
 		}
+		public void SendMakeRoomSucData(int rid,String roomname, ArrayList<Integer> userAuth){
+			StringBuffer str = new StringBuffer();
+			str.append(rid);
+			str.append(","+roomname);
 
+			str.append(",[");
+			for(int i=0;i<userAuth.size();i++){
+				str.append(userAuth.get(i));
+				if(i!=userAuth.size()-1)str.append(".");
+			}
+			str.append("]");
+
+			String MakeRoomData = str.toString();
+			ChatMsg obcm = new ChatMsg("SERVER", "710", MakeRoomData);
+			WriteAllObject(obcm);
+		}
 		public String getUserName(int uid){
 			ListData sld = JavaObjServer.getListData();
 

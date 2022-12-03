@@ -15,7 +15,8 @@ public class ChatRoomView extends JFrame{
     private JTextArea ChatInput;
     private JLabel btnSubmit;
     private JLabel btnSendImg;
-
+    
+    //생성자 함수
     public ChatRoomView(String roomName,String userNum){
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 800);
@@ -78,4 +79,11 @@ public class ChatRoomView extends JFrame{
         // TODO: place custom component creation code here
     }
 
+    public void setLblRoomName(String lblRoomName) {
+        this.lblRoomName.setText(lblRoomName);
+    }
+
+    public void setLblRoomUserNum(String lblRoomUserNum) {
+        this.lblRoomUserNum.setText(lblRoomUserNum);
+    }
 }

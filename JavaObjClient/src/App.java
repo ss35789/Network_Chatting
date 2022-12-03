@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -255,7 +256,7 @@ public class App extends JFrame {
 
                 for (Integer j : roomList.get(i).getUserAuth()) {
 
-                    //Room의 userAuth(접근권한) Uid(유저가 있으면) JLabel 추가
+                    //Room의 userAuth(접근권한)에 Uid(유저가 있으면) JLabel 추가
                     if (j == controller.getUser().getUid()) {
                         u.setLayout(new BorderLayout());
 
@@ -281,11 +282,38 @@ public class App extends JFrame {
                             southPanel.add(lastChatTime, BorderLayout.EAST);
                             southPanel.setBackground(Color.WHITE);
                         }
-                        
+
                         u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         u.setBackground(Color.WHITE);
                         ChatRoomList.add(u);
                     }
+                    int panelOrder = i;
+                    u.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            controller.getChatRoomViewList().get(panelOrder).setVisible(true);
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
                 }
             }
             //roomList 패널 먼저 추가 한 후 빈 패널을 아래에 배치
