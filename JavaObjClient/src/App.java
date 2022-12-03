@@ -266,22 +266,24 @@ public class App extends JFrame {
                         u.add(jl, BorderLayout.WEST);
 
                         //맨 끝 채팅을 가져옴
-                        JLabel lastChat = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
-                        lastChat.setBackground(Color.gray);
-                        u.add(lastChat, BorderLayout.EAST);
+                        if(!roomList.get(i).getChat().isEmpty()) {
+                            JLabel lastChat = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
+                            lastChat.setBackground(Color.gray);
+                            u.add(lastChat, BorderLayout.EAST);
+
+                            //아래 쪽에 빈 패널 추가(동남쪽에 패널 배치용)
+                            JPanel southPanel = new JPanel(new BorderLayout());
+                            u.add(southPanel, BorderLayout.SOUTH);
+
+                            //맨 끝 채팅의 시간을 가져옴
+                            JLabel lastChatTime = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getDate());
+                            lastChatTime.setBackground(Color.gray);
+                            southPanel.add(lastChatTime, BorderLayout.EAST);
+                            southPanel.setBackground(Color.WHITE);
+                        }
+                        
                         u.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                         u.setBackground(Color.WHITE);
-
-                        //아래 쪽에 빈 패널 추가(동남쪽에 패널 배치용)
-                        JPanel southPanel = new JPanel(new BorderLayout());
-                        u.add(southPanel,BorderLayout.SOUTH);
-
-                        //맨 끝 채팅의 시간을 가져옴
-                        JLabel lastChatTime = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getDate());
-                        lastChatTime.setBackground(Color.gray);
-                        southPanel.add(lastChatTime,BorderLayout.EAST);
-                        southPanel.setBackground(Color.WHITE);
-
                         ChatRoomList.add(u);
                     }
                 }
