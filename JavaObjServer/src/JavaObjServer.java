@@ -371,7 +371,6 @@ public class JavaObjServer extends JFrame {
 			for(int i=0;i<=roomList.size();i++){
 				if(!roomList.containsKey(i)){
 					Room room = new Room(i, userAuth, roomName);
-					room.createChat(new Chat(1,"더미채팅 ㅓㅐㅓㅐㅓ","9:11"));//생략가능 테스트용
 					sld.roomList.put(i, room);
 					for(int j=0;j<room.userAuth.size();j++){
 						sld.userList.get(room.userAuth.get(j)).RoomAuth.add(i);
