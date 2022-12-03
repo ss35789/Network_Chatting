@@ -412,7 +412,8 @@ public class JavaObjServer extends JFrame {
 				strbuf.append(x);
 				if(i!=myRoomAuth.size()-1)strbuf.append(".");
 			}
-			strbuf.append("]");
+			strbuf.append("],");
+			strbuf.append(my.userName+",");
 			strbuf.append(my.Profileimg);
 			return strbuf.toString();
 		}
