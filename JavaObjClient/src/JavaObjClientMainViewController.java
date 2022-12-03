@@ -694,7 +694,7 @@ public class JavaObjClientMainViewController {
         //user 인원 수 세기
         String userAuth = deleteCharStarEnd(roomData[2]); // 앞뒤 [] 제거
         int userNum = 0;
-        String[] num = userAuth.split(".");
+        String[] num = userAuth.split("\\.");
         for(String s : num)
             userNum++;
 
