@@ -64,7 +64,7 @@ public class MakeChatRoomView extends JFrame  {
                 controller.SendObject(obcm);
                 
                 //ChatRoomView 생성
-                ChatRoomView chatRoomView = new ChatRoomView();
+                ChatRoomView chatRoomView = new ChatRoomView(txtRoomNameInput.getText(),Integer.toString(selectionList.size()));
                 controller.addChatRoomView(chatRoomView);
                 
                 //채팅방 생성 View => ChatRoomView로 화면 전환

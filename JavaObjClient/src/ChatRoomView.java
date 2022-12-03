@@ -16,10 +16,13 @@ public class ChatRoomView extends JFrame{
     private JLabel btnSubmit;
     private JLabel btnSendImg;
 
-    public ChatRoomView(){
+    public ChatRoomView(String roomName,String userNum){
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 800);
         setContentPane(mainPanel);
+        lblRoomName.setText(roomName);
+        lblRoomUserNum.setText(userNum);
+
 
         btnSendImg.addMouseListener(new MouseAdapter() {
             @Override
