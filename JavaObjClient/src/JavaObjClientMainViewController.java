@@ -211,7 +211,7 @@ public class JavaObjClientMainViewController {
                         case "600":
                             System.out.println("Client received 600 " + msg);
                             dataReformat(cm.getCode(), msg);
-                            //신규 유저 접속 시 유저리스트 갱신
+                            initChatRoomView(controller.getChatRoomViewList());
                             reGenerateAppView();
                             break;
                         case "610":
@@ -245,6 +245,7 @@ public class JavaObjClientMainViewController {
         }
 
     }
+
 
 
 //	// keyboard enter key 치면 서버로 전송
@@ -439,7 +440,7 @@ public class JavaObjClientMainViewController {
         String[] userData = data.split(","); // 0=uid, 1=state, 2=RoomAuth, 3=userName, 4=ImgPath
 
         ArrayList<Integer> roomAuth = getArrayListFromAuthString(userData[2]);
-        
+
 
         User user = new User.UserBuilder().
                 setUid(Integer.parseInt(userData[0])).
@@ -662,7 +663,7 @@ public class JavaObjClientMainViewController {
 
         // ArrayList<Integer> Auth에 넣기 위한 data reformate(앞뒤[]제거)
         stringAuthData = deleteCharStarEnd(stringAuthData);
-        
+
         //stringRoomAuth ","로 분할
         String[] eachAuth = stringAuthData.split("\\.");
 
@@ -673,6 +674,14 @@ public class JavaObjClientMainViewController {
             }
         }
         return Auth;
+    }
+
+    /***
+     * Controller의 채팅방뷰 리스트를 받아서 초기화가 되지 않은 ChatRoomView를 초기화 함
+     * @param chatRoomViewList
+     */
+    public void initChatRoomView(Map<Integer,ChatRoomView> chatRoomViewList) {
+
     }
 
 }
