@@ -268,7 +268,7 @@ public class JavaObjServer extends JFrame {
 
 
 
-			SendListData(); // 누군가 로그인 할 때마다 데이터 갱신
+			SendInitData(); // 누군가 로그인 할 때마다 데이터 갱신
 
 
 
@@ -287,6 +287,14 @@ public class JavaObjServer extends JFrame {
 
 		}
 
+		public void SendInitData(){
+			ListData sld = JavaObjServer.getListData();
+			System.out.println(sld.userList.get(0).userName + ", ["+sld.userList.get(0).RoomAuth+"]");
+			ChatMsg obcm = new ChatMsg("SERVER", "600", sld.AllListData());
+			WriteOneObject(obcm);
+			SendUserData();
+
+		}
 		public void SendListData(){
 			ListData sld = JavaObjServer.getListData();
 			System.out.println(sld.userList.get(0).userName + ", ["+sld.userList.get(0).RoomAuth+"]");

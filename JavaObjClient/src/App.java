@@ -211,7 +211,6 @@ public class App extends JFrame {
 
     public void setUserListPanel() {
         for (int i = 0; i < 100; i++) {
-
             JPanel u = new JPanel();
             if (userList.size() > i) {
                 u.setLayout(new BorderLayout());
