@@ -393,7 +393,7 @@ public class JavaObjServer extends JFrame {
 
 			str.append(",[");
 			for(int i=0;i<userAuth.size();i++){
-				str.append(userAuth.get(0));
+				str.append(userAuth.get(i));
 				if(i!=userAuth.size()-1)str.append(".");
 			}
 			str.append("]");
