@@ -42,6 +42,7 @@
                 </constraints>
                 <properties>
                   <font size="30"/>
+                  <labelFor value="415ea"/>
                   <text value="친구"/>
                 </properties>
               </component>
