@@ -443,7 +443,7 @@ public class JavaObjServer extends JFrame {
 			JavaObjServer.setListData(sld);
 //sdf
 			//채팅 전송
-			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
+			ChatMsg cm = new ChatMsg(rid+DivString.RoomDiv+ chat.uid,"200",chat.msg);
 			cm.setImg(chat.img);
 			WriteAllObject(cm);
 		}

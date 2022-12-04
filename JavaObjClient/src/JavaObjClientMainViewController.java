@@ -203,6 +203,7 @@ public class JavaObjClientMainViewController {
                         case "200": // chat message
                             //AppendText(msg);
                             System.out.println("Client received 200 " + msg);
+                            AppendText(msg);
                             break;
                         case "230":
                             System.out.println("Client received 230 " + msg);
@@ -255,8 +256,7 @@ public class JavaObjClientMainViewController {
         }
 
     }
-
-
+    
 
 //	// keyboard enter key 치면 서버로 전송
 //	class TextSendAction implements ActionListener {
@@ -728,5 +728,23 @@ public class JavaObjClientMainViewController {
         return 0;
     }
 
+    /***
+     * 200 Protocol로 받은 data로 해당하는 ChatRoomView에 text를 추가
+     * @param msg 200 Protocol로 받은 문자열 data
+     */
+    public void AppendText(String msg) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //채팅 데이터 분리
+        String text = removeProtocolString(msg);
+
+        //채팅 추가
+        controller.getChatRoomViewList().get(rid).receiveText(uid,text);
+    }
 }
 
