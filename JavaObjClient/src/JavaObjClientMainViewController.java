@@ -119,7 +119,11 @@ public class JavaObjClientMainViewController {
         this.user = user;
     }
 
-//    public void setNet(ListenNetwork net) {
+    public void setChatRoomViewList(Map<Integer, ChatRoomView> chatRoomViewList) {
+        this.chatRoomViewList = chatRoomViewList;
+    }
+
+    //    public void setNet(ListenNetwork net) {
 //        this.net = net;
 //    }
 
@@ -497,6 +501,8 @@ public class JavaObjClientMainViewController {
 
                 controller.setUserList(userList);
                 controller.setRoomList(roomList);
+
+
             }
             //RoomList가 존재 하지 않으면 UserList만 세팅
             else {
