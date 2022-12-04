@@ -29,7 +29,9 @@ public class ChatRoomView extends JFrame {
         setContentPane(mainPanel);
         lblRoomName.setText(roomName);
         lblRoomUserNum.setText(userNum);
-        
+        getTextArea().setForeground(Color.BLACK);
+        getTextArea().setFont(new Font("Serif",Font.BOLD,40));
+
         //이미지 전송 버튼 액션 리스너 설정
         btnSendImg.addMouseListener(new MouseAdapter() {
             @Override
@@ -111,11 +113,13 @@ public class ChatRoomView extends JFrame {
 
     public void sendText() {
         // 채팅이 없으면
-        if(ChatInput.getText()=="")
+        if(ChatInput.getText().equals(""))
             return;
-        getTextArea().append(ChatInput.getText()+"\n");
+        textArea.append(ChatInput.getText()+"\n");
         ChatInput.setText("");
-        ChatInput.setFocusable(true);
+        ChatInput.requestFocus();
+        int len = textArea.getDocument().getLength();
+        textArea.setCaretPosition(len);
     }
 
 }
