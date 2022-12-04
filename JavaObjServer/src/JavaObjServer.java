@@ -635,9 +635,9 @@ public class JavaObjServer extends JFrame {
 						// 일반 채팅 메시지
 						String RidAndChat = (String)cm.getData();
 						//3,0-ぞしぞしぞぞ-date.toString()
-						String[] str = RidAndChat.split(DivString.RoomDiv); //","
+						String[] str = RidAndChat.split(DivString.regxRoomDiv); //","
 						int rid = Integer.parseInt(str[0]);
-						String[] Chatstr = str[1].split(DivString.ChatDiv); // "-"
+						String[] Chatstr = str[1].split(DivString.regxChatDiv); // "-"
 						int uid = Integer.parseInt(Chatstr[0]);
 
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
@@ -649,9 +649,9 @@ public class JavaObjServer extends JFrame {
 					} else if (cm.getCode().matches("300")) { // 이미지 전송
 						String RidAndChat = (String)cm.getData();
 						//3,0-ぞしぞしぞぞ-date.toString()
-						String[] str = RidAndChat.split(DivString.RoomDiv);
+						String[] str = RidAndChat.split(DivString.regxRoomDiv);
 						int rid = Integer.parseInt(str[0]);
-						String[] Chatstr = str[1].split(DivString.ChatDiv);
+						String[] Chatstr = str[1].split(DivString.regxChatDiv);
 						int uid = Integer.parseInt(Chatstr[0]);
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
 						chat.setImg(cm.img);
