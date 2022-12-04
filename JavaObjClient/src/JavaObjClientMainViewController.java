@@ -425,7 +425,7 @@ public class JavaObjClientMainViewController {
      * @return 원하는 형식으로 변환한 문자열
      */
     public String DateToString(LocalTime time) {
-        String formatedNow = time.format(DateTimeFormatter.ofPattern("a hh:mm").withLocale(Locale.forLanguageTag("ko")));
+        String formatedNow = time.format(DateTimeFormatter.ofPattern("ahh:mm").withLocale(Locale.forLanguageTag("ko")));
         return formatedNow;
     }
 

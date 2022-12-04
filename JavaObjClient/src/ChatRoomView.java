@@ -133,8 +133,7 @@ public class ChatRoomView extends JFrame {
         
         //채팅 화면에 추가 & reSetting
         textArea.append(ChatInput.getText()+"\n");
-        ChatInput.setText("");
-        ChatInput.requestFocus();
+
 
         //TextArea의 위치를 맨 아래로 옮김
         int len = textArea.getDocument().getLength();
@@ -150,10 +149,13 @@ public class ChatRoomView extends JFrame {
                 setMsg(ChatInput.getText()).
                 setDate(controller.DateToString(time)).
                 build();
-        String msg = Integer.toString(rid)+DivString.RoomDiv+chat.toString(chat);
+        String msg = rid+","+chat.toString(chat);
 
         ChatMsg obcm = new ChatMsg(Integer.toString(controller.getUser().getUid()),"200",msg);
         controller.SendObject(obcm);
+
+        ChatInput.setText("");
+        ChatInput.requestFocus();
     }
 
 }
