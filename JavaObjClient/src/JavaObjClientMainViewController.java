@@ -425,8 +425,8 @@ public class JavaObjClientMainViewController {
      * @return 원하는 형식으로 변환한 문자열
      */
     public String DateToString(LocalTime time) {
-        String formatedNow = time.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
-        return "오전 0:00";
+        String formatedNow = time.format(DateTimeFormatter.ofPattern("a hh:mm").withLocale(Locale.forLanguageTag("ko")));
+        return formatedNow;
     }
 
     /***
@@ -486,7 +486,7 @@ public class JavaObjClientMainViewController {
 
         if (code.equals("600")) {
             //UserList 문자열과 RoomList 문자열로 구분
-            String[] receivedData = data.split(DivString.ListDiv);
+            String[] receivedData = data.split(DivString.regxListDiv);
             //receivedData[0] = userList , receivedData[1] = RoomList
 
             //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
@@ -573,7 +573,7 @@ public class JavaObjClientMainViewController {
      * @return Map<Integer, Room> RoomList
      */
     public Map<Integer, Room> StringDatatoRoomList(String data) {
-        String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
+        String[] StringRoomListData = data.split(DivString.regxRoomListDiv); // Room 별로 분할
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
 
         //Room 생성 후 삽입
@@ -583,7 +583,7 @@ public class JavaObjClientMainViewController {
             s = s.substring(s.indexOf(":") + 1);
 
             // stringRoomData  생성
-            String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
+            String[] stringRoomData = s.split(DivString.regxRoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
 
             //userAuth 처리
             ArrayList<Integer> userAuth = getArrayListFromAuthString(stringRoomData[1]);
@@ -594,12 +594,12 @@ public class JavaObjClientMainViewController {
             String stringChat = stringRoomData[3];
             stringChat = deleteCharStarEnd(stringChat);
 
-            String[] stringChatList = stringChat.split(DivString.ChatListDiv);
+            String[] stringChatList = stringChat.split(DivString.regxChatListDiv);
 
             //Chat이 존재하면
             if (!stringChatList[0].isEmpty()) {
                 for (String rb : stringChatList) {
-                    String[] stringChatDataArray = rb.split(DivString.ChatDiv); //0 = uid, 1 = msg , 2 = date
+                    String[] stringChatDataArray = rb.split(DivString.regxChatDiv); //0 = uid, 1 = msg , 2 = date
                     Chat chat = Chat.ChatBuilder.aChat().
                             setUid(Integer.parseInt(stringChatDataArray[0])).
                             setMsg(stringChatDataArray[1]).
@@ -719,6 +719,13 @@ public class JavaObjClientMainViewController {
         String[] roomData = data.split(","); // 0= Rid, 1= roomName, 2= userAuth
 
         return Integer.parseInt(roomData[0]);
+    }
+    public int getRidfromRoomName(String rName){
+        for(Integer i : controller.chatRoomViewList.keySet()){
+            if(chatRoomViewList.get(i).getLblRoomName().getText().equals(rName))
+                return i;
+        }
+        return 0;
     }
 
 }

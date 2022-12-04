@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+
+import Object.Chat;
 
 public class ChatRoomView extends JFrame {
     private JPanel mainPanel;
@@ -20,6 +23,7 @@ public class ChatRoomView extends JFrame {
     private JTextField ChatInput;
     private JLabel btnSubmit;
     private JLabel btnSendImg;
+    private Integer rid = null;
     JavaObjClientMainViewController controller = JavaObjClientMainViewController.getInstance();
     
     //생성자 함수
@@ -103,8 +107,16 @@ public class ChatRoomView extends JFrame {
         this.lblRoomUserNum.setText(lblRoomUserNum);
     }
 
+    public void setRid(Integer rid) {
+        this.rid = rid;
+    }
+
     public JTextArea getTextArea() {
         return textArea;
+    }
+
+    public JLabel getLblRoomName() {
+        return lblRoomName;
     }
     // Getters & Setters 끝
 
@@ -116,6 +128,10 @@ public class ChatRoomView extends JFrame {
         // 채팅이 없으면
         if(ChatInput.getText().equals(""))
             return;
+        //채팅 시간 기록
+        LocalTime time = LocalTime.now();
+        
+        //채팅 화면에 추가 & reSetting
         textArea.append(ChatInput.getText()+"\n");
         ChatInput.setText("");
         ChatInput.requestFocus();
@@ -123,6 +139,21 @@ public class ChatRoomView extends JFrame {
         //TextArea의 위치를 맨 아래로 옮김
         int len = textArea.getDocument().getLength();
         textArea.setCaretPosition(len);
+
+        if(this.rid == null){
+            setRid(controller.getRidfromRoomName(lblRoomName.getText()));
+        }
+
+        // 서버에게 200 Protocol 전송
+        Chat chat = new Chat.ChatBuilder().
+                setUid(controller.getUser().getUid()).
+                setMsg(ChatInput.getText()).
+                setDate(controller.DateToString(time)).
+                build();
+        String msg = Integer.toString(rid)+DivString.RoomDiv+chat.toString(chat);
+
+        ChatMsg obcm = new ChatMsg(Integer.toString(controller.getUser().getUid()),"200",msg);
+        controller.SendObject(obcm);
     }
 
 }
