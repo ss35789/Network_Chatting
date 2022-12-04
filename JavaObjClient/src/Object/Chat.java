@@ -1,5 +1,7 @@
 package Object;
 
+import com.sun.org.apache.xpath.internal.operations.Div;
+
 import javax.swing.*;
 import java.util.Date;
 
@@ -7,19 +9,17 @@ public class Chat {
     int uid;
     String msg;
     String date;
-    ImageIcon img;
+    ImageIcon img= new ImageIcon("");
 
-    public Chat(int uid, String msg, String date) {
+    public Chat(int uid, String date) {
         this.uid = uid;
-        this.msg = msg;
         this.date = date;
     }
-
-    //Use Builder pattern
     public static final class ChatBuilder {
         private int uid;
         private String msg;
         private String date;
+        private ImageIcon img;
 
         public ChatBuilder() {
         }
@@ -43,10 +43,19 @@ public class Chat {
             return this;
         }
 
+        public ChatBuilder setImg(ImageIcon img) {
+            this.img = img;
+            return this;
+        }
+
         public Chat build() {
-            return new Chat(uid, msg, date);
+            Chat chat = new Chat(uid, date);
+            chat.img = this.img;
+            chat.msg = this.msg;
+            return chat;
         }
     }
+
     //Getters
 
     public int getUid() {
@@ -64,4 +73,22 @@ public class Chat {
     public ImageIcon getImg() {
         return img;
     }
+
+    public String toString(Chat chat){
+        StringBuilder str= new StringBuilder();
+
+        str.append(Integer.toString(chat.uid));
+        str.append(DivString.ChatDiv);
+        str.append(msg);
+        str.append(DivString.ChatDiv);
+        str.append(date);
+        str.append(DivString.ChatDiv);
+        str.append(date);
+        str.append(DivString.ChatDiv);
+        str.append(img);
+        str.append(DivString.ChatDiv);
+
+        return str.toString();
+    }
+
 }

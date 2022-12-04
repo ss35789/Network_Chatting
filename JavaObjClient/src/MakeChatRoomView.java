@@ -62,14 +62,10 @@ public class MakeChatRoomView extends JFrame  {
                 ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "700",lsd.getRoomToString());
                 // 서버 전송
                 controller.SendObject(obcm);
-                
-                //ChatRoomView 생성
-                ChatRoomView chatRoomView = new ChatRoomView();
-                controller.addChatRoomView(chatRoomView);
-                
-                //채팅방 생성 View => ChatRoomView로 화면 전환
-                chatRoomView.setVisible(true);
-                setVisible(false);
+
+                // 채팅방 생성 뷰 삭제
+                dispose();
+                //ChatRoomView 생성은 서버에서 710을 받고 함
             }
         });
 
