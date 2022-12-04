@@ -443,7 +443,8 @@ public class JavaObjServer extends JFrame {
 			JavaObjServer.setListData(sld);
 //sdf
 			//채팅 전송
-			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
+			System.out.println(chat.msg);
+			ChatMsg cm = new ChatMsg(rid+DivString.RoomDiv+getUserName(chat.uid),"200",chat.msg);
 			cm.setImg(chat.img);
 			WriteAllObject(cm);
 		}
@@ -628,12 +629,13 @@ public class JavaObjServer extends JFrame {
 
 
 					} else if (cm.getCode().matches("200")) {
-						msg = String.format("[%s] %s", cm.getId(), cm.getData());
-						AppendText(msg); // server 화면에 출력
-						String[] args = msg.split(" "); // 단어들을 분리한다.
+//						msg = String.format("[%s] %s", cm.getId(), cm.getData());
+//						AppendText(msg); // server 화면에 출력
+//						String[] args = msg.split(" "); // 단어들을 분리한다.
 
 						// 일반 채팅 메시지
 						String RidAndChat = (String)cm.getData();
+						System.out.println(RidAndChat);
 						//3,0-ぞしぞしぞぞ-date.toString()
 						String[] str = RidAndChat.split(DivString.regxRoomDiv); //","
 						int rid = Integer.parseInt(str[0]);
@@ -641,6 +643,7 @@ public class JavaObjServer extends JFrame {
 						int uid = Integer.parseInt(Chatstr[0]);
 
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
+						System.out.println("get 200 , uid:"+uid+", msg:"+Chatstr[1]+", date:"+Chatstr[2]);
 						Chatting(rid, chat);
 
 					} else if (cm.getCode().matches("400")) { // logout message 처리
@@ -655,6 +658,7 @@ public class JavaObjServer extends JFrame {
 						int uid = Integer.parseInt(Chatstr[0]);
 						Chat chat = new Chat(uid, Chatstr[1],Chatstr[2]);
 						chat.setImg(cm.img);
+						System.out.println("get 300 , uid:"+uid+", msg:"+Chatstr[1]+", date:"+Chatstr[2]+", img:"+cm.img);
 						Chatting(rid, chat);
 					} else if (cm.getCode().matches("350")) { // 프로필 이미지 설정
 						ImageIcon ProfileImg = cm.img;
