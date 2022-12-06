@@ -16,7 +16,7 @@ public class ChatRoomView extends JFrame {
     private JPanel upperPanel;
     private JPanel lowerPanel;
     private JPanel RoomInfoPanel;
-    private JTextArea textArea;
+    private JTextPane textArea;
     private JLabel lblRoomName;
     private JLabel lblRoomUserNum;
     private JLabel btnUserList;
@@ -36,7 +36,7 @@ public class ChatRoomView extends JFrame {
         lblRoomUserNum.setText(userNum);
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
-        textArea.setLineWrap(true);
+        //textArea.setLineWrap(true);
 
         //이미지 전송 버튼 액션 리스너 설정
         btnSendImg.addMouseListener(new MouseAdapter() {
@@ -50,8 +50,10 @@ public class ChatRoomView extends JFrame {
 //                repaint();
                 JFrame frame = new JFrame();
                 FileDialog fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
-                fd.setDirectory(".\\");
+                fd.setDirectory(System.getProperty("user.dir")+"\\JavaObjClient\\images");
                 fd.setVisible(true);
+
+                // server에게 300 protocol 전송
                 Chat chat = new Chat.ChatBuilder().
                         setUid(controller.getUser().getUid()).
                         setMsg("IMG").
@@ -68,6 +70,9 @@ public class ChatRoomView extends JFrame {
                 ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
                 obcm.setImg(img);
                 controller.SendObject(obcm);
+
+                //채팅창에 이미지 추가
+                appendIcon(new ImageIcon(fd.getDirectory()+fd.getFile()));
             }
 
             @Override
@@ -132,7 +137,7 @@ public class ChatRoomView extends JFrame {
         this.rid = rid;
     }
 
-    public JTextArea getTextArea() {
+    public JTextPane getTextArea() {
         return textArea;
     }
 
@@ -165,7 +170,7 @@ public class ChatRoomView extends JFrame {
 
 
 
-        textArea.append(controller.getUser().getUserName()+"\n"+ChatInput.getText() + "\n");
+        appnedText(controller.getUser().getUserName(),ChatInput.getText());
 
 
         //TextArea의 위치를 맨 아래로 옮김
@@ -196,7 +201,7 @@ public class ChatRoomView extends JFrame {
     public void receiveText(Integer uid, String text) {
         // 다른 사람이 보낸 msg면 추가
         if (uid != controller.getUser().getUid()) {
-            textArea.append(controller.getUserList().get(uid).getUserName()+"\n"+text + "\n");
+            appnedText(controller.getUserList().get(uid).getUserName(),text);
             ChatInput.requestFocus();
         }
         //TextArea의 위치를 맨 아래로 옮김
@@ -206,6 +211,17 @@ public class ChatRoomView extends JFrame {
     }
 
     public void appnedText(String userName,String text) {
-        textArea.append(userName+"\n"+ text + "\n");
+        int len = textArea.getDocument().getLength();
+        // 끝으로 이동
+        textArea.setCaretPosition(len);
+
+        textArea.replaceSelection(userName + "\n");
+        textArea.replaceSelection(text + "\n");
+    }
+    public void appendIcon(ImageIcon icon) {
+        int len = textArea.getDocument().getLength();
+        // 끝으로 이동
+        textArea.setCaretPosition(len);
+        textArea.insertIcon(icon);
     }
 }
