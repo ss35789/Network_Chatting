@@ -29,6 +29,7 @@ public class ChatRoomView extends JFrame {
     //생성자 함수
     public ChatRoomView(String roomName, String userNum) {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(controller.getUser().getUserName());
         setSize(500, 800);
         setContentPane(mainPanel);
         lblRoomName.setText(roomName);
@@ -42,11 +43,31 @@ public class ChatRoomView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //마우스 이벤트
-                setContentPane(mainPanel);
-                revalidate();
-                repaint();
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                //마우스 이벤트
+//                setContentPane(mainPanel);
+//                revalidate();
+//                repaint();
+                JFrame frame = new JFrame();
+                FileDialog fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
+                fd.setDirectory(".\\");
+                fd.setVisible(true);
+                Chat chat = new Chat.ChatBuilder().
+                        setUid(controller.getUser().getUid()).
+                        setMsg("IMG").
+                        setDate(controller.DateToString(LocalTime.now())).
+                        build();
+
+                if (rid == null) {
+                    setRid(controller.getRidfromRoomName(lblRoomName.getText()));
+                }
+
+                String msg = rid.toString()+DivString.RoomDiv+chat.toString(chat);
+
+                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "300",msg);
+                ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
+                obcm.setImg(img);
+                controller.SendObject(obcm);
             }
 
             @Override
@@ -135,10 +156,10 @@ public class ChatRoomView extends JFrame {
 
         //채팅 화면에 추가 & reSetting
         //textArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        int EntextAreaWidth = 70;
-        int KotextAreaWidth = 50;
-        int userNameSize =EntextAreaWidth-controller.getUser().getUserName().length();
-        int textSize = KotextAreaWidth-ChatInput.getText().length();
+//        int EntextAreaWidth = 70;
+//        int KotextAreaWidth = 50;
+//        int userNameSize =EntextAreaWidth-controller.getUser().getUserName().length();
+//        int textSize = KotextAreaWidth-ChatInput.getText().length();
 //        int userNameSize =AreaWidth-controller.getUser().getUserName().length();
 //        int textSize = AreaWidth-ChatInput.getText().length();
 
@@ -161,6 +182,7 @@ public class ChatRoomView extends JFrame {
                 setMsg(ChatInput.getText()).
                 setDate(controller.DateToString(time)).
                 build();
+
         String msg = rid + DivString.RoomDiv + chat.toString(chat);
 
         ChatMsg obcm = new ChatMsg(Integer.toString(controller.getUser().getUid()), "200", msg);
