@@ -749,10 +749,12 @@ public class JavaObjClientMainViewController {
         //채팅 데이터 분리
         String text = removeProtocolString(msg);
 
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
         //채팅 추가
         controller.getChatRoomViewList().get(rid).receiveText(uid,text);
-
-        //App View에 마지막 채팅 갱신
 
     }
 

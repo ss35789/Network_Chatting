@@ -269,7 +269,11 @@ public class App extends JFrame {
 
                         //맨 끝 채팅을 가져옴
                         if (!roomList.get(i).getChatList().isEmpty()) {
-                            JLabel lastChat = new JLabel(roomList.get(i).getChatList().get(roomList.get(i).getChatList().size() - 1).getMsg());
+                            int limitChatLength =10;
+                            String strLastChat = roomList.get(i).getChatList().get(roomList.get(i).getChatList().size() - 1).getMsg();
+                            if(strLastChat.length()>limitChatLength)
+                                strLastChat = strLastChat.substring(0,limitChatLength) + "...";
+                            JLabel lastChat = new JLabel(strLastChat);
                             lastChat.setBackground(Color.gray);
                             u.add(lastChat, BorderLayout.EAST);
 

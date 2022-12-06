@@ -36,6 +36,7 @@ public class ChatRoomView extends JFrame {
         lblRoomUserNum.setText(userNum);
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
+        //textArea.setSize(textArea.getWidth(), textArea.getPreferredSize().height);//For fixed width
         //textArea.setLineWrap(true);
 
         //이미지 전송 버튼 액션 리스너 설정
@@ -50,7 +51,7 @@ public class ChatRoomView extends JFrame {
 //                repaint();
                 JFrame frame = new JFrame();
                 FileDialog fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
-                fd.setDirectory(System.getProperty("user.dir")+"\\JavaObjClient\\images");
+                fd.setDirectory(System.getProperty("user.dir") + "\\JavaObjClient\\images");
                 fd.setVisible(true);
 
                 // server에게 300 protocol 전송
@@ -64,15 +65,15 @@ public class ChatRoomView extends JFrame {
                     setRid(controller.getRidfromRoomName(lblRoomName.getText()));
                 }
 
-                String msg = rid.toString()+DivString.RoomDiv+chat.toString(chat);
+                String msg = rid.toString() + DivString.RoomDiv + chat.toString(chat);
 
-                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "300",msg);
+                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "300", msg);
                 ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
                 obcm.setImg(img);
                 controller.SendObject(obcm);
 
                 //채팅창에 이미지 추가
-                appendIcon(new ImageIcon(fd.getDirectory()+fd.getFile()));
+                appendImage(new ImageIcon(fd.getDirectory() + fd.getFile()));
             }
 
             @Override
@@ -149,13 +150,13 @@ public class ChatRoomView extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
-    
+
     //내가 채팅을 보내면
     public void sendText() {
         // 채팅이 없으면 처리 하지 않음
         if (ChatInput.getText().equals(""))
             return;
-        
+
         //채팅 시간 기록
         LocalTime time = LocalTime.now();
 
@@ -169,13 +170,12 @@ public class ChatRoomView extends JFrame {
 //        int textSize = AreaWidth-ChatInput.getText().length();
 
 
+        appnedText(controller.getUser().getUserName(), ChatInput.getText());
 
-        appnedText(controller.getUser().getUserName(),ChatInput.getText());
-
-
-        //TextArea의 위치를 맨 아래로 옮김
-        int len = textArea.getDocument().getLength();
-        textArea.setCaretPosition(len);
+//
+//        //TextArea의 위치를 맨 아래로 옮김
+//        int len = textArea.getDocument().getLength();
+//        textArea.setCaretPosition(len);
 
         if (this.rid == null) {
             setRid(controller.getRidfromRoomName(lblRoomName.getText()));
@@ -201,27 +201,67 @@ public class ChatRoomView extends JFrame {
     public void receiveText(Integer uid, String text) {
         // 다른 사람이 보낸 msg면 추가
         if (uid != controller.getUser().getUid()) {
-            appnedText(controller.getUserList().get(uid).getUserName(),text);
+            appnedText(controller.getUserList().get(uid).getUserName(), text);
             ChatInput.requestFocus();
+            // 끝으로 이동
+            int len = textArea.getDocument().getLength();
+            textArea.setCaretPosition(len);
         }
-        //TextArea의 위치를 맨 아래로 옮김
-        int len = textArea.getDocument().getLength();
-        textArea.setCaretPosition(len);
+//        //TextArea의 위치를 맨 아래로 옮김
+//        int len = textArea.getDocument().getLength();
+//        textArea.setCaretPosition(len);
         return;
     }
 
-    public void appnedText(String userName,String text) {
+    public void appnedText(String userName, String text) {
         int len = textArea.getDocument().getLength();
+        int widthlimit = 12;
         // 끝으로 이동
         textArea.setCaretPosition(len);
 
         textArea.replaceSelection(userName + "\n");
-        textArea.replaceSelection(text + "\n");
+
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+
+        if (text.length() > widthlimit) {
+            while (text.length() > widthlimit) {
+                textArea.replaceSelection(text.substring(0,widthlimit-1) + "\n");
+                text = text.substring(widthlimit);
+                textArea.setCaretPosition(textArea.getDocument().getLength());
+            }
+            textArea.replaceSelection(text + "\n");
+        } else
+            textArea.replaceSelection(text + "\n");
     }
-    public void appendIcon(ImageIcon icon) {
+
+    public void appendImage(ImageIcon ori_icon) {
         int len = textArea.getDocument().getLength();
-        // 끝으로 이동
+        textArea.setCaretPosition(len); // place caret at the end (with no selection)
+        Image ori_img = ori_icon.getImage();
+        int width, height;
+        double ratio;
+        width = ori_icon.getIconWidth();
+        height = ori_icon.getIconHeight();
+        // Image가 너무 크면 최대 가로 또는 세로 200 기준으로 축소시킨다.
+        if (width > 200 || height > 200) {
+            if (width > height) { // 가로 사진
+                ratio = (double) height / width;
+                width = 200;
+                height = (int) (width * ratio);
+            } else { // 세로 사진
+                ratio = (double) width / height;
+                height = 200;
+                width = (int) (height * ratio);
+            }
+            Image new_img = ori_img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            ImageIcon new_icon = new ImageIcon(new_img);
+            textArea.insertIcon(new_icon);
+        } else
+            textArea.insertIcon(ori_icon);
+        len = textArea.getDocument().getLength();
         textArea.setCaretPosition(len);
-        textArea.insertIcon(icon);
+        textArea.replaceSelection("\n");
+        // ImageViewAction viewaction = new ImageViewAction();
+        // new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
     }
 }
