@@ -489,7 +489,7 @@ public class JavaObjClientMainViewController {
             String[] receivedData = data.split(DivString.regxListDiv);
             //receivedData[0] = userList , receivedData[1] = RoomList
 
-            //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
+            //수신받은 Data에 RoomList가 존재하면 UserList,RoomList 둘 다 세팅
             if (receivedData.length > 1) {
                 String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
                 String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
@@ -720,6 +720,12 @@ public class JavaObjClientMainViewController {
 
         return Integer.parseInt(roomData[0]);
     }
+
+    /***
+     * RoomName을 받아서 RoomName에 해당하는 RoomID를 반환해주는 함수
+     * @param rName RoomID를 찾을 RoomName
+     * @return RoomName에 해당하는 RommID
+     */
     public int getRidfromRoomName(String rName){
         for(Integer i : controller.chatRoomViewList.keySet()){
             if(chatRoomViewList.get(i).getLblRoomName().getText().equals(rName))
@@ -745,6 +751,26 @@ public class JavaObjClientMainViewController {
 
         //채팅 추가
         controller.getChatRoomViewList().get(rid).receiveText(uid,text);
+
+        //App View에 마지막 채팅 갱신
+
+    }
+
+    /***
+     * 유저 재 로그인 시 채팅방View를 복원하고 ChatRoomViewList에 추가하는 함수
+     * @param rid 복원할 RoomID
+     */
+    public void restoreChatRoomView(int rid){
+        Room room = controller.RoomList.get(rid);
+        ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),Integer.toString(room.getUserAuth().size()));
+        for(Chat c:room.getChatList()){
+            chatRoomView.appnedText(getUserNameFromUid(c.getUid()),c.getMsg());
+        }
+        controller.addChatRoomView(rid,chatRoomView);
+
+    }
+    public String getUserNameFromUid(int uid){
+        return controller.getUserList().get(uid).getUserName();
     }
 }
 

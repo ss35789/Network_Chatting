@@ -33,9 +33,9 @@ public class ChatRoomView extends JFrame {
         setContentPane(mainPanel);
         lblRoomName.setText(roomName);
         lblRoomUserNum.setText(userNum);
-        //textArea.setForeground(Color.BLACK);
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
+        textArea.setLineWrap(true);
 
         //이미지 전송 버튼 액션 리스너 설정
         btnSendImg.addMouseListener(new MouseAdapter() {
@@ -123,15 +123,27 @@ public class ChatRoomView extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
-
+    
+    //내가 채팅을 보내면
     public void sendText() {
-        // 채팅이 없으면
+        // 채팅이 없으면 처리 하지 않음
         if (ChatInput.getText().equals(""))
             return;
+        
         //채팅 시간 기록
         LocalTime time = LocalTime.now();
 
         //채팅 화면에 추가 & reSetting
+        //textArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        int EntextAreaWidth = 70;
+        int KotextAreaWidth = 50;
+        int userNameSize =EntextAreaWidth-controller.getUser().getUserName().length();
+        int textSize = KotextAreaWidth-ChatInput.getText().length();
+//        int userNameSize =AreaWidth-controller.getUser().getUserName().length();
+//        int textSize = AreaWidth-ChatInput.getText().length();
+
+
+
         textArea.append(controller.getUser().getUserName()+"\n"+ChatInput.getText() + "\n");
 
 
@@ -171,4 +183,7 @@ public class ChatRoomView extends JFrame {
         return;
     }
 
+    public void appnedText(String userName,String text) {
+        textArea.append(userName+"\n"+ text + "\n");
+    }
 }

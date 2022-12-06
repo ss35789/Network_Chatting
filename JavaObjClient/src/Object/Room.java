@@ -6,7 +6,7 @@ public class Room {
     int rid;
     ArrayList<Integer> userAuth = new ArrayList<>();
     String  roomName;
-    ArrayList<Chat> chat = new ArrayList<>();
+    ArrayList<Chat> chatList = new ArrayList<>();
 
     public Room(ArrayList<Integer> userAuth, String roomName) {
         this.userAuth = userAuth;
@@ -16,10 +16,10 @@ public class Room {
     public String getChatToString(){
         StringBuilder str= new StringBuilder();
         str.append("<");
-        for(int i=0;i<chat.size();i++){
-            Chat c= chat.get(i);
+        for(int i = 0; i< chatList.size(); i++){
+            Chat c= chatList.get(i);
             str.append(c.uid+"-"+c.msg+"-"+c.date.toString());
-            if(i!=chat.size()-1)str.append("@");
+            if(i!= chatList.size()-1)str.append("@");
         }
         str.append(">");
         return str.toString();
@@ -27,7 +27,7 @@ public class Room {
 
 
     public void createChat(Chat chatting){
-        this.chat.add(chatting);
+        this.chatList.add(chatting);
     }
 
 
@@ -66,7 +66,7 @@ public class Room {
 
         public Room build() {
             Room room = new Room(userAuth, roomName);
-            room.chat = this.chat;
+            room.chatList = this.chat;
             room.rid = this.rid;
             return room;
         }
@@ -86,7 +86,7 @@ public class Room {
         return roomName;
     }
 
-    public ArrayList<Chat> getChat() {
-        return chat;
+    public ArrayList<Chat> getChatList() {
+        return chatList;
     }
 }
