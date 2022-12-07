@@ -70,7 +70,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="99137" class="javax.swing.JTextArea" binding="textArea">
+              <component id="99137" class="javax.swing.JTextPane" binding="textArea">
                 <constraints/>
                 <properties>
                   <background color="-3019278"/>

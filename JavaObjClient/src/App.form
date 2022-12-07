@@ -116,6 +116,12 @@
                       <text value="Myname"/>
                     </properties>
                   </component>
+                  <component id="28d90" class="javax.swing.JButton" binding="myState">
+                    <constraints border-constraint="East"/>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
             </children>

@@ -203,6 +203,10 @@ public class JavaObjClientMainViewController {
                         case "200": // chat message
                             //AppendText(msg);
                             System.out.println("Client received 200 " + msg);
+                            if(isChatMSG(msg))
+                                AppendText(msg);
+                            else
+                                AppnedImg(msg,cm.getImg());
                             break;
                         case "230":
                             System.out.println("Client received 230 " + msg);
@@ -220,6 +224,7 @@ public class JavaObjClientMainViewController {
                         case "610":
                             System.out.println("Client received 610" + msg);
                             dataReformat(cm.getCode(), msg);
+                            controller.setUser(controller.getUserList().get(controller.getUser().getUid()));
                             reGenerateAppView();
                             break;
                         case "620":
@@ -489,7 +494,7 @@ public class JavaObjClientMainViewController {
             String[] receivedData = data.split(DivString.regxListDiv);
             //receivedData[0] = userList , receivedData[1] = RoomList
 
-            //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
+            //수신받은 Data에 RoomList가 존재하면 UserList,RoomList 둘 다 세팅
             if (receivedData.length > 1) {
                 String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
                 String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
@@ -720,12 +725,126 @@ public class JavaObjClientMainViewController {
 
         return Integer.parseInt(roomData[0]);
     }
+
+    /***
+     * RoomName을 받아서 RoomName에 해당하는 RoomID를 반환해주는 함수
+     * @param rName RoomID를 찾을 RoomName
+     * @return RoomName에 해당하는 RommID
+     */
     public int getRidfromRoomName(String rName){
         for(Integer i : controller.chatRoomViewList.keySet()){
             if(chatRoomViewList.get(i).getLblRoomName().getText().equals(rName))
                 return i;
         }
         return 0;
+    }
+
+    /***
+     * 200 Protocol로 받은 data로 해당하는 ChatRoomView에 text를 추가
+     * @param msg 200 Protocol로 받은 문자열 data
+     */
+    public void AppendText(String msg) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //채팅 데이터 분리
+        String text = removeProtocolString(msg);
+
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
+        //채팅 추가
+        controller.getChatRoomViewList().get(rid).receiveText(uid,text);
+
+    }
+
+
+    public void AppnedImg(String msg,ImageIcon img) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
+        //이미지 추가
+        controller.getChatRoomViewList().get(rid).receiveImg(uid,img);
+    }
+
+
+    /***
+     * 유저 재 로그인 시 채팅방View를 복원하고 ChatRoomViewList에 추가하는 함수
+     * @param rid 복원할 RoomID
+     */
+    public void restoreChatRoomView(int rid){
+        Room room = controller.RoomList.get(rid);
+        ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),Integer.toString(room.getUserAuth().size()));
+        chatRoomView.setRid(rid);
+        for(Chat c:room.getChatList()){
+            chatRoomView.appnedText(c.getUid(),c.getMsg());
+        }
+        controller.addChatRoomView(rid,chatRoomView);
+
+    }
+
+    /***
+     * Uid를 받아서 UserName으로 변환해주는 함수
+     * @param uid UserName으로 변환하고 싶은 Uid
+     * @return Uid에 해당하는 UserName
+     */
+    public String getUserNameFromUid(int uid){
+        return controller.getUserList().get(uid).getUserName();
+    }
+
+    /***
+     * 채팅방을 복원하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param index ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isChatUserChanged(int rid,int index){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(index-1).getUid();
+        int addChatUid = RoomList.get(rid).getChatList().get(index).getUid();
+        if(lastChatUid == addChatUid)
+            return true;
+        else
+            return false;
+    }
+    /***
+     * 채팅방에 채팅을 추가하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param uid ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isAddChatUserChanged(int rid,int uid){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(RoomList.get(rid).getChatList().size()-1).getUid();
+
+        if(lastChatUid == uid)
+            return true;
+        else
+            return false;
+    }
+    public int getUidFromUserName(String userName){
+        for(Integer key : UserList.keySet()){
+            if(UserList.get(key).getUserName().equals(userName))
+                return UserList.get(key).getUid();
+        }
+        return 999;
+    }
+    public boolean isChatMSG(String msg) {
+        if(removeProtocolString(msg).equals("IMG"))
+            return false;
+        return true;
     }
 
 }

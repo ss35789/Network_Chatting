@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +35,7 @@ public class App extends JFrame {
     private JPanel Profile;
     private JLabel chatting_myImg;
     private JPanel chatting_Profile;
+    private JButton myState;
 
     private JPanel userListSpace;
     private JavaObjClientMainViewController controller;
@@ -44,6 +44,8 @@ public class App extends JFrame {
     private String port_no;
     public static Map<Integer, User> userList = new HashMap<>();
     public static Map<Integer, Room> roomList = new HashMap<>();
+    private String userState;
+
 
     private String MyimgPath = "JavaObjClient/images/defaultProfileImg.jpg";
     private ArrayList<String> arr = new ArrayList<>();
@@ -64,6 +66,35 @@ public class App extends JFrame {
 
         userList = controller.getUserList();
         roomList = controller.getRoomList();
+        userState = controller.getUser().getState();
+
+        myState.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                //서버 전송용 객체인스턴스변수 생성
+                ChatMsg obcm;
+
+
+                switch (userState) {
+                    case "Online": // 바꾸기 전 유저의 상태가 온라인 이면 Sleep으로
+                        // sleep protocol 서버에게 전송
+                        obcm = new ChatMsg(controller.getUser().getUserName(), "720", "set SleepMode");
+                        controller.SendObject(obcm);
+                        //controller.getUser().setState("Sleep");
+                        break;
+                    case "Sleep": // 바꾸기 전 유저의 상태가 Sleep 이면 Online으로
+                        // wakeup protocol 서버에게 전송
+                        obcm = new ChatMsg(controller.getUser().getUserName(), "730", "set SleepMode");
+                        controller.SendObject(obcm);
+                        //controller.getUser().setState("Online");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -159,7 +190,6 @@ public class App extends JFrame {
             }
         });
 
-        myName.setText(username);
 
         ImageIcon icon = new ImageIcon(MyimgPath);
 
@@ -170,30 +200,13 @@ public class App extends JFrame {
 
 
         chatting_myImg.setIcon(changeIcon);
-        myImg.setIcon(changeIcon);
-
         chatting_myName.setText(username);
-
-        //마우스 클릭시 userList 반응
-//        DefaultListModel model = new DefaultListModel();
-//        for(User s : user){
-//            model.addElement(s.userName);
-//        }
-//        userList.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                String clickedUser = (String)userList.getSelectedValue();
-//                if(arr.contains(clickedUser)){
-//                    arr.remove(clickedUser);
-//                }
-//                else{
-//                    arr.add(clickedUser);
-//                }
-//
-//
-//                System.out.println(arr);
-//            }
-//        });
+        myImg.setIcon(changeIcon);
+        myName.setText(username);
+        if(userState.equals("Sleep"))
+            myState.setText("set Online");
+        else if (userState.equals("Online"))
+            myState.setText("set Sleep");
 
 
         setUserListPanel();
@@ -244,15 +257,16 @@ public class App extends JFrame {
 
         // server에서 110 protocol 수신을 대기
         while (controller.getUser().getState() == null) ;
-        int roomListSize = roomList.size(); 
-        
+        int roomListSize = roomList.size();
+
         //RoomList를 순회
         for (int i = 0; i < 100; i++) {
             JPanel u = new JPanel();
+
             //Room의 userAuth를 순회
 
             //RoomList 의 패널을 먼저 추가 시킴
-            if (i < roomListSize ) {
+            if (i < roomListSize) {
 
                 for (Integer j : roomList.get(i).getUserAuth()) {
 
@@ -261,14 +275,18 @@ public class App extends JFrame {
                         u.setLayout(new BorderLayout());
 
                         //채팅방 이름과 이미지를 가져옴
-                        JLabel jl = new JLabel(roomList.get(i).getRoomName());
+                        JLabel jl = new JLabel(roomList.get(i).getRoomName()); // i는 key값
                         jl.setIcon(changeIcon);
                         jl.setFont(new Font("Serif", Font.BOLD, 31));
                         u.add(jl, BorderLayout.WEST);
 
                         //맨 끝 채팅을 가져옴
-                        if(!roomList.get(i).getChat().isEmpty()) {
-                            JLabel lastChat = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getMsg());
+                        if (!roomList.get(i).getChatList().isEmpty()) {
+                            int limitChatLength = 10;
+                            String strLastChat = roomList.get(i).getChatList().get(roomList.get(i).getChatList().size() - 1).getMsg();
+                            if (strLastChat.length() > limitChatLength)
+                                strLastChat = strLastChat.substring(0, limitChatLength) + "...";
+                            JLabel lastChat = new JLabel(strLastChat);
                             lastChat.setBackground(Color.gray);
                             u.add(lastChat, BorderLayout.EAST);
 
@@ -277,7 +295,7 @@ public class App extends JFrame {
                             u.add(southPanel, BorderLayout.SOUTH);
 
                             //맨 끝 채팅의 시간을 가져옴
-                            JLabel lastChatTime = new JLabel(roomList.get(i).getChat().get(roomList.get(i).getChat().size() - 1).getDate());
+                            JLabel lastChatTime = new JLabel(roomList.get(i).getChatList().get(roomList.get(i).getChatList().size() - 1).getDate());
                             lastChatTime.setBackground(Color.gray);
                             southPanel.add(lastChatTime, BorderLayout.EAST);
                             southPanel.setBackground(Color.WHITE);
@@ -288,36 +306,33 @@ public class App extends JFrame {
                         ChatRoomList.add(u);
                     }
                     int panelOrder = i;
-                    u.addMouseListener(new MouseListener() {
+                    u.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            controller.getChatRoomViewList().get(panelOrder).setVisible(true);
-                        }
-
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-
-                        }
-
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-
+                            super.mouseClicked(e);
+                            try {
+                                //로그인시 new AppView, 600시 new AppView로 두번 불림
+                                controller.getChatRoomViewList().get(panelOrder).setVisible(true);
+                            } catch (NullPointerException nullPointerException) {
+                                controller.restoreChatRoomView(panelOrder);
+                                controller.getChatRoomViewList().get(panelOrder).setVisible(true);
+                            }
                         }
 
                         @Override
                         public void mouseEntered(MouseEvent e) {
-
+                            super.mouseEntered(e);
                         }
 
                         @Override
                         public void mouseExited(MouseEvent e) {
-
+                            super.mouseExited(e);
                         }
                     });
                 }
             }
             //roomList 패널 먼저 추가 한 후 빈 패널을 아래에 배치
-            else{
+            else {
                 ChatRoomList.add(u);
             }
 

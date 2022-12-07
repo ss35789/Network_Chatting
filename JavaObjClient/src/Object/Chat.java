@@ -84,7 +84,6 @@ public class Chat {
         str.append(date);
         str.append(DivString.ChatDiv);
         str.append(img);
-        str.append(DivString.ChatDiv);
 
         return str.toString();
     }

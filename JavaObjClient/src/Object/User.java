@@ -84,4 +84,8 @@ public class User{
     public ImageIcon getImg() {
         return img;
     }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

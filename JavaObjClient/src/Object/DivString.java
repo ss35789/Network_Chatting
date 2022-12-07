@@ -10,7 +10,7 @@ public class DivString {
     public static String regxRoomListDiv ="\\$#@";  //$#@
     public static String regxRoomDiv = ",_#\\$\\^#"; //,_#$^#
     public static String regxChatDiv = "-\\_\\^\\$%#"; //-_^$%#
-    public static String regxChatListDiv = "@&%\\^&"; //@&%^&
+    public static String regxChatListDiv = "@_&%\\^&"; //@_&%^&
     public static String ListDiv = "|_#$%";
     public static String RoomListDiv = "$#@";
     public static String RoomDiv = ",_#$^#";

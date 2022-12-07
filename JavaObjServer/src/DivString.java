@@ -4,6 +4,13 @@ public class DivString {
     // "@" => ChatListDiv
     // "," => RoomDiv
     // " " => RoomListDiv
+
+    public static String regxListDiv = "\\|_#\\$%";  //|#$%
+    public static String regxRoomListDiv ="\\$#@";  //$#@
+    public static String regxRoomDiv = ",_#\\$\\^#"; //,#$^#
+    public static String regxChatDiv = "-\\_\\^\\$%#"; //-^$%#
+    public static String regxChatListDiv = "@&%\\^&"; //@&%^&
+
     public static String ListDiv = "|_#$%";
     public static String RoomListDiv = "$#@";
     public static String RoomDiv = ",_#$^#";
