@@ -24,6 +24,7 @@ public class ChatRoomView extends JFrame {
     private JLabel btnSubmit;
     private JLabel btnSendImg;
     private Integer rid = null;
+    private Integer currentViewChatSize = 0;
     JavaObjClientMainViewController controller = JavaObjClientMainViewController.getInstance();
 
     //생성자 함수
@@ -170,7 +171,7 @@ public class ChatRoomView extends JFrame {
 //        int textSize = AreaWidth-ChatInput.getText().length();
 
 
-        appnedText(controller.getUser().getUserName(), ChatInput.getText());
+
 
 //
 //        //TextArea의 위치를 맨 아래로 옮김
@@ -187,11 +188,20 @@ public class ChatRoomView extends JFrame {
                 setMsg(ChatInput.getText()).
                 setDate(controller.DateToString(time)).
                 build();
-
+        
+        
         String msg = rid + DivString.RoomDiv + chat.toString(chat);
 
         ChatMsg obcm = new ChatMsg(Integer.toString(controller.getUser().getUid()), "200", msg);
         controller.SendObject(obcm);
+
+
+
+        //Client RoomList의 Room의 ChatList에 채팅 추가
+        controller.getRoomList().get(rid).getChatList().add(chat);
+
+        //채팅방 뷰에 채팅 추가
+        appnedText(controller.getUser().getUid(), ChatInput.getText());
 
         //채팅방 뷰 reSetting
         ChatInput.setText("");
@@ -201,11 +211,22 @@ public class ChatRoomView extends JFrame {
     public void receiveText(Integer uid, String text) {
         // 다른 사람이 보낸 msg면 추가
         if (uid != controller.getUser().getUid()) {
-            appnedText(controller.getUserList().get(uid).getUserName(), text);
+            appnedText(controller.getUserList().get(uid).getUid(), text);
             ChatInput.requestFocus();
             // 끝으로 이동
             int len = textArea.getDocument().getLength();
             textArea.setCaretPosition(len);
+
+            //Client RoomList의 Room의 ChatList에 채팅 추가
+            Chat chat = new Chat.ChatBuilder().
+                    setUid(uid).
+                    setMsg(text).
+                    build();
+
+            controller.getRoomList().get(rid).getChatList().add(chat);
+
+            //채팅방 뷰에 채팅 추가
+            appnedText(controller.getUser().getUid(), ChatInput.getText());
         }
 //        //TextArea의 위치를 맨 아래로 옮김
 //        int len = textArea.getDocument().getLength();
@@ -213,19 +234,36 @@ public class ChatRoomView extends JFrame {
         return;
     }
 
-    public void appnedText(String userName, String text) {
+    public void appnedText(Integer uid, String text) {
         int len = textArea.getDocument().getLength();
+        String userName = controller.getUserNameFromUid(uid);
         int widthlimit = 12;
         // 끝으로 이동
         textArea.setCaretPosition(len);
 
-        textArea.replaceSelection(userName + "\n");
+        //유저 네임 print 중복 처리
+        if (currentViewChatSize == 0) {
+            textArea.replaceSelection(userName + "\n");
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        } else {
+            if (currentViewChatSize < controller.getRoomList().get(rid).getChatList().size()) {
+                if (!controller.isChatUserChanged(this.rid, currentViewChatSize)) {
+                    textArea.replaceSelection(userName + "\n");
+                    textArea.setCaretPosition(textArea.getDocument().getLength());
+                }
+            }else {
+                if (!controller.isAddChatUserChanged(this.rid,uid)) {
+                    textArea.replaceSelection(userName + "\n");
+                    textArea.setCaretPosition(textArea.getDocument().getLength());
+                }
+            }
+        }
+        currentViewChatSize++;
 
-        textArea.setCaretPosition(textArea.getDocument().getLength());
 
         if (text.length() > widthlimit) {
             while (text.length() > widthlimit) {
-                textArea.replaceSelection(text.substring(0,widthlimit-1) + "\n");
+                textArea.replaceSelection(text.substring(0, widthlimit - 1) + "\n");
                 text = text.substring(widthlimit);
                 textArea.setCaretPosition(textArea.getDocument().getLength());
             }

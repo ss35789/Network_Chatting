@@ -765,14 +765,52 @@ public class JavaObjClientMainViewController {
     public void restoreChatRoomView(int rid){
         Room room = controller.RoomList.get(rid);
         ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),Integer.toString(room.getUserAuth().size()));
+        chatRoomView.setRid(rid);
         for(Chat c:room.getChatList()){
-            chatRoomView.appnedText(getUserNameFromUid(c.getUid()),c.getMsg());
+            chatRoomView.appnedText(c.getUid(),c.getMsg());
         }
         controller.addChatRoomView(rid,chatRoomView);
 
     }
+
+    /***
+     * Uid를 받아서 UserName으로 변환해주는 함수
+     * @param uid UserName으로 변환하고 싶은 Uid
+     * @return Uid에 해당하는 UserName
+     */
     public String getUserNameFromUid(int uid){
         return controller.getUserList().get(uid).getUserName();
+    }
+
+    /***
+     * 채팅방을 복원하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param index ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isChatUserChanged(int rid,int index){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(index-1).getUid();
+        int addChatUid = RoomList.get(rid).getChatList().get(index).getUid();
+        if(lastChatUid == addChatUid)
+            return true;
+        else
+            return false;
+    }
+    /***
+     * 채팅방에 채팅을 추가하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param uid ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isAddChatUserChanged(int rid,int uid){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(RoomList.get(rid).getChatList().size()-1).getUid();
+
+        if(lastChatUid == uid)
+            return true;
+        else
+            return false;
     }
 }
 
