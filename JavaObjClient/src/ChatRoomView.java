@@ -47,10 +47,6 @@ public class ChatRoomView extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                //마우스 이벤트
-//                setContentPane(mainPanel);
-//                revalidate();
-//                repaint();
                 JFrame frame = new JFrame();
                 FileDialog fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
                 fd.setDirectory(System.getProperty("user.dir") + "\\JavaObjClient\\images");
