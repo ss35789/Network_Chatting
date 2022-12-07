@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import java.awt.*;
@@ -8,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 import Object.Chat;
@@ -25,18 +22,24 @@ public class ChatRoomView extends JFrame {
     private JTextField ChatInput;
     private JLabel btnSubmit;
     private JLabel btnSendImg;
+    private JLabel lbUsers;
     private Integer rid = null;
     private Integer currentViewChatSize = 0;
     JavaObjClientMainViewController controller = JavaObjClientMainViewController.getInstance();
 
     //생성자 함수
-    public ChatRoomView(String roomName, String userNum) {
+    public ChatRoomView(String roomName, String[] users) {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(controller.getUser().getUserName());
         setSize(500, 800);
         setContentPane(mainPanel);
         lblRoomName.setText(roomName);
-        lblRoomUserNum.setText(userNum);
+
+        StringBuffer str = new StringBuffer();
+        for(String user : users )
+            str.append(user+" ");
+        lbUsers.setText(str.toString());
+        lblRoomUserNum.setText(Integer.toString(users.length));
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
         btnSendImg.setFont(new Font("Serif", Font.BOLD, 20));

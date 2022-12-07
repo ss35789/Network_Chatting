@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -187,6 +188,25 @@ public class App extends JFrame {
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        myImg.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                //이미지 선택 창을 띄움
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                JFrame frame = new JFrame();
+                FileDialog fd = new FileDialog(frame, "프로필 이미지 선택", FileDialog.LOAD);
+                fd.setDirectory(System.getProperty("user.dir") + "\\JavaObjClient\\images");
+                fd.setVisible(true);
+
+                // 서버에게 350 protocol 전송
+                ChatMsg obcm = new ChatMsg(controller.getUser().getUserName(), "350", "Change ProfileIMG");
+                ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
+                obcm.setImg(img);
+                controller.SendObject(obcm);
             }
         });
 

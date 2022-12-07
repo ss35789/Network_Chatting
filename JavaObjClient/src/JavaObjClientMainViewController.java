@@ -706,10 +706,13 @@ public class JavaObjClientMainViewController {
         String userAuth = deleteCharStarEnd(roomData[2]); // 앞뒤 [] 제거
         int userNum = 0;
         String[] num = userAuth.split("\\.");
-        for(String s : num)
+        for(String count : num)
             userNum++;
+        String users[] = new String[userNum];
+        for(String s : num)
+            users[Integer.parseInt(s)]= getUserNameFromUid(Integer.parseInt(s));
 
-        ChatRoomView c = new ChatRoomView(roomData[1],Integer.toString(userNum));
+        ChatRoomView c = new ChatRoomView(roomData[1],users);
         return c;
     }
 
@@ -786,7 +789,10 @@ public class JavaObjClientMainViewController {
      */
     public void restoreChatRoomView(int rid){
         Room room = controller.RoomList.get(rid);
-        ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),Integer.toString(room.getUserAuth().size()));
+        String[] users = new String[room.getUserAuth().size()];
+        for(Integer i : room.getUserAuth())
+            users[i]= getUserNameFromUid(i);
+        ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),users);
         chatRoomView.setRid(rid);
         for(Chat c:room.getChatList()){
             chatRoomView.appnedText(c.getUid(),c.getMsg());
