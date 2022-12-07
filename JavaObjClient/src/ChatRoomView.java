@@ -39,8 +39,7 @@ public class ChatRoomView extends JFrame {
         lblRoomUserNum.setText(userNum);
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
-        //textArea.setSize(textArea.getWidth(), textArea.getPreferredSize().height);//For fixed width
-        //textArea.setLineWrap(true);
+        btnSendImg.setFont(new Font("Serif", Font.BOLD, 20));
 
         //이미지 전송 버튼 액션 리스너 설정
         btnSendImg.addMouseListener(new MouseAdapter() {
