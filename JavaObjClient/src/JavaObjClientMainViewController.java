@@ -203,7 +203,10 @@ public class JavaObjClientMainViewController {
                         case "200": // chat message
                             //AppendText(msg);
                             System.out.println("Client received 200 " + msg);
-                            AppendText(msg);
+                            if(isChatMSG(msg))
+                                AppendText(msg);
+                            else
+                                AppnedImg(msg,cm.getImg());
                             break;
                         case "230":
                             System.out.println("Client received 230 " + msg);
@@ -256,7 +259,8 @@ public class JavaObjClientMainViewController {
         }
 
     }
-    
+
+
 
 //	// keyboard enter key 치면 서버로 전송
 //	class TextSendAction implements ActionListener {
@@ -758,6 +762,23 @@ public class JavaObjClientMainViewController {
 
     }
 
+
+    public void AppnedImg(String msg,ImageIcon img) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
+        //이미지 추가
+        controller.getChatRoomViewList().get(rid).receiveImg(uid,img);
+    }
+
+
     /***
      * 유저 재 로그인 시 채팅방View를 복원하고 ChatRoomViewList에 추가하는 함수
      * @param rid 복원할 RoomID
@@ -819,5 +840,11 @@ public class JavaObjClientMainViewController {
         }
         return 999;
     }
+    public boolean isChatMSG(String msg) {
+        if(removeProtocolString(msg).equals("IMG"))
+            return false;
+        return true;
+    }
+
 }
 

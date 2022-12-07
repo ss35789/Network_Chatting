@@ -33,6 +33,8 @@ class ChatMsg implements Serializable {
 		return id;
 	}
 
+	public ImageIcon getImg() {return img; }
+
 	public void setId(String id) {
 		this.id = id;
 	}

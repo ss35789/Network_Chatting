@@ -204,22 +204,17 @@ public class ChatRoomView extends JFrame {
             //채팅방 뷰에 채팅 추가
             appnedText(controller.getUserList().get(uid).getUid(), text);
             ChatInput.requestFocus();
-//            // 끝으로 이동
-//            int len = textArea.getDocument().getLength();
-//            textArea.setCaretPosition(len);
-
-            //Client RoomList의 Room의 ChatList에 채팅 추가
-            Chat chat = new Chat.ChatBuilder().
-                    setUid(uid).
-                    setMsg(text).
-                    build();
-
-            //controller.getRoomList().get(rid).getChatList().add(chat);
         }
-//        //TextArea의 위치를 맨 아래로 옮김
-//        int len = textArea.getDocument().getLength();
-//        textArea.setCaretPosition(len);
         return;
+    }
+
+    public void receiveImg(Integer uid, ImageIcon img) {
+        //rid 세팅이 되어있지 않으면 rid를 세팅함
+        isRidNullSet(this.rid);
+        if (uid != controller.getUser().getUid()){
+            appendImage(img);
+            ChatInput.requestFocus();
+        }
     }
 
     public void appnedText(Integer uid, String text) {
