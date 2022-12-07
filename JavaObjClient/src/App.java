@@ -68,6 +68,7 @@ public class App extends JFrame {
         userList = controller.getUserList();
         roomList = controller.getRoomList();
         userState = controller.getUser().getState();
+        MyimgPath = controller.getUser().getImg().toString();
 
         myState.addMouseListener(new MouseAdapter() {
             @Override
@@ -208,15 +209,22 @@ public class App extends JFrame {
                 obcm.setImg(img);
                 controller.SendObject(obcm);
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
         });
 
 
-        ImageIcon icon = new ImageIcon(MyimgPath);
-
-        Image img = icon.getImage();
-        Image changeImg = img.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
-        ImageIcon changeIcon = new ImageIcon(changeImg);
+        ImageIcon changeIcon = reSacledProfileImg(new ImageIcon(MyimgPath));
 
 
         chatting_myImg.setIcon(changeIcon);
@@ -242,6 +250,16 @@ public class App extends JFrame {
 
     }
 
+    private ImageIcon reSacledProfileImg(ImageIcon MyimgPath) {
+        ImageIcon icon = MyimgPath;
+
+        Image img = icon.getImage();
+        Image changeImg = img.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        ImageIcon changeIcon = new ImageIcon(changeImg);
+        return changeIcon;
+    }
+
 
     public void setUserListPanel() {
         for (int i = 0; i < 100; i++) {
@@ -251,10 +269,7 @@ public class App extends JFrame {
                 JLabel jl = new JLabel(userList.get(i).getUserName());
 
                 // 이미지 스케일 조정
-                ImageIcon originImg = userList.get(i).getImg();
-                Image targetImg = originImg.getImage();
-                Image scaledImg = targetImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-                ImageIcon profileImg = new ImageIcon(scaledImg);
+                ImageIcon profileImg = reSacledProfileImg(userList.get(i).getImg());
                 jl.setIcon(profileImg);
 
                 jl.setFont(new Font("Serif", Font.BOLD, 31));
