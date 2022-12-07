@@ -400,7 +400,15 @@ public class JavaObjServer extends JFrame {
 
 			String MakeRoomData = str.toString();
 			ChatMsg obcm = new ChatMsg("SERVER", "710", MakeRoomData);
-			WriteAllObject(obcm);
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				for(int j=0; j< userAuth.size();j++){
+					if(user.UserName.equals(getUserName(userAuth.get(j)))){
+						user.WriteOneObject(obcm);
+					}
+				}
+
+			}
 		}
 		public String getUserName(int uid){
 			ListData sld = JavaObjServer.getListData();
