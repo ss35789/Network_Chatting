@@ -77,7 +77,7 @@ public class Chat {
     public String toString(Chat chat){
         StringBuilder str= new StringBuilder();
 
-        str.append(Integer.toString(chat.uid));
+        str.append(chat.uid);
         str.append(DivString.ChatDiv);
         str.append(msg);
         str.append(DivString.ChatDiv);
