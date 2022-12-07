@@ -74,7 +74,7 @@ public class ChatRoomView extends JFrame {
                 controller.SendObject(obcm);
 
                 //채팅창에 이미지 추가
-                appendImage(new ImageIcon(fd.getDirectory() + fd.getFile()));
+                appendImage(controller.getUser().getUid(),new ImageIcon(fd.getDirectory() + fd.getFile()));
             }
 
             @Override
@@ -211,8 +211,10 @@ public class ChatRoomView extends JFrame {
     public void receiveImg(Integer uid, ImageIcon img) {
         //rid 세팅이 되어있지 않으면 rid를 세팅함
         isRidNullSet(this.rid);
+
+        // 다른 사람이 보낸 Img면 추가
         if (uid != controller.getUser().getUid()){
-            appendImage(img);
+            appendImage(controller.getUserList().get(uid).getUid(),img);
             ChatInput.requestFocus();
         }
     }
@@ -240,6 +242,37 @@ public class ChatRoomView extends JFrame {
             textAreaAppendText(text, 12);
     }
 
+    public void appendImage(Integer uid ,ImageIcon ori_icon) {
+        String userName = controller.getUserNameFromUid(uid);
+
+        movetoEndLine();
+        Image ori_img = ori_icon.getImage();
+        ImageIcon scaledImg = reSacledImg(ori_icon, ori_img, ori_icon.getIconWidth(), ori_icon.getIconHeight());
+
+        // 첫 채팅(이미지)일시 바로 추가
+        if(textArea.getText().length()==0){
+            textArea.replaceSelection(userName + "\n");
+            movetoEndLine();
+            textArea.insertIcon(scaledImg);
+            movetoEndLine();
+            textArea.replaceSelection("\n");
+            return;
+        }
+        //첫채팅이 아닐경우 유저 네임 print 중복 처리
+        if(!checkChatUserSame(uid)){
+            textArea.replaceSelection(userName + "\n");
+            movetoEndLine();
+            textArea.insertIcon(scaledImg);
+        }
+        else
+            textArea.insertIcon(scaledImg);
+
+        movetoEndLine();
+        textArea.replaceSelection("\n");
+        // ImageViewAction viewaction = new ImageViewAction();
+        // new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
+    }
+
     private void textAreaAppendText(String text, int widthlimit) {
         // text 추가 , 긴 text 길이 처리
         if (text.length() > widthlimit) {
@@ -263,6 +296,7 @@ public class ChatRoomView extends JFrame {
         try {
             String[] str = doc.getText(0,doc.getLength()-1).split("\\n");
             for(int i=str.length-1;i>=0;i--){
+
                 //userName을 찾지 못하면 바로 위의 텍스트로 다시 넘어감
                 if(controller.getUidFromUserName(str[i])==999)
                     continue;
@@ -288,13 +322,8 @@ public class ChatRoomView extends JFrame {
         textArea.setCaretPosition(len);
     }
 
-    public void appendImage(ImageIcon ori_icon) {
-        movetoEndLine();
-        Image ori_img = ori_icon.getImage();
-        int width, height;
+    public ImageIcon reSacledImg(ImageIcon ori_icon, Image ori_img, int width, int height) {
         double ratio;
-        width = ori_icon.getIconWidth();
-        height = ori_icon.getIconHeight();
         // Image가 너무 크면 최대 가로 또는 세로 200 기준으로 축소시킨다.
         if (width > 200 || height > 200) {
             if (width > height) { // 가로 사진
@@ -308,12 +337,8 @@ public class ChatRoomView extends JFrame {
             }
             Image new_img = ori_img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             ImageIcon new_icon = new ImageIcon(new_img);
-            textArea.insertIcon(new_icon);
+            return new_icon;
         } else
-            textArea.insertIcon(ori_icon);
-        movetoEndLine();
-        textArea.replaceSelection("\n");
-        // ImageViewAction viewaction = new ImageViewAction();
-        // new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
+            return ori_icon;
     }
 }
