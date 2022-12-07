@@ -812,5 +812,12 @@ public class JavaObjClientMainViewController {
         else
             return false;
     }
+    public int getUidFromUserName(String userName){
+        for(Integer key : UserList.keySet()){
+            if(UserList.get(key).getUserName().equals(userName))
+                return UserList.get(key).getUid();
+        }
+        return 999;
+    }
 }
 

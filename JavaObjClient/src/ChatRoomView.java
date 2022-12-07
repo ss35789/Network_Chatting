@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,9 +64,7 @@ public class ChatRoomView extends JFrame {
                         setDate(controller.DateToString(LocalTime.now())).
                         build();
 
-                if (rid == null) {
-                    setRid(controller.getRidfromRoomName(lblRoomName.getText()));
-                }
+                isRidNullSet(rid);
 
                 String msg = rid.toString() + DivString.RoomDiv + chat.toString(chat);
 
@@ -158,29 +158,17 @@ public class ChatRoomView extends JFrame {
         if (ChatInput.getText().equals(""))
             return;
 
+        isRidNullSet(this.rid);
+
         //채팅 시간 기록
         LocalTime time = LocalTime.now();
-
-        //채팅 화면에 추가 & reSetting
-        //textArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-//        int EntextAreaWidth = 70;
-//        int KotextAreaWidth = 50;
-//        int userNameSize =EntextAreaWidth-controller.getUser().getUserName().length();
-//        int textSize = KotextAreaWidth-ChatInput.getText().length();
-//        int userNameSize =AreaWidth-controller.getUser().getUserName().length();
-//        int textSize = AreaWidth-ChatInput.getText().length();
-
-
-
-
+        //채팅방 뷰에 채팅 추가
+        appnedText(controller.getUser().getUid(), ChatInput.getText());
 //
 //        //TextArea의 위치를 맨 아래로 옮김
 //        int len = textArea.getDocument().getLength();
 //        textArea.setCaretPosition(len);
 
-        if (this.rid == null) {
-            setRid(controller.getRidfromRoomName(lblRoomName.getText()));
-        }
 
         // 서버에게 200 Protocol 전송
         Chat chat = new Chat.ChatBuilder().
@@ -188,34 +176,37 @@ public class ChatRoomView extends JFrame {
                 setMsg(ChatInput.getText()).
                 setDate(controller.DateToString(time)).
                 build();
-        
-        
         String msg = rid + DivString.RoomDiv + chat.toString(chat);
-
         ChatMsg obcm = new ChatMsg(Integer.toString(controller.getUser().getUid()), "200", msg);
         controller.SendObject(obcm);
 
-
-
         //Client RoomList의 Room의 ChatList에 채팅 추가
         controller.getRoomList().get(rid).getChatList().add(chat);
-
-        //채팅방 뷰에 채팅 추가
-        appnedText(controller.getUser().getUid(), ChatInput.getText());
 
         //채팅방 뷰 reSetting
         ChatInput.setText("");
         ChatInput.requestFocus();
     }
 
+    private void isRidNullSet(Integer rid) {
+        //rid 세팅이 되어있지 않으면 rid를 세팅함
+        if (rid == null) {
+            setRid(controller.getRidfromRoomName(lblRoomName.getText()));
+        }
+    }
+
     public void receiveText(Integer uid, String text) {
+        //rid 세팅이 되어있지 않으면 rid를 세팅함
+        isRidNullSet(this.rid);
+
         // 다른 사람이 보낸 msg면 추가
         if (uid != controller.getUser().getUid()) {
+            //채팅방 뷰에 채팅 추가
             appnedText(controller.getUserList().get(uid).getUid(), text);
             ChatInput.requestFocus();
-            // 끝으로 이동
-            int len = textArea.getDocument().getLength();
-            textArea.setCaretPosition(len);
+//            // 끝으로 이동
+//            int len = textArea.getDocument().getLength();
+//            textArea.setCaretPosition(len);
 
             //Client RoomList의 Room의 ChatList에 채팅 추가
             Chat chat = new Chat.ChatBuilder().
@@ -223,10 +214,7 @@ public class ChatRoomView extends JFrame {
                     setMsg(text).
                     build();
 
-            controller.getRoomList().get(rid).getChatList().add(chat);
-
-            //채팅방 뷰에 채팅 추가
-            appnedText(controller.getUser().getUid(), ChatInput.getText());
+            //controller.getRoomList().get(rid).getChatList().add(chat);
         }
 //        //TextArea의 위치를 맨 아래로 옮김
 //        int len = textArea.getDocument().getLength();
@@ -235,32 +223,30 @@ public class ChatRoomView extends JFrame {
     }
 
     public void appnedText(Integer uid, String text) {
-        int len = textArea.getDocument().getLength();
+
         String userName = controller.getUserNameFromUid(uid);
-        int widthlimit = 12;
-        // 끝으로 이동
-        textArea.setCaretPosition(len);
+        movetoEndLine();
 
-        //유저 네임 print 중복 처리
-        if (currentViewChatSize == 0) {
+        // 첫 채팅일시 바로 추가
+        if(textArea.getText().length()==0){
             textArea.replaceSelection(userName + "\n");
-            textArea.setCaretPosition(textArea.getDocument().getLength());
-        } else {
-            if (currentViewChatSize < controller.getRoomList().get(rid).getChatList().size()) {
-                if (!controller.isChatUserChanged(this.rid, currentViewChatSize)) {
-                    textArea.replaceSelection(userName + "\n");
-                    textArea.setCaretPosition(textArea.getDocument().getLength());
-                }
-            }else {
-                if (!controller.isAddChatUserChanged(this.rid,uid)) {
-                    textArea.replaceSelection(userName + "\n");
-                    textArea.setCaretPosition(textArea.getDocument().getLength());
-                }
-            }
+            movetoEndLine();
+            textAreaAppendText(text, 12);
+            return;
         }
-        currentViewChatSize++;
 
+        //첫채팅이 아닐경우 유저 네임 print 중복 처리
+        if(!checkChatUserSame(uid)){
+            textArea.replaceSelection(userName + "\n");
+            movetoEndLine();
+            textAreaAppendText(text, 12);
+        }
+        else
+            textAreaAppendText(text, 12);
+    }
 
+    private void textAreaAppendText(String text, int widthlimit) {
+        // text 추가 , 긴 text 길이 처리
         if (text.length() > widthlimit) {
             while (text.length() > widthlimit) {
                 textArea.replaceSelection(text.substring(0, widthlimit - 1) + "\n");
@@ -272,9 +258,43 @@ public class ChatRoomView extends JFrame {
             textArea.replaceSelection(text + "\n");
     }
 
-    public void appendImage(ImageIcon ori_icon) {
+    /***
+     * 추가할 채팅과 그 이전 채팅의 유저가 같은 체크하는 함수
+     * @param uid 추가할 채팅의 UserID
+     * @return 같으면 true 다르면 false
+     */
+    public boolean checkChatUserSame(Integer uid) {
+        Document doc = textArea.getDocument();
+        try {
+            String[] str = doc.getText(0,doc.getLength()-1).split("\\n");
+            for(int i=str.length-1;i>=0;i--){
+                //userName을 찾지 못하면 바로 위의 텍스트로 다시 넘어감
+                if(controller.getUidFromUserName(str[i])==999)
+                    continue;
+                
+                else{
+                 if((controller.getUidFromUserName(str[i])==uid))
+                     return true;
+                 else
+                     return false;
+                }
+            }
+            return false;
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+            System.out.println("First Chat Append in this ChatRoomView");
+            return false;
+        }
+    }
+
+    public void movetoEndLine() {
+        // 끝으로 이동
         int len = textArea.getDocument().getLength();
-        textArea.setCaretPosition(len); // place caret at the end (with no selection)
+        textArea.setCaretPosition(len);
+    }
+
+    public void appendImage(ImageIcon ori_icon) {
+        movetoEndLine();
         Image ori_img = ori_icon.getImage();
         int width, height;
         double ratio;
@@ -296,8 +316,7 @@ public class ChatRoomView extends JFrame {
             textArea.insertIcon(new_icon);
         } else
             textArea.insertIcon(ori_icon);
-        len = textArea.getDocument().getLength();
-        textArea.setCaretPosition(len);
+        movetoEndLine();
         textArea.replaceSelection("\n");
         // ImageViewAction viewaction = new ImageViewAction();
         // new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
