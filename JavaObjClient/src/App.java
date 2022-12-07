@@ -35,6 +35,7 @@ public class App extends JFrame {
     private JPanel Profile;
     private JLabel chatting_myImg;
     private JPanel chatting_Profile;
+    private JButton myState;
 
     private JPanel userListSpace;
     private JavaObjClientMainViewController controller;
@@ -43,6 +44,7 @@ public class App extends JFrame {
     private String port_no;
     public static Map<Integer, User> userList = new HashMap<>();
     public static Map<Integer, Room> roomList = new HashMap<>();
+    private String userState;
 
 
     private String MyimgPath = "JavaObjClient/images/defaultProfileImg.jpg";
@@ -64,6 +66,33 @@ public class App extends JFrame {
 
         userList = controller.getUserList();
         roomList = controller.getRoomList();
+        userState = controller.getUser().getState();
+
+        myState.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                //서버 전송용 객체인스턴스변수 생성
+                ChatMsg obcm;
+
+
+                switch (userState) {
+                    case "Online": // 바꾸기 전 유저의 상태가 온라인 이면 Sleep으로
+                        // sleep protocol 서버에게 전송
+                        obcm = new ChatMsg(controller.getUser().getUserName(), "720", "set SleepMode");
+                        controller.SendObject(obcm);
+                        break;
+                    case "Sleep": // 바꾸기 전 유저의 상태가 Sleep 이면 Online으로
+                        // wakeup protocol 서버에게 전송
+                        obcm = new ChatMsg(controller.getUser().getUserName(), "730", "set SleepMode");
+                        controller.SendObject(obcm);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         chatting_MakeChatRoomButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -159,7 +188,6 @@ public class App extends JFrame {
             }
         });
 
-        myName.setText(username);
 
         ImageIcon icon = new ImageIcon(MyimgPath);
 
@@ -170,30 +198,13 @@ public class App extends JFrame {
 
 
         chatting_myImg.setIcon(changeIcon);
-        myImg.setIcon(changeIcon);
-
         chatting_myName.setText(username);
-
-        //마우스 클릭시 userList 반응
-//        DefaultListModel model = new DefaultListModel();
-//        for(User s : user){
-//            model.addElement(s.userName);
-//        }
-//        userList.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                String clickedUser = (String)userList.getSelectedValue();
-//                if(arr.contains(clickedUser)){
-//                    arr.remove(clickedUser);
-//                }
-//                else{
-//                    arr.add(clickedUser);
-//                }
-//
-//
-//                System.out.println(arr);
-//            }
-//        });
+        myImg.setIcon(changeIcon);
+        myName.setText(username);
+        if(userState.equals("Sleep"))
+            myState.setText("set Online");
+        else if (userState.equals("Online"))
+            myState.setText("set Sleep");
 
 
         setUserListPanel();
@@ -269,10 +280,10 @@ public class App extends JFrame {
 
                         //맨 끝 채팅을 가져옴
                         if (!roomList.get(i).getChatList().isEmpty()) {
-                            int limitChatLength =10;
+                            int limitChatLength = 10;
                             String strLastChat = roomList.get(i).getChatList().get(roomList.get(i).getChatList().size() - 1).getMsg();
-                            if(strLastChat.length()>limitChatLength)
-                                strLastChat = strLastChat.substring(0,limitChatLength) + "...";
+                            if (strLastChat.length() > limitChatLength)
+                                strLastChat = strLastChat.substring(0, limitChatLength) + "...";
                             JLabel lastChat = new JLabel(strLastChat);
                             lastChat.setBackground(Color.gray);
                             u.add(lastChat, BorderLayout.EAST);

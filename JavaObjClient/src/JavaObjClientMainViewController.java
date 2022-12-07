@@ -224,6 +224,7 @@ public class JavaObjClientMainViewController {
                         case "610":
                             System.out.println("Client received 610" + msg);
                             dataReformat(cm.getCode(), msg);
+                            setUser(UserList.get(controller.getUser().getUid()));
                             reGenerateAppView();
                             break;
                         case "620":
