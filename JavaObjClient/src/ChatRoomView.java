@@ -31,7 +31,7 @@ public class ChatRoomView extends JFrame {
     public ChatRoomView(String roomName, String[] users) {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(controller.getUser().getUserName());
-        setSize(500, 800);
+        setSize(500, 1000);
         setContentPane(mainPanel);
         lblRoomName.setText(roomName);
 
