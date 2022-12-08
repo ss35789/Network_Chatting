@@ -31,7 +31,7 @@ public class JavaObjClientMainViewController {
     private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList Key: Rid Value: ChatRoomView
     private String ip_addr;
     private String port_no;
-    //private ListenNetwork net ;
+    private ListenNetwork net ;
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -71,7 +71,11 @@ public class JavaObjClientMainViewController {
         return RoomList;
     }
 
-//    public ListenNetwork getNet() {
+    public ListenNetwork getNet() {
+        ListenNetwork net = new ListenNetwork();
+        return net;
+    }
+    //    public ListenNetwork getNet() {
 //        return net;
 //    }
 
@@ -119,7 +123,11 @@ public class JavaObjClientMainViewController {
         this.user = user;
     }
 
-//    public void setNet(ListenNetwork net) {
+    public void setChatRoomViewList(Map<Integer, ChatRoomView> chatRoomViewList) {
+        this.chatRoomViewList = chatRoomViewList;
+    }
+
+    //    public void setNet(ListenNetwork net) {
 //        this.net = net;
 //    }
 
@@ -133,8 +141,8 @@ public class JavaObjClientMainViewController {
      *
      * @param chatRoomView 추가할 View
      */
-    public void addChatRoomView(ChatRoomView chatRoomView) {
-        this.chatRoomViewList.put(chatRoomViewList.size() + 1, chatRoomView);
+    public void addChatRoomView(Integer rid,ChatRoomView chatRoomView) {
+        this.chatRoomViewList.put(rid, chatRoomView);
     }
 
 
@@ -192,13 +200,20 @@ public class JavaObjClientMainViewController {
                         case "110":
                             System.out.println("Client received 110 " + msg);
                             dataSetUser(msg);
+                            //Controller에서 로그인 성공 시 AppView로 전환
+                            controller.ChangeLoginViewToAppView(controller.getUser().getUserName(),ip_addr,port_no);
                             break;
                         case "120":
                             System.out.println("Client received 120 " + msg);
+                            System.exit(0);
                             break;
                         case "200": // chat message
                             //AppendText(msg);
                             System.out.println("Client received 200 " + msg);
+                            if(isChatMSG(msg))
+                                AppendText(msg);
+                            else
+                                AppnedImg(msg,cm.getImg());
                             break;
                         case "230":
                             System.out.println("Client received 230 " + msg);
@@ -211,18 +226,25 @@ public class JavaObjClientMainViewController {
                         case "600":
                             System.out.println("Client received 600 " + msg);
                             dataReformat(cm.getCode(), msg);
-                            initChatRoomView(controller.getChatRoomViewList());
                             reGenerateAppView();
                             break;
                         case "610":
                             System.out.println("Client received 610" + msg);
                             dataReformat(cm.getCode(), msg);
+                            controller.setUser(controller.getUserList().get(controller.getUser().getUid()));
                             reGenerateAppView();
                             break;
                         case "620":
                             System.out.println("Client received 620 " + msg);
                             dataReformat(cm.getCode(), msg);
                             reGenerateAppView();
+                            break;
+                        case "710":
+                            System.out.println("Client received 710 " + msg);
+                            ChatRoomView c = initChatRoomView(msg);
+                            int rid = getRidfromData(msg);
+                            controller.addChatRoomView(rid,c);
+                            c.setVisible(true);
                             break;
 
                     }
@@ -400,9 +422,7 @@ public class JavaObjClientMainViewController {
      * @param port_no  접속할 포트 번호
      */
     public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
-        ListenNetwork net = new ListenNetwork();
-        //controller.setNet(net);
-        net.start();
+
         App appView = new App(username, ip_addr, port_no);
         controller.setAppView(appView);
         controller.loginView.setVisible(false);
@@ -415,8 +435,8 @@ public class JavaObjClientMainViewController {
      * @return 원하는 형식으로 변환한 문자열
      */
     public String DateToString(LocalTime time) {
-        String formatedNow = time.format(DateTimeFormatter.ofPattern("a HH시 mm분").withLocale(Locale.forLanguageTag("ko")));
-        return "오전 0:00";
+        String formatedNow = time.format(DateTimeFormatter.ofPattern("ahh:mm").withLocale(Locale.forLanguageTag("ko")));
+        return formatedNow;
     }
 
     /***
@@ -476,10 +496,10 @@ public class JavaObjClientMainViewController {
 
         if (code.equals("600")) {
             //UserList 문자열과 RoomList 문자열로 구분
-            String[] receivedData = data.split(DivString.ListDiv);
+            String[] receivedData = data.split(DivString.regxListDiv);
             //receivedData[0] = userList , receivedData[1] = RoomList
 
-            //RoomList가 존재하면 UserList,RoomList 둘 다 세팅
+            //수신받은 Data에 RoomList가 존재하면 UserList,RoomList 둘 다 세팅
             if (receivedData.length > 1) {
                 String stringUserList = receivedData[0]; //0:0,Online,[],user1,file 1:1,Offline,[],user10,file 2:2
                 String stringRoomList = receivedData[1]; //0:0<_^$%#[0.2]<_^$%#ABCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@1:1<_^$%#[0.1]<_^$%#BDCD<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@2:2<_^$%#[1.2]<_^$%#DCFF<_^$%#<1-_%^#@더미채팅 ㅓㅐㅓㅐㅓ-_%^#@sdfsdf>$#@
@@ -491,6 +511,8 @@ public class JavaObjClientMainViewController {
 
                 controller.setUserList(userList);
                 controller.setRoomList(roomList);
+
+
             }
             //RoomList가 존재 하지 않으면 UserList만 세팅
             else {
@@ -561,7 +583,7 @@ public class JavaObjClientMainViewController {
      * @return Map<Integer, Room> RoomList
      */
     public Map<Integer, Room> StringDatatoRoomList(String data) {
-        String[] StringRoomListData = data.split(DivString.RoomListDiv); // Room 별로 분할
+        String[] StringRoomListData = data.split(DivString.regxRoomListDiv); // Room 별로 분할
         Map<Integer, Room> roomList = new HashMap<Integer, Room>(); // 반환할 room 변수
 
         //Room 생성 후 삽입
@@ -571,7 +593,7 @@ public class JavaObjClientMainViewController {
             s = s.substring(s.indexOf(":") + 1);
 
             // stringRoomData  생성
-            String[] stringRoomData = s.split(DivString.RoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
+            String[] stringRoomData = s.split(DivString.regxRoomDiv); // 0 = rid, 1 = userAuth , 2 = roomName , 3 = Chat
 
             //userAuth 처리
             ArrayList<Integer> userAuth = getArrayListFromAuthString(stringRoomData[1]);
@@ -582,16 +604,17 @@ public class JavaObjClientMainViewController {
             String stringChat = stringRoomData[3];
             stringChat = deleteCharStarEnd(stringChat);
 
-            String[] stringChatList = stringChat.split(DivString.ChatListDiv);
+            String[] stringChatList = stringChat.split(DivString.regxChatListDiv);
 
             //Chat이 존재하면
             if (!stringChatList[0].isEmpty()) {
                 for (String rb : stringChatList) {
-                    String[] stringChatDataArray = rb.split(DivString.ChatDiv); //0 = uid, 1 = msg , 2 = date
+                    String[] stringChatDataArray = rb.split(DivString.regxChatDiv); //0 = uid, 1 = msg , 2 = date
                     Chat chat = Chat.ChatBuilder.aChat().
                             setUid(Integer.parseInt(stringChatDataArray[0])).
                             setMsg(stringChatDataArray[1]).
                             setDate(stringChatDataArray[2]).
+                            setImg(new ImageIcon(stringChatDataArray[3])).
                             build();
                     chatArrayList.add(chat);
                 }
@@ -676,12 +699,167 @@ public class JavaObjClientMainViewController {
         return Auth;
     }
 
-    /***
-     * Controller의 채팅방뷰 리스트를 받아서 초기화가 되지 않은 ChatRoomView를 초기화 함
-     * @param chatRoomViewList
+    /**
+     * 710 Protocol data를 받아서 ChatRoomView를 초기화 하는 함수
+     * @param data 서버에서 710으로 수신받은 문자열 데이터
      */
-    public void initChatRoomView(Map<Integer,ChatRoomView> chatRoomViewList) {
+    public ChatRoomView initChatRoomView(String data) {
+        //protocol 코드 제거 [server]
+        data = removeProtocolString(data);
+        String[] roomData = data.split(","); // 0= Rid, 1= roomName, 2= userAuth
 
+        //user 인원 수 세기
+        String userAuth = deleteCharStarEnd(roomData[2]); // 앞뒤 [] 제거
+        int userNum = 0;
+        String[] num = userAuth.split("\\.");
+        for(String count : num)
+            userNum++;
+        String users[] = new String[userNum+1];
+        for(String s : num)
+            users[Integer.parseInt(s)]= getUserNameFromUid(Integer.parseInt(s));
+
+        ChatRoomView c = new ChatRoomView(roomData[1],users);
+        return c;
+    }
+
+    /***
+     * 710 Protocol data를 받아서 RoomID를 반환하는 함수
+     * @param data 서버에서 710으로 수신받은 문자열 데이터
+     * @return
+     */
+    public int getRidfromData(String data) {
+        //protocol 코드 제거 [server]
+        data = removeProtocolString(data);
+        String[] roomData = data.split(","); // 0= Rid, 1= roomName, 2= userAuth
+
+        return Integer.parseInt(roomData[0]);
+    }
+
+    /***
+     * RoomName을 받아서 RoomName에 해당하는 RoomID를 반환해주는 함수
+     * @param rName RoomID를 찾을 RoomName
+     * @return RoomName에 해당하는 RommID
+     */
+    public int getRidfromRoomName(String rName){
+        for(Integer i : controller.chatRoomViewList.keySet()){
+            if(chatRoomViewList.get(i).getLblRoomName().getText().equals(rName))
+                return i;
+        }
+        return 0;
+    }
+
+    /***
+     * 200 Protocol로 받은 data로 해당하는 ChatRoomView에 text를 추가
+     * @param msg 200 Protocol로 받은 문자열 data
+     */
+    public void AppendText(String msg) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //채팅 데이터 분리
+        String text = removeProtocolString(msg);
+
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
+        //채팅 추가
+        controller.getChatRoomViewList().get(rid).receiveText(uid,text);
+
+    }
+
+
+    public void AppnedImg(String msg,ImageIcon img) {
+        //채팅방 데이터 [rid,uid] 분리
+        String[] temp = msg.split(" ");
+        String[] chatData = deleteCharStarEnd(temp[0]).split(DivString.regxRoomDiv);
+
+        Integer rid = Integer.parseInt(chatData[0]);
+        Integer uid = Integer.parseInt(chatData[1]);
+
+        //rid 세팅 기다림
+        while(controller.getChatRoomViewList().get(rid) == null);
+
+        //이미지 추가
+        controller.getChatRoomViewList().get(rid).receiveImg(uid,img);
+    }
+
+
+    /***
+     * 유저 재 로그인 시 채팅방View를 복원하고 ChatRoomViewList에 추가하는 함수
+     * @param rid 복원할 RoomID
+     */
+    public void restoreChatRoomView(int rid){
+        Room room = controller.RoomList.get(rid);
+        String[] users = new String[room.getUserAuth().size()];
+        for(Integer i : room.getUserAuth())
+            users[i]= getUserNameFromUid(i);
+        ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),users);
+        chatRoomView.setRid(rid);
+        for(Chat c:room.getChatList()){
+            if(c.getImg().toString().equals("null"))
+                chatRoomView.appnedText(c.getUid(),c.getMsg());
+            else
+                chatRoomView.appendImage(c.getUid(),c.getImg());
+        }
+        controller.addChatRoomView(rid,chatRoomView);
+
+    }
+
+    /***
+     * Uid를 받아서 UserName으로 변환해주는 함수
+     * @param uid UserName으로 변환하고 싶은 Uid
+     * @return Uid에 해당하는 UserName
+     */
+    public String getUserNameFromUid(int uid){
+        return controller.getUserList().get(uid).getUserName();
+    }
+
+    /***
+     * 채팅방을 복원하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param index ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isChatUserChanged(int rid,int index){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(index-1).getUid();
+        int addChatUid = RoomList.get(rid).getChatList().get(index).getUid();
+        if(lastChatUid == addChatUid)
+            return true;
+        else
+            return false;
+    }
+    /***
+     * 채팅방에 채팅을 추가하는 경우 추가하고 싶은 방의 Rid와 현재까지 추가된 ChatList의 Index와 받아서 추가하는 채팅이 같은 유저의 채팅인지 아닌지를 반환하는 함수
+     * @param rid 확인하고 싶은 방의 Rid
+     * @param uid ChatRoomView에 현재까지 추가된 ChatList의 Index
+     * @return 같으면 true, 다르면 false
+     */
+    public boolean isAddChatUserChanged(int rid,int uid){
+
+        int lastChatUid = RoomList.get(rid).getChatList().get(RoomList.get(rid).getChatList().size()-1).getUid();
+
+        if(lastChatUid == uid)
+            return true;
+        else
+            return false;
+    }
+    public int getUidFromUserName(String userName){
+        for(Integer key : UserList.keySet()){
+            if(UserList.get(key).getUserName().equals(userName))
+                return UserList.get(key).getUid();
+        }
+        return 999;
+    }
+    public boolean isChatMSG(String msg) {
+        if(removeProtocolString(msg).equals("IMG"))
+            return false;
+        return true;
     }
 
 }

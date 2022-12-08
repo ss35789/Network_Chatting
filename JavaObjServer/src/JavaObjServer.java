@@ -400,7 +400,15 @@ public class JavaObjServer extends JFrame {
 
 			String MakeRoomData = str.toString();
 			ChatMsg obcm = new ChatMsg("SERVER", "710", MakeRoomData);
-			WriteAllObject(obcm);
+			for (int i = 0; i < user_vc.size(); i++) {
+				UserService user = (UserService) user_vc.elementAt(i);
+				for(int j=0; j< userAuth.size();j++){
+					if(user.UserName.equals(getUserName(userAuth.get(j)))){
+						user.WriteOneObject(obcm);
+					}
+				}
+
+			}
 		}
 		public String getUserName(int uid){
 			ListData sld = JavaObjServer.getListData();
@@ -443,7 +451,7 @@ public class JavaObjServer extends JFrame {
 			JavaObjServer.setListData(sld);
 //sdf
 			//채팅 전송
-			ChatMsg cm = new ChatMsg(getUserName(chat.uid),"200",chat.msg);
+			ChatMsg cm = new ChatMsg(rid+DivString.RoomDiv+ chat.uid,"200",chat.msg);
 			cm.setImg(chat.img);
 			WriteAllObject(cm);
 		}
