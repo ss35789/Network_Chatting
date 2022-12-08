@@ -110,5 +110,9 @@ public class LoginView extends JFrame{
             }
         }
     }
+
+    public JTextField getTxtUserName() {
+        return txtUserName;
+    }
 }
 

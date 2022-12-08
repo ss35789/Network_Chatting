@@ -199,6 +199,7 @@ public class JavaObjClientMainViewController {
                             break;
                         case "120":
                             System.out.println("Client received 120 " + msg);
+                            System.exit(0);
                             break;
                         case "200": // chat message
                             //AppendText(msg);
