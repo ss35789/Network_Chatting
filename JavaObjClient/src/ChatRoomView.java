@@ -36,8 +36,10 @@ public class ChatRoomView extends JFrame {
         lblRoomName.setText(roomName);
 
         StringBuffer str = new StringBuffer();
-        for(String user : users )
+        for(String user : users ){
+            if(user!=null)
             str.append(user+" ");
+        }
         lbUsers.setText(str.toString());
         lblRoomUserNum.setText(Integer.toString(users.length));
         textArea.setFont(new Font("Serif", Font.BOLD, 20));

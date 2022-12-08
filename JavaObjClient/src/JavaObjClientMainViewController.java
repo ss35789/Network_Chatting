@@ -710,7 +710,7 @@ public class JavaObjClientMainViewController {
         String[] num = userAuth.split("\\.");
         for(String count : num)
             userNum++;
-        String users[] = new String[userNum];
+        String users[] = new String[userNum+1];
         for(String s : num)
             users[Integer.parseInt(s)]= getUserNameFromUid(Integer.parseInt(s));
 
