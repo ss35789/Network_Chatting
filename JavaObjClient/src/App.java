@@ -67,7 +67,11 @@ public class App extends JFrame {
 
         userList = controller.getUserList();
         roomList = controller.getRoomList();
+        //user 세팅 대기
+        while (controller.getUser().getState()==null);
         userState = controller.getUser().getState();
+        //user 세팅 대기
+        while (controller.getUser().getImg()==null);
         MyimgPath = controller.getUser().getImg().toString();
 
         myState.addMouseListener(new MouseAdapter() {

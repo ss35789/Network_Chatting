@@ -31,7 +31,7 @@ public class JavaObjClientMainViewController {
     private Map<Integer, ChatRoomView> chatRoomViewList = new HashMap<Integer, ChatRoomView>(); // ChatRoomViewList Key: Rid Value: ChatRoomView
     private String ip_addr;
     private String port_no;
-    //private ListenNetwork net ;
+    private ListenNetwork net ;
     private static JavaObjClientMainViewController controller; // Singleton Pattern 적용
 
     // Singleton pattern 시작 (생성자)
@@ -71,7 +71,11 @@ public class JavaObjClientMainViewController {
         return RoomList;
     }
 
-//    public ListenNetwork getNet() {
+    public ListenNetwork getNet() {
+        ListenNetwork net = new ListenNetwork();
+        return net;
+    }
+    //    public ListenNetwork getNet() {
 //        return net;
 //    }
 
@@ -196,6 +200,8 @@ public class JavaObjClientMainViewController {
                         case "110":
                             System.out.println("Client received 110 " + msg);
                             dataSetUser(msg);
+                            //Controller에서 로그인 성공 시 AppView로 전환
+                            controller.ChangeLoginViewToAppView(controller.getUser().getUserName(),ip_addr,port_no);
                             break;
                         case "120":
                             System.out.println("Client received 120 " + msg);
@@ -416,9 +422,7 @@ public class JavaObjClientMainViewController {
      * @param port_no  접속할 포트 번호
      */
     public void ChangeLoginViewToAppView(String username, String ip_addr, String port_no) {
-        ListenNetwork net = new ListenNetwork();
-        //controller.setNet(net);
-        net.start();
+
         App appView = new App(username, ip_addr, port_no);
         controller.setAppView(appView);
         controller.loginView.setVisible(false);

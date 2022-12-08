@@ -102,8 +102,9 @@ public class LoginView extends JFrame{
                 //Controller에서 100 protocol Send
                 controller.SendObject(obcm);
 
-                //Controller에서 로그인 성공 시 AppView로 전환
-                controller.ChangeLoginViewToAppView(username,ip_addr,port_no);
+                //JavaObjClientMainViewController.ListenNetwork net = new JavaObjClientMainViewController.ListenNetwork();
+                JavaObjClientMainViewController.ListenNetwork net = controller.getNet();
+                net.start();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 //AppendText("connect error");

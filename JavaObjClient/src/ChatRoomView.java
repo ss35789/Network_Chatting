@@ -41,7 +41,7 @@ public class ChatRoomView extends JFrame {
             str.append(user+" ");
         }
         lbUsers.setText(str.toString());
-        lblRoomUserNum.setText(Integer.toString(users.length));
+        lblRoomUserNum.setText(Integer.toString(users.length-1));
         textArea.setFont(new Font("Serif", Font.BOLD, 20));
         textArea.setDisabledTextColor(Color.BLACK);
         btnSendImg.setFont(new Font("Serif", Font.BOLD, 20));
