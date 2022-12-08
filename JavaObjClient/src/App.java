@@ -84,13 +84,11 @@ public class App extends JFrame {
                         // sleep protocol 서버에게 전송
                         obcm = new ChatMsg(controller.getUser().getUserName(), "720", "set SleepMode");
                         controller.SendObject(obcm);
-                        //controller.getUser().setState("Sleep");
                         break;
                     case "Sleep": // 바꾸기 전 유저의 상태가 Sleep 이면 Online으로
                         // wakeup protocol 서버에게 전송
                         obcm = new ChatMsg(controller.getUser().getUserName(), "730", "set SleepMode");
                         controller.SendObject(obcm);
-                        //controller.getUser().setState("Online");
                         break;
                     default:
                         break;
@@ -208,6 +206,10 @@ public class App extends JFrame {
                 ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
                 obcm.setImg(img);
                 controller.SendObject(obcm);
+
+                ImageIcon changeIcon = reSacledProfileImg(new ImageIcon(fd.getDirectory() + fd.getFile()));
+                chatting_myImg.setIcon(changeIcon);
+                myImg.setIcon(changeIcon);
             }
 
             @Override
@@ -228,8 +230,8 @@ public class App extends JFrame {
 
 
         chatting_myImg.setIcon(changeIcon);
-        chatting_myName.setText(username);
         myImg.setIcon(changeIcon);
+        chatting_myName.setText(username);
         myName.setText(username);
         if(userState.equals("Sleep"))
             myState.setText("set Online");
