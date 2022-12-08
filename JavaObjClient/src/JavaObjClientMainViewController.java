@@ -609,6 +609,7 @@ public class JavaObjClientMainViewController {
                             setUid(Integer.parseInt(stringChatDataArray[0])).
                             setMsg(stringChatDataArray[1]).
                             setDate(stringChatDataArray[2]).
+                            setImg(new ImageIcon(stringChatDataArray[3])).
                             build();
                     chatArrayList.add(chat);
                 }
@@ -795,7 +796,10 @@ public class JavaObjClientMainViewController {
         ChatRoomView chatRoomView = new ChatRoomView(room.getRoomName(),users);
         chatRoomView.setRid(rid);
         for(Chat c:room.getChatList()){
-            chatRoomView.appnedText(c.getUid(),c.getMsg());
+            if(c.getImg().toString().equals("null"))
+                chatRoomView.appnedText(c.getUid(),c.getMsg());
+            else
+                chatRoomView.appendImage(c.getUid(),c.getImg());
         }
         controller.addChatRoomView(rid,chatRoomView);
 
